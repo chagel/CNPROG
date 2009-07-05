@@ -1,0 +1,33 @@
+PRE-REQUIREMENTS:
+-----------------------------------------------
+1. Python2.5, MySQL, Django v1.0+
+
+2. Python-openid v2.2
+http://openidenabled.com/python-openid/
+
+3. django-authopenid(Included in project already)
+http://code.google.com/p/django-authopenid/
+
+4. html5lib
+http://code.google.com/p/html5lib/
+Used for HTML sanitizer
+
+5. Markdown2
+http://code.google.com/p/python-markdown2/
+
+
+INSTALL STEPS:
+-----------------------------------------------
+1. Copy settings_local.py.dist to settings_local.py and 
+update all your settings. Check settings.py and update 
+it as well if necessory.
+
+2. Prepare your database by using the same database/account 
+configuration from above.
+
+3. Run "python manager.py runserver" to startup django 
+development environment.
+
+4. There are some demo scripts under sql_scripts folder, 
+including badges and test accounts for CNProg.com. You 
+don't need them to run your sample.

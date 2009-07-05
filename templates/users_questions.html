@@ -1,0 +1,60 @@
+{% load extra_tags %}
+{% load extra_filters %}
+{% load humanize %}
+<div class="user-stats-table">
+    {% for question in questions%}
+        {% if question.favourite_count %}
+            {% if question.favorited_myself %}
+                <div class="favorites-count">
+                    <img title="这个问题被 {{question.favourite_count}} 位用户收藏" src="/content/images/vote-favorite-on.png">
+                    <div><b>{{question.favourite_count|intcomma}}</b></div>
+                </div>
+            {% else %}
+                <div class="favorites-count-off">
+                    <img title="这个问题被 {{question.favourite_count}} 位用户收藏" src="/content/images/vote-favorite-off.png">
+                    <div><b>{{question.favourite_count|intcomma}}</b></div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="favorites-empty"> </div>
+        {% endif %}
+    <div id="question-summary-{{question.id}}" class="question-summary narrow">
+        <a style="text-decoration: none;" href="/questions/{{question.id}}/{{question.get_question_title}}">
+            <div class="stats">
+                <div class="votes">
+                    <div class="vote-count-post">{{question.vote_count|intcomma}}</div> 
+                    票
+                  
+                </div>
+                <div title="{% if question.answer_accepted %}有答案已被接受为正确答案{% endif %}" class="status {% if question.answer_accepted %}answered-accepted{% endif %} {% ifequal question.answer_count 0 %}unanswered{% endifequal %}{% ifnotequal question.answer_count 0 %}answered{% endifnotequal %}">
+                    <div class="answer-count-post">{{question.answer_count|intcomma}}</div>
+                    回答
+             
+                </div>
+                <div class="views">
+                     <div class="views-count-post">{{question.view_count|cnprog_intword|safe}}</div>
+                     浏览
+                </div>
+            </div>
+        </a>
+        <div class="summary">
+            <h3>
+                <a title="{{question.summary}}" href="/questions/{{question.id}}/{{question.title}}">{{question.title}}</a>
+            </h3>
+            <div class="tags">
+                {% convert2tagname_list question %}
+                {% for tag in question.tagnames %}
+                    <a href="{% url forum.views.tag tag|urlencode %}" title="查看有关'{{ tag }}'的问题" rel="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            <div class="started">
+                <span class="relativetime" title="{{question.last_activity_at}}">{% diff_date question.last_activity_at %}</span>
+                {% if question.la_username %}
+                    <a href="/users/{{question.la_user_id}}/{{question.la_username}}">{{question.la_username}}</a> {% get_score_badge_by_details question.la_user_reputation question.la_user_gold question.la_user_silver question.la_user_bronze%}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <br clear="both"/>
+    {% endfor %}
+</div>

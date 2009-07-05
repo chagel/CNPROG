@@ -1,0 +1,90 @@
+{% extends "base_content.html" %}
+{% load extra_tags %}
+{% load humanize %}
+{% block title %}{% spaceless %}修改个人资料{% endspaceless %}{% endblock %}
+{% block forejs %}
+        <script type="text/javascript">
+            $().ready(function(){
+                $("#nav_profile").attr('className',"on");
+                $("#cancel").bind('click', function(){history.go(-1);})
+            });     
+        </script>
+        {% block userjs %}
+        {% endblock %}
+{% endblock %}
+{% block content %}
+<div id="main-bar" class="headNormal">
+    {{ request.user.username }} - 修改资料
+</div>
+<div id="main-body" style="width:100%;padding-top:10px">
+    <form name="" action="{% url edit_user request.user.id %}" method="post">
+        <div id="left" style="float:left;width:180px">
+            {% if request.user.email %}
+            {% gravatar request.user 128 %}
+            {% else %}
+            <img src="/content/images/nophoto.png">
+            {% endif %}
+            <div style="padding:20px 0 0 20px;font-weight:bold;font-size:150%">
+                <a href="http://www.gravatar.com/" target="_blank" title="gravatar和您的邮件地址是绑定的">修改头像</a>
+            </div>
+        </div>
+        
+        <div id="askform" style="float:right;width:750px;text-align:left;">
+            <h2>注册用户</h2>
+            <table class="user-details">
+                <tr>
+                    <th width="100px"></th>
+                    <th></th>
+                </tr>
+                
+	            <tr style="height:35px">
+	            	<td>{{ form.email.label_tag }}:</td>
+	            	<td>{{ form.email }} <span class="form-error"></span> {{ form.email.errors }} </td>
+	            </tr>
+                <tr style="height:35px">
+	            	<td></td>
+	            	<td class="title-desc">{{ form.email.help_text }}</td>
+	            </tr>
+                <tr style="height:35px">
+	            	<td>{{ form.realname.label_tag }}:</td>
+	            	<td>{{ form.realname }} <span class="form-error"></span> {{ form.realname.errors }} </td>
+	            </tr>
+                <tr style="height:35px">
+	            	<td>{{ form.website.label_tag }}:</td>
+	            	<td>{{ form.website }} <span class="form-error"></span> {{ form.website.errors }} </td>
+	            </tr>
+                <tr style="height:35px">
+	            	<td>{{ form.city.label_tag }}:</td>
+	            	<td>{{ form.city }} <span class="form-error"></span> {{ form.city.errors }} </td>
+	            </tr>
+                <tr style="height:35px">
+	            	<td>{{ form.birthday.label_tag }}:</td>
+	            	<td>{{ form.birthday }} <span class="form-error"></span> {{ form.birthday.errors }} </td>
+	            </tr>
+                <tr style="height:35px">
+	            	<td></td>
+	            	<td class="title-desc">{{ form.birthday.help_text }}</td>
+	            </tr>
+                <tr style="height:10px">
+                    <td colspan="2">
+                    </td>
+                </tr>
+                <tr>
+	            	<td style="vertical-align:top">{{ form.about.label_tag }}:</td>
+	            	<td>{{ form.about }} <span class="form-error"></span> {{ form.about.errors }} </td>
+	            </tr>
+	            
+            </table>
+            <div style="margin:30px 0 60px 0">
+                <input type="submit" value="更新" class="submit" >
+                <input id="cancel" type="button" value="取消" class="submit" >
+          
+            </div>
+        </div>
+    </form>
+    
+</div>
+{% endblock %}
+
+
+

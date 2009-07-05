@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{% spaceless %}发送新密码{% endspaceless %}{% endblock %}
+
+{% block content %}
+<div id="main-bar" class="">
+    <h3 >发送新密码</h3>
+
+</div>
+<div class="paragraph">
+丢失了您的密码？ 你可以在这里重设密码。<br>
+请输入用户名，新的密码会发送到你注册时候填写的电子邮件。
+</div>
+{% if form.errors %}
+<p class="errors"><span class="big">请注意以下错误：</span><br>
+	{% if form.username.errors %} 
+		<span class="error">{{ form.username.errors|join:", " }}</span>
+	{% endif %}
+</p>
+{% endif %}
+{% if msg %}
+    <div class="paragraph error">{{ msg }}</div>
+{% endif %}
+
+<div class="aligned">
+	<form action="." method="post" accept-charset="utf-8">
+		<div id="form-row"><label for="id_username">用户名： </label>{{ form.username }}</div>
+
+        <p style="padding-top:10px"><input type="submit" value="重设密码"> <a href="{% url user_signin %}">返回登录</a></p>
+
+	</form>
+    <span class="darkred">注意: 新的密码只有您在激活邮件中的链接后才会被激活。</span>
+</div>
+{% endblock %}

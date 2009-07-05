@@ -1,0 +1,70 @@
+{% extends "base_content.html" %}
+{% load extra_tags %}
+{% load humanize %}
+{% block title %}{% spaceless %}用户列表{% endspaceless %}{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">
+        $().ready(function(){
+            $("#nav_users").attr('className',"on");
+            $("#type-user").attr('checked',true);
+            var orderby = "{{ tab_id }}";
+            $("#sort_" + orderby).attr('className',"on");
+            
+            Hilite.exact = false;
+            Hilite.elementid = "main-body";
+            Hilite.debug_referrer = location.href;
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+<div class="tabBar">
+    <div class="headUsers">用户列表</div>
+    <div class="tabsA">
+        <a id="sort_reputation" href="?sort=reputation" class="off" title="积分">积分</a>
+        <a id="sort_newest" href="?sort=newest" class="off" title="最新加入">最新加入</a>
+        <a id="sort_last" href="?sort=last" class="off" title="最先加入">最先加入</a>
+        <a id="sort_user" href="?sort=user" class="off" title="用户名">用户名</a>
+    </div>
+</div>
+<div id="main-body" style="width:100%">
+    <p>        
+        {% if suser %}
+            匹配查询 '<span class="darkred"><strong>{{ suser }}</strong></span>' 的所有用户名： 
+        {% endif %}
+    
+        {% if not users.object_list %}
+            <span >没有找到相关数据。</span>
+        {% endif %}
+    </p>
+    <div class="userList">
+        <table class="list-table">
+            <tr>    
+                <td class="list-td">
+                    {% for user in users.object_list %}
+                    
+                    <div class="user">
+                        <ul>
+                                <li class="thumb"><a href="{{ user.get_profile_url }}">{% gravatar user 32 %}</a></li>
+                                <li><a href="{{ user.get_profile_url }}">{{user.username}}</a></li>
+                                <li>{% get_score_badge user %}</li>
+                            </ul>
+                    </div>
+                    
+            {% if forloop.counter|divisibleby:"7" %}
+                </td>
+                <td>
+            {% endif %}
+
+                    {% endfor %}
+                </td>
+            </tr>   
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block tail %}
+<div class="pager">
+    {% cnprog_paginator context %}
+</div>              
+{% endblock %}

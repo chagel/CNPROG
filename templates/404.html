@@ -1,0 +1,48 @@
+{% extends "base_content.html" %}
+{% block title %}{% spaceless %}404 Error{% endspaceless %}{% endblock %}
+{% block forestyle%}
+    <style type="text/css">
+ 		form input { margin-right: 5px; }
+	</style>
+{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">
+        $().ready(function(){
+            $("#linkPrevious").bind("click", back=function(){history.go(-1);})            
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+<div id="main-bar" class="headNormal">
+    404 Not Found
+</div>
+<div id="main-body" class="">
+    <div style="padding:5px 0px 10px 0;line-height:25px;">
+        <h3>对不起，没有找到您请求的页面！</h3>
+        <div style="margin-top:5px">
+        有可能是以下原因导致：<br>
+        <ul>
+            <li>你正在查看的问题或者回答已经被删除；</li>
+            <li>请求的地址有误 - 请核实原始URL地址；</li>
+            <li>访问的页面被保护或你的积分不够，参见<a href="/faq"> faq</a>；</li>
+            <li>如果你确信不该出现404错误，请<a href="http://cnprog.uservoice.com/" target="_blank">报告这个问题</a></li>
+            </u>
+        </div>
+        <script type="text/javascript">
+            var GOOG_FIXURL_LANG = 'zh-cn';
+            var GOOG_FIXURL_SITE = 'http://cnprog.com/';
+        </script>
+        <script type="text/javascript" src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
+        <ul>
+            <li><a href="#" id="linkPrevious">返回前页 » </li>
+            <li><a href="/questions">查看最新问题 » </a></li>
+            <li><a href="/tags/">查看标签列表 » </a></li>
+        </u>
+    </div>
+
+</div>
+{% endblock %}
+
+
+

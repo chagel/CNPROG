@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}{% spaceless %}修改回答{% endspaceless %}{% endblock %}
+{% block forejs %}
+        <script type='text/javascript' src='/content/js/com.cnprog.editor.js'></script>
+        <script type='text/javascript' src='/content/js/com.cnprog.post.js'></script>
+        <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
+        <script type='text/javascript' src='/content/js/wmd/showdown-min.js'></script>
+        <script type='text/javascript' src='/content/js/wmd/wmd-min.js'></script>
+        <link rel="stylesheet" type="text/css" href="/content/js/wmd/wmd.css" />
+        <script type="text/javascript">
+        
+        $().ready(function(){
+            $("#nav_questions").attr('className',"on");
+            $('#editor').TextAreaResizer();
+            
+            //highlight code synctax when editor has new text
+            $("#editor").typeWatch({highlight: false, wait: 3000,
+                             captureLength: 5, callback: lanai.highlightSyntax});
+                             
+            //toggle preview of editor
+            var display = true;
+            var txt = "禁用预览";
+            $('#pre-collapse').text(txt);
+            $('#pre-collapse').bind('click', function(){
+                txt = display ? "启用预览" : "禁用预览";
+                display = !display;
+                $('#previewer').toggle();
+                $('#pre-collapse').text(txt);
+            });
+
+            setupFormValidation("#fmedit", CPValidator.getQuestionFormRules(), CPValidator.getQuestionFormMessages());
+            
+            $('#id_revision').unbind().change(function(){
+                $("#select_revision").click();
+            });
+            
+            lanai.highlightSyntax();
+            
+        });
+        </script>
+{% endblock %}
+        
+{% block content %}
+<div id="main-bar" class="headNormal">
+    修改回答 [<a href="{{ answer.question.get_absolute_url }}#{{ answer.id }}">返回</a>]
+</div>
+<div id="main-body" class="ask-body">
+    <div id="askform">
+        <form id="fmedit" action="{% url edit_answer answer.id %}" method="post" >
+            <label for="id_revision" ><strong>版本:</strong></label> <br> 
+            {% if revision_form.revision.errors %}{{ revision_form.revision.errors.as_ul }}{% endif %}
+            <div style="vertical-align:middle">
+            {{ revision_form.revision }} <input type="submit" style="display:none" id="select_revision" name="select_revision" value="选择版本">
+            </div><br>
+            <div class="form-item">
+                <div id="wmd-button-bar" class="wmd-panel"></div>
+                {{ form.text }}
+                <span class="form-error"></span>
+                <div class="preview-toggle"><span id="pre-collapse" title="打开或者关闭Markdown编辑器的实时预览">预览开关</span></div>
+                <div id="previewer" class="wmd-preview"></div>
+                <br>
+            </div>
+            
+            <strong>{{ form.summary.label_tag }}</strong> <br>
+            {{ form.summary }}  {{ form.summary.errors }}
+            <div class="title-desc">
+                {{ form.summary.help_text }}
+            </div>
+            <br>
+            <input type="submit" value="现在修改" class="submit" />
+            <input type="button" value="取消" class="submit" onclick="history.back(-1);" />
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <p class="subtitle darkred">受欢迎的提问</p>
+    <div>
+        <ul class="list-item">
+            <li>
+                <b>您的问题与编程相关吗？</b>
+            </li>
+            <li>
+                建议您提的问题是可以被答复的，而不仅仅是可以讨论。
+            </li>
+            <li>
+                请详细描述您的问题。
+            </li>
+            <li>
+                我们推荐您使用中文描述问题，这样可以得到更多的答复机会。
+            </li>
+        </ul>
+         <a href="/faq/" target="_blank" title="查看常见问题" style="float:right;position:relative">faq »</a>
+         <br>  
+    </div>
+</div>
+
+<div class="boxC">
+    <p class="subtitle">Markdown快速参考</p>
+    <ul class="list-item">
+        <li>
+            *斜体* 或者 _斜体_  
+
+        </li>
+        <li>
+            **加粗** 或者 __加粗__ 
+
+        </li>
+        <li>
+            <b>链接</b>：一个[例子](http://url.com/ "标题")
+
+        </li>
+        
+        <li>
+            <b>图片</b>：![alt 文本](/path/img.jpg "标题")
+
+        </li>
+        <li>
+            列表：
+            1.  Foo
+            2.  Bar
+        </li>
+        <li>
+            基本的HTML标签也是支持的
+        </li>
+    </ul>
+    <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank" style="float:right;position:relative">有关Markdown详细说明 »</a>
+    <br>  
+</div>
+
+{% endblock %}
+
+{% block endjs %}
+{% endblock %}
+

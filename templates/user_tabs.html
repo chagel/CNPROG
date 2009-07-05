@@ -1,0 +1,20 @@
+{% load extra_filters %}
+<div class="tabBar">
+    <div class="tabsA">
+        <a id="stats" {% ifequal tab_name "stats" %}class="on"{% endifequal %} title="用户概览" href="/users/{{view_user.id}}/{{view_user.username}}?sort=stats">概览</a>
+        <a id="recent" {% ifequal tab_name "recent" %}class="on"{% endifequal %} title="最近活动" href="/users/{{view_user.id}}/{{view_user.username}}?sort=recent">最近活动</a>
+        {% if request.user|is_user_self:view_user %}
+        <a id="responses" {% ifequal tab_name "responses" %}class="on"{% endifequal %} title="其他用户的回复和评论" href="/users/{{view_user.id}}/{{view_user.username}}?sort=responses">回应</a>
+        {% endif %}
+        <a id="reputation" {% ifequal tab_name "reputation" %}class="on"{% endifequal %} title="用户的社区积分历史" href="/users/{{view_user.id}}/{{view_user.username}}?sort=reputation">积分</a>
+        {% if request.user|can_view_user_votes:view_user %}
+        <a id="votes" {% ifequal tab_name "votes" %}class="on"{% endifequal %} title="用户所有投票" href="/users/{{view_user.id}}/{{view_user.username}}?sort=votes">投票</a>
+        {% endif %}
+        <a id="favorites" {% ifequal tab_name "favorites" %}class="on"{% endifequal %} title="用户收藏的问题" href="/users/{{view_user.id}}/{{view_user.username}}?sort=favorites">收藏</a>
+        <!--
+        {% if request.user|can_view_user_preferences:view_user %}
+        <a id="preferences" {% ifequal tab_name "preferences" %}class="on"{% endifequal %} title="用户参数的设置" href="/users/{{view_user.id}}/{{view_user.username}}?sort=preferences">设置</a>
+        {% endif %}  
+        -->
+    </div>
+</div>

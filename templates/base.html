@@ -1,0 +1,82 @@
+﻿{% load extra_filters %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{% block title %}{% endblock %} - CNProg.com 程序员问答社区</title>
+        {% spaceless %}
+        {% block meta %}{% endblock %}
+        {% endspaceless %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="verify-v1" content="55uGNnQVJW8p1bbXeF/Xbh9I7nZBM/wLhRz6N/I1kkA=" />
+        <link rel="shortcut icon" href="/content/images/favicon.ico" >
+        <link href="/content/style/style.css" rel="stylesheet" type="text/css" />
+        <script type='text/javascript' src='/content/js/com.cnprog.utils.js'></script>
+        <script src="http://www.google.com/jsapi"></script>
+        <script>google.load("jquery", "1.2.6");</script>
+        <script type="text/javascript">
+        var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
+        document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
+        </script>
+        <script type="text/javascript">
+        UserVoice.Tab.show({ 
+            key: 'cnprog',
+            host: 'cnprog.uservoice.com', 
+            forum: 'general', 
+            alignment: 'left', /* 'left', 'right' */
+            background_color:'#777', 
+            text_color: 'white', /* 'white', 'black' */
+            hover_color: '#06C',
+            lang: 'en' /* 'en', 'de', 'nl', 'es', 'fr' */
+        })
+        </script>
+        {% with request.user.get_messages as messages%}
+        {% if messages %}
+        <style type="text/css">
+            body { margin-top:2.4em; }
+        </style>
+        <script type="text/javascript">
+            $().ready(function() {
+                notify.show();
+            });
+        </script>
+       
+        {% endif %}
+        {% endwith %}
+      
+        {% block forejs %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="notify" style="display:none">
+            <span>{% if request.user.get_messages %}
+            恭喜您，社区给您颁发了奖牌：{% for message in request.user.get_messages %}
+            <font class="darkred">{{ message }}</font>, {% endfor %}查看
+            <a href="{{ request.user.get_profile_url }}">个人资料</a>{% endif %}</span>
+            <a class="close-notify" onclick="notify.close(true)">&times;</a>
+        </div>
+        {% include "header.html" %}
+        <div id="wrapper">
+            <div id="room">
+                <div id="CALeft">
+                    {% block content%}
+                    {% endblock%}
+
+                </div>
+
+                <div id="CARight">
+                    {% block sidebar%}
+                    {% endblock%}
+
+                </div>
+                <div id="tail" style="clear:both;">
+                    {% block tail %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="spacer3"></div>
+        </div>
+        {% include "footer.html" %}
+        {% block endjs %}
+        {% endblock %}
+    </body>
+</html>

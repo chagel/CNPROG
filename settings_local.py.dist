@@ -1,0 +1,21 @@
+SITE_SRC_ROOT = '/Users/sailing/Development/cnprog_beta2'
+
+#for logging
+import logging
+LOG_FILENAME = '/Users/sailing/Development/cnprog_beta2/django.lanai.log'
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG,)
+
+
+DATABASE_NAME = 'cnprog'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'root'               # Not used with sqlite3.
+DATABASE_PASSWORD = ''               # Not used with sqlite3.
+
+
+# Absolute path to the directory that holds media.
+# Example: "/home/media/media.lawrence.com/"
+MEDIA_ROOT = '/Users/sailing/Development/cnprog_beta2/templates/upfiles/'
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash if there is a path component (optional in other cases).
+# Examples: "http://media.lawrence.com", "http://example.com/media/"
+MEDIA_URL = 'http://127.0.0.1:8000/upfiles/'

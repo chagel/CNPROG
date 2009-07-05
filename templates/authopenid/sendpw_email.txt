@@ -1,0 +1,14 @@
+Someone has requested to reset your password on {{ site_url }}.
+If this is not you, it is safe to ignore this email.
+
+Your new account details are:
+
+Username: {{ username }}
+New password: {{ password }}
+
+To confirm reset of your password go to this address:
+{{ site_url }}{{ url_confirm }}?key={{ confirm_key }}
+
+Regards,
+
+

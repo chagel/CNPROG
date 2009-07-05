@@ -1,0 +1,33 @@
+{% extends "base_content.html" %}
+{% block title %}{% spaceless %}500 Error{% endspaceless %}{% endblock %}
+{% block forejs %}
+        <script type="text/javascript">
+        $().ready(function(){
+            $("#linkPrevious").bind("click", back=function(){history.go(-1);})            
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+<div id="main-bar" class="headNormal">
+    500 Server Error
+</div>
+<div id="main-body" class="">
+    <div style="padding:5px 0px 10px 0;line-height:25px">
+        <h3>对不起，系统发生了错误，不能响应您的请求！</h3>
+        <br>
+        系统已经记录错误日志，我们会尽快解决此问题。<br>
+        如果这个问题长时间没有被修复，请<span class="darkred"><a title="cnprog.uservoice.com" href="http://cnprog.uservoice.com/" >搜索查看当前问题的状态，或者报告新的bug</a></span>。感谢您的支持！
+        
+        <ul>
+            <li><a href="#" id="linkPrevious">返回前页</li>
+            <li><a href="/questions">查看最新问题</a></li>
+            <li><a href="/tags/">查看标签列表</a></li>
+        </u>
+    </div>
+
+</div>
+{% endblock %}
+
+
+

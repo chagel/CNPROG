@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}{% spaceless %}用户登录{% endspaceless %}{% endblock %}
+{% block forejs %}
+	<script type="text/javascript" src="/content/js/jquery.openid.js?"></script>
+    <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
+	<script type="text/javascript">
+	$().ready(function(){
+	    openid.init('id_openid_url');
+        setupFormValidation("#openid_form", {bsignin:{required: true}});
+	});
+	</script>
+{% endblock %}
+{% block content %}
+<div class="headNormal">
+    用户登录
+</div>
+<div class="login">
+    <form name="openid_form" action="{% url user_signin %}" method="post">
+        {{ form2.next }}
+        <p style="display:none">CNProg支持<b>两种</b>登录模式。您可以使用帐号、密码登录，或者使用OpenID登录。</p>
+        {% if msg %}
+            <p class="warning">{{ msg }}</p>
+        {% endif %}
+        <fieldset class="fieldset">
+    		<legend ><strong>使用OpenID登录</strong></legend>
+            <div id="openid_choice">
+                <p>请选择您的帐号类型并完成正确的OpenID地址（如：替换“{username}”为您的对应帐号）：</p>
+                <div id="openid_btns">
+                </div>
+            </div>
+            <br>
+            <br><br>
+        	<p>
+                {{ form2.openid_url }} <input id="bsignin" name="bsignin" type="submit" value="登录" class="openid-login-submit" />
+        	</p>
+        </fieldset>	
+    </form>
+    <div style="display:none">
+        <br>
+        {% if form1.errors %}
+        <p class="errors">
+            <span class="big">请注意以下错误：</span><br>
+            <ul class="error-list">
+                {% if form1.username.errors %} 
+                <li><span class="error">{{ form1.username.errors|join:", " }}</span></li>
+                {% endif %}
+                {% if form1.password.errors %} 
+                <li><span class="error">{{ form1.password.errors|join:", " }}</span></li>
+                {% endif %}
+            </ul>
+        </p>
+        {% endif %}
+        <br>
+        <form name="fauth" action="{% url user_signin %}" method="post">
+            {{ form1.next }}
+        	<fieldset class="fieldset" >
+        		<legend class="big">使用帐号密码登录</legend>
+        		<div class="form-row"><label for="id_username">用户名：</label><br />{{ form1.username }}</div>
+        		<div class="form-row"><label for="id_password">密码：</label><br />{{ form1.password }}</div>
+               <div class="submit-row"><input type="submit" class="submit" name="blogin" value="登录"> <a href="">忘记密码？</a> <a href="">注册新帐号</a></div>
+           
+        	</fieldset>	
+        </form>
+    </div>
+</div>	
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <h3 class="subtitle">为什么需要OpenID登录？</h3>
+    <p>
+    <ul class="list-item">
+        <li>
+        构建在OpenID网络认证上的本系统，不需要你注册新的帐号，即可使用我们系统的所有功能
+        </li>
+        <li>
+        用同一个帐号可登录互联网所有激活OpenID的网站
+
+        </li>
+        <li>
+        全世界有1.6亿OpenID帐号，和10,000个支持OpenID的站点
+
+        </li>
+        <li>
+         OpenID是有开放标准，并且有相关的基金组织提供支持
+
+        </li>
+        
+    </ul>
+    <a href="http://openid.net/what/" target="_blank" style="float:right;position:relative">查看更多 »</a><br>
+    <a href="http://openid.net/get/" target="_blank" style="float:right;position:relative">获取OpenID »</a>
+    </p>
+    <br>  
+</div>
+{% endblock%}
+

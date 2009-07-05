@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load extra_tags %}
+{% load humanize %}
+{% load extra_filters %}
+{% block title %}{% spaceless %}没有回答的问题{% endspaceless %}{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">
+        $().ready(function(){
+            $("#nav_unanswered").attr('className',"on");
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+<div class="tabBar">
+    <span class="headQuestions">没有回答的问题</span>
+    <div class="tabsA">
+        <a id="latest" href="?sort=latest" class="on" title="最新加入系统的问题">最新问题</a> 
+    </div>
+</div>
+
+<div id="listA">
+    {% for question in questions.object_list %}
+    <div class="qstA">
+        <h2><a href="{{ question.get_absolute_url }}">{{ question.get_question_title }}</a></h2>
+        <div class="stat">
+            <table>
+	            <tr>
+                    <td><span class="num">{{ question.answer_count|intcomma }}</span> </td>
+                    <td><span class="num">{{ question.score|intcomma }}</span> </td>
+                    <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
+	            </tr>  
+                <tr>
+                    <td><span class="unit">回答</span></td>
+                    <td><span class="unit">票数</span></td>
+                    <td><span class="unit">浏览</span></td>
+	            </tr> 
+            </table>
+        </div>
+        <div class="summary">
+            {{ question.summary }}...                
+        </div>
+    
+        {% ifequal tab_id 'active'%}
+        {% if question.wiki %}
+        <span class="from wiki">社区Wiki</span>
+        <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        {% else %}
+        <div class="from">
+             {% comment %}{% gravatar question.last_activity_by 24 %}{% endcomment %}
+            <span class="author"><a href="{{ question.last_activity_by.get_profile_url }}">{{ question.last_activity_by }}</a></span>
+            <span class="score">{% get_score_badge question.last_activity_by %} </span>
+            <span class="date" title="{{ question.last_activity_at }}">{% diff_date question.last_activity_at %}</span>
+        </div>
+        {% endif %}
+        {% else %}
+        {% if question.wiki %}
+        <span class="from wiki">社区Wiki</span>
+        <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        {% else %}
+        <div class="from">
+             {% comment %}{% gravatar question.author 24 %}{% endcomment %}
+            <span class="author"><a href="{{ question.author.get_profile_url }}">{{ question.author }}</a></span>
+            <span class="score">{% get_score_badge question.author %} </span>
+            <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        </div>
+        {% endif %}
+        {% endifequal %}
+        
+        <div class="tags">
+        {% for tag in question.tagname_list %}
+        <a href="{% url forum.views.tag tag|urlencode %}" title="查看有关'{{ tag }}'的问题" rel="tag">{{ tag }}</a>
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block tail %}
+                        <div class="pager">
+                            {% cnprog_paginator context %}
+                            
+                        </div>
+                        <div class="pagesize">
+                            {% cnprog_pagesize context %}
+                        </div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <p>
+        您正在浏览所有<br><div class="questions-count">{{ questions_count|intcomma }}</div>
+        <p>个<span class="darkred"><strong> 没有回答的 </strong></span>问题。</p>
+        
+            <p>问题按 <strong>问题创建时间</strong> 排序。最新加入的问题将显示在最前面。</p>
+
+    </p>
+</div>
+<div class="boxC">
+	<h3 class="subtitle">相关标签</h3>
+    <div class="body">
+    <div class="tags">
+        {% for tag in tags %}
+            <a rel="tag" title="查看有关'{{ tag.name }}'的问题"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <span class="tag-number">× {{ tag.used_count|intcomma }}</span>
+            <br>
+        {% endfor %}
+        <br>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+

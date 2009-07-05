@@ -1,0 +1,127 @@
+{% extends "user.html" %}
+{% load extra_tags %}
+{% load humanize %}
+		{% block usercontent %}
+	
+        <a name="questions"></a>
+        <table>
+            <tr>
+                <td>
+                    <div style="text-align: right;" class="count">{{questions|length}}</div>
+                </td>
+                <td>
+                    <h2>个问题</h2>
+                </td>
+            </tr>
+        </table>
+		{% include "users_questions.html" %}
+        <p>&nbsp;</p>
+        <a name="answers"></a>
+        <table>
+            <tr>
+                <td>
+                    <div style="text-align: right;" class="count">{{answered_questions|length}}</div>
+                </td>
+                <td >
+                    <h2>个回答</h2>
+                </td>
+            </tr>
+        </table>
+        <div class="user-stats-table">
+            {% for answered_question in answered_questions %}
+            <div class="answer-summary">
+                <a title="{{answered_question.summary}}" href="/questions/{{answered_question.id}}/{{answered_question.title}}#{{answered_question.answer_id}}">
+                    <div class="answer-votes {% if answered_question.accepted %}answered-accepted{% endif %}" title="该回答总共有{{ answered_question.vote_count }}个投票&#13;{% if answered_question.accepted %}该回答已被设为最佳答案{%endif%}">
+                        {{ answered_question.vote_count }}
+                    </div>
+                </a>
+                <div class="answer-link">
+                    <a href="/questions/{{answered_question.id}}/{{answered_question.title}}#{{answered_question.answer_id}}">{{answered_question.title}}</a> {% if answered_question.comment_count %}<span title="该回答有{{ answered_question.comment_count }}条评论">({{answered_question.comment_count}})</span>{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <p>&nbsp;</p>
+        <a name="votes"></a>
+        <table>
+            <tr>
+                <td>
+                    <div style="text-align: right;" class="count">{{total_votes}}</div>
+                </td>
+                <td >
+                    <h2>个投票</h2>                    
+                </td>
+            </tr>
+        </table>
+        <div class="user-stats-table">
+            <table height="50px">
+                <tr>
+                    <td width="60">
+                        <img style="cursor: default;" align="absmiddle" src="/content/images/vote-arrow-up-on.png"/>
+                            <span title="该用户投的赞成票总数" class="vote-count">{{up_votes}}</span>
+
+                    </td>
+                    <td width="60">
+                        <img style="cursor: default;" align="absmiddle" src="/content/images/vote-arrow-down-on.png"/>
+                            <span title="用户投的反对票总数" class="vote-count">{{down_votes}}</span>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p>&nbsp;</p>
+        <a name="tags"></a>
+        <table>
+            <tr>
+                <td>
+                    <div style="text-align: right;" class="count">{{tags|length}}</div>
+                </td>
+                <td >
+                    <h2>个标签</h2>
+                </td>
+            </tr>
+        </table>
+        <div class="user-stats-table">
+            <table class="tags">
+                <tr>
+                    <td width="180" valign="top">
+                        {% for tag in tags%}
+                        <a rel="tag" title="查看有关'{{ tag }}'的问题" href="{% url forum.views.tag tag|urlencode %}">{{tag.name}}</a><span class="tag-number"> × {{ tag.used_count|intcomma }}</span><br>
+                            {% if forloop.counter|divisibleby:"10" %}
+                                </td>
+                                <td width="180"  valign="top">
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p>&nbsp;</p>
+        <a name="badges"></a>
+        <table>
+            <tr>
+                <td>
+                    <div style="text-align: right;" class="count">{{total_awards}}</div>
+                </td>
+                <td >
+                    <h2>枚奖牌</h2>
+                </td>
+            </tr>
+        </table>
+        <div class="user-stats-table">
+            <table>
+                <tr>
+                    <td width="180" style="line-height:35px">
+                        {% for award in awards %}
+                            <a href="/badges/{{award.id}}/{{award.name}}" title="{{ award.description }}" class="medal"><span class="badge{{ award.type }}">&#9679;</span>&nbsp;{{ award.name }}</a><span class="tag-number"> × {{ award.count|intcomma }}</span><br>
+                            {% if forloop.counter|divisibleby:"6" %}
+                                </td>
+                                <td width="180" style="line-height:35px">
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+{% endblock %}
