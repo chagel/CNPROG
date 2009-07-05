@@ -4,20 +4,8 @@ import os.path
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-#David Cramer debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.cache.CacheDebugPanel',
-    'debug_toolbar.panels.profiler.ProfilerDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.templates.TemplatesDebugPanel',
-)
 
-DEBUG_TOOLBAR_CONFIG = {
-    "INTERCEPT_REDIRECTS":False
-}
 
 #for OpenID auth
 ugettext = lambda s: s
@@ -25,7 +13,7 @@ LOGIN_URL = '/%s%s' % (ugettext('account/'), ugettext('signin/'))
 
 #system will send admins email about error stacktrace if DEBUG=False
 ADMINS = (
-    ('Mike Chen', 'chagel@gmail.com'),
+    ('CNProg team', 'team@cnprog.com'),
 )
 MANAGERS = ADMINS
 
@@ -85,7 +73,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.transaction.TransactionMiddleware',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
     'middleware.pagesize.QuestionsPageSizeMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

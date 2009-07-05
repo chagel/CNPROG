@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}奖牌列表{% endspaceless %}{% endblock %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "Badges" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -12,7 +13,7 @@
 {% endblock %}
 {% block content %}
 <div class="headlineA">
-        <span class="headMedals">奖牌榜</span>
+        <span class="headMedals">{% trans "Badges"%}</span>
 </div>
 <div id="main-body" style="width:100%">
     <p>
