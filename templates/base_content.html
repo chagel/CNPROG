@@ -1,7 +1,8 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+﻿{% load i18n %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
     <head>
-        <title>{% block title %}{% endblock %} - CNProg.com 程序员问答社区</title>
+        <title>{% block title %}{% endblock %} - {{ APP_TITLE }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="verify-v1" content="55uGNnQVJW8p1bbXeF/Xbh9I7nZBM/wLhRz6N/I1kkA=" />
         <link rel="shortcut icon" href="/content/images/favicon.ico" >
@@ -48,10 +49,10 @@
     <body>
         <div class="notify" style="display:none">
             <span>{% if request.user.get_messages %}
-            恭喜您，社区给您颁发了奖牌：{% for message in request.user.get_messages %}
-            <font class="darkred">{{ message }}</font>, {% endfor %}查看
-            <a href="{{ request.user.get_profile_url }}">个人资料</a>{% endif %}</span>
-            <a class="close-notify" onclick="notify.close(true)">&times;</a>
+            {% trans "Congratulations! You have new badges: " %}{% for message in request.user.get_messages %}
+            <font class="darkred">{{ message }}</font>, {% endfor %}{% trans "go to see" %}
+            <a href="{{ request.user.get_profile_url }}">{% trans "Profile" %}</a>{% endif %}</span>
+           <a class="close-notify" onclick="notify.close(true)">&times;</a>
         </div>
         {% include "header.html" %}
         <div id="wrapper">

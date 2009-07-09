@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-05 12:30+0000\n"
+"POT-Creation-Date: 2009-07-09 15:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings.py:24
+#: settings.py:12
 msgid "account/"
 msgstr ""
 
-#: settings.py:24 django_authopenid/urls.py:9 django_authopenid/urls.py:11
+#: settings.py:12 django_authopenid/urls.py:9 django_authopenid/urls.py:11
 msgid "signin/"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "非法OpenID地址： %s"
 msgstr ""
 
-#: django_authopenid/views.py:366
+#: django_authopenid/views.py:366 templates/index.html:78
 msgid "Welcome"
 msgstr "欢迎"
 
@@ -229,7 +229,7 @@ msgstr "用户收藏的问题"
 msgid "Favorites - User Profile"
 msgstr "收藏-用户资料"
 
-#: forum/user.py:60
+#: forum/user.py:60 templates/index.html:46
 msgid "Votes"
 msgstr "投票"
 
@@ -254,8 +254,175 @@ msgid "Preferences - User Profile"
 msgstr "设置-用户资料"
 
 #: templates/badges.html:5 templates/badges.html.py:16
+#: templates/header.html:31
 msgid "Badges"
 msgstr "奖牌榜"
+
+#: templates/base.html:53 templates/base_content.html:52
+msgid "Congratulations! You have new badges: "
+msgstr "恭喜您被授予奖牌："
+
+#: templates/base.html:54 templates/base_content.html:53
+msgid "go to see"
+msgstr "查看"
+
+#: templates/base.html:55 templates/base_content.html:54
+#: templates/header.html:35
+msgid "Profile"
+msgstr "我的资料"
+
+#: templates/footer.html:5 templates/header.html:10 templates/index.html:81
+msgid "About us"
+msgstr "关于我们"
+
+#: templates/footer.html:6 templates/header.html:11
+msgid "faq"
+msgstr "常见问题"
+
+#: templates/footer.html:8
+msgid "Contact"
+msgstr "联系我们"
+
+#: templates/footer.html:9
+msgid "Privacy"
+msgstr "隐私政策"
+
+#: templates/footer.html:10
+msgid "Feedback"
+msgstr "用户反馈"
+
+#: templates/header.html:6 templates/logout.html:5 templates/logout.html.py:16
+msgid "Logout"
+msgstr "退出登录"
+
+#: templates/header.html:8
+msgid "Login"
+msgstr "登录"
+
+#: templates/header.html:21
+msgid "link to homepage"
+msgstr "返回首页"
+
+#: templates/header.html:27 templates/header.html.py:56
+#: templates/index.html:21
+msgid "Questions"
+msgstr "问题"
+
+#: templates/header.html:28 templates/header.html.py:57
+msgid "Tags"
+msgstr "标签"
+
+#: templates/header.html:29 templates/header.html.py:58
+msgid "Users"
+msgstr "用户"
+
+#: templates/header.html:30
+msgid "Books"
+msgstr "读书"
+
+#: templates/header.html:32
+msgid "Unanswered"
+msgstr "没有回答的问题"
+
+#: templates/header.html:38
+msgid "Ask a question"
+msgstr "我要提问"
+
+#: templates/header.html:53
+msgid "Search"
+msgstr "搜索"
+
+#: templates/index.html:6
+msgid "Home"
+msgstr "首页"
+
+#: templates/index.html:23
+msgid "Newest updated questions"
+msgstr "最新更新的问题"
+
+#: templates/index.html:23
+msgid "Newest"
+msgstr "最新问题"
+
+#: templates/index.html:24
+msgid "Questions with most answers"
+msgstr "被回复最多的问题"
+
+#: templates/index.html:24
+msgid "Hottest"
+msgstr "最热问题"
+
+#: templates/index.html:25
+msgid "Questions with most votes"
+msgstr "被投票最多的问题"
+
+#: templates/index.html:25
+msgid "Best"
+msgstr "最有价值问题"
+
+#: templates/index.html:26 templates/index.html.py:118
+msgid "All questions"
+msgstr "所有问题"
+
+#: templates/index.html:26
+msgid "All"
+msgstr "所有问题"
+
+#: templates/index.html:45
+msgid "Answers"
+msgstr "回答"
+
+#: templates/index.html:47
+msgid "Visits"
+msgstr "访问"
+
+#: templates/index.html:55
+msgid "Community wiki"
+msgstr "社区wiki"
+
+#: templates/index.html:67 templates/index.html.py:91
+msgid "Browse questions with tag of "
+msgstr "查看所有以下主题问题："
+
+#: templates/index.html:87
+msgid "Recent tags"
+msgstr "最新标签"
+
+#: templates/index.html:94 templates/index.html.py:118
+msgid "Popular tags"
+msgstr "受欢迎的标签"
+
+#: templates/index.html:98
+msgid "Recent badges"
+msgstr "最新奖牌"
+
+#: templates/index.html:109
+msgid "All badges"
+msgstr "所有奖牌"
+
+#: templates/index.html:113
+msgid "RSS feed of recent 30 questions"
+msgstr "RSS订阅最新30个问题"
+
+#: templates/index.html:113
+msgid "Subscribe"
+msgstr "订阅最新问题"
+
+#: templates/index.html:118
+msgid "Are you looking for more questions? Try to browse"
+msgstr "在寻找更多问题吗？请查阅"
+
+#: templates/index.html:118
+msgid " or "
+msgstr " 或者 "
+
+#: templates/index.html:118
+msgid ". Please help us answer "
+msgstr "。请帮助我们回答"
+
+#: templates/index.html:118
+msgid "Unanswered questions"
+msgstr "没有回答的问题"
 
 #: templates/authopenid/changeemail.html:10
 msgid "Account: change email"
@@ -407,9 +574,6 @@ msgstr "删除您的帐号和所有内容"
 
 #~ msgid "A new account"
 #~ msgstr "新帐号"
-
-#~ msgid "Username"
-#~ msgstr "用户名"
 
 #~ msgid "An exisiting account"
 #~ msgstr "已经存在的帐号"

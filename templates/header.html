@@ -1,13 +1,14 @@
 {% load extra_tags %}
+{% load i18n %}
     <div id="top">
         <div id="header">
             {% if request.user.is_authenticated %}
-                <a href="/users/{{ request.user.id }}/{{ request.user.username }}/">{{ request.user.username }}</a> {% get_score_badge request.user %} <a href="/logout/">退出登录</a>
+                <a href="/users/{{ request.user.id }}/{{ request.user.username }}/">{{ request.user.username }}</a> {% get_score_badge request.user %} <a href="/logout/">{% trans "Logout" %}</a>
             {% else %}
-                <a href="/account/signin">登录</a>
+                <a href="/account/signin">{% trans "Login" %}</a>
             {% endif %}
-            <a href="/about">关于本站</a>
-            <a href="/faq">常见问题</a>
+            <a href="/about">{% trans "About us" %}</a>
+            <a href="/faq">{% trans "faq" %}</a>
         </div>
     </div>
 	<div id="roof">
@@ -17,24 +18,24 @@
 				<td width="23%">
                 <div id="logo">
                     <a href="/">
-                        <img src="/content/images/logo.png" title="回到首页" />
+                        <img src="/content/images/logo.png" title="{% trans 'link to homepage'%}" />
                     </a>
                 </div>
             </td>
 				<td width="77%" valign="bottom">
                 <div class="nav">
-                    <a id="nav_questions" href="/questions/" >问题</a>
-                    <a id="nav_tags" href="/tags/">标签</a>
-                    <a id="nav_users" href="/users/">用户</a>
-                    <a id="nav_books" href="/books/">读书</a>
-                    <a id="nav_badges" href="/badges/">奖牌榜</a>
-                    <a id="nav_unanswered" href="/questions/unanswered/">没有回答的问题</a>
+                    <a id="nav_questions" href="/questions/" >{% trans "Questions" %}</a>
+                    <a id="nav_tags" href="/tags/">{% trans "Tags" %}</a>
+                    <a id="nav_users" href="/users/">{% trans "Users" %}</a>
+                    <a id="nav_books" href="/books/">{% trans "Books" %}</a>
+                    <a id="nav_badges" href="/badges/">{% trans "Badges" %}</a>
+                    <a id="nav_unanswered" href="/questions/unanswered/">{% trans "Unanswered" %}</a>
                     
                     {% if request.user.is_authenticated %}
-                    <a id="nav_profile" href="/users/{{ request.user.id }}/{{ request.user.username }}/">我的资料</a>
+                    <a id="nav_profile" href="/users/{{ request.user.id }}/{{ request.user.username }}/">{% trans "Profile" %}</a>
                     {% endif %}
                     <div class="focus">
-                    <a id="nav_ask" href="/questions/ask/" class="special">我要提问</a>
+                    <a id="nav_ask" href="/questions/ask/" class="special">{% trans "Ask a question" %}</a>
                     </div>
                 </div>
 
@@ -49,12 +50,12 @@
                     <form action="/search/" method="GET">
                         <div>
                             <input type="text" class="searchInput" value="{{ keywords }}" name="q" id="keywords" >
-                            <input type="submit" name="Submit" value="搜索" class="searchBtn" >
+                            <input type="submit" name="Submit" value="{% trans 'Search' %}" class="searchBtn" >
                         </div>
                         <div class="options">
-                            <input id="type-question" type="radio" class="" value="question" name="t" checked >问题 
-                            <input id="type-tag" type="radio" class="" value="tag" name="t" >标签 
-                            <input id="type-user" type="radio" class="" value="user" name="t" >用户
+                            <input id="type-question" type="radio" class="" value="question" name="t" checked >{% trans "Questions" %} 
+                            <input id="type-tag" type="radio" class="" value="tag" name="t" >{% trans "Tags" %} 
+                            <input id="type-user" type="radio" class="" value="user" name="t" >{% trans "Users" %}
                         </div>
                     </form>
                 </td>

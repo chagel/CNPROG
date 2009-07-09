@@ -1,23 +1,21 @@
 ﻿{% load extra_tags %}
-<!-- 页面底部开始： -->
+{% load i18n %}
     <div id="ground">
         <div class="footerLinks" >
-            <a href="/about">关于本站</a><span class="link-separator"> |</span>
-            <a href="/faq">常见问题</a><span class="link-separator"> |</span>
+            <a href="/about">{% trans "About us" %}</a><span class="link-separator"> |</span>
+            <a href="/faq">{% trans "faq" %}</a><span class="link-separator"> |</span>
             <a href="http://blog.cnprog.com">Blog</a><span class="link-separator"> |</span>
-            <a href="mailto:team@cnprog.com">联系我们</a><span class="link-separator"> |</span>
-            <a href="/privacy">隐私政策</a><span class="link-separator"> |</span>
-            <a href="http://cnprog.uservoice.com" target="_blank">问题反馈</a>
+            <a href="mailto:team@cnprog.com">{% trans "Contact" %}</a><span class="link-separator"> |</span>
+            <a href="/privacy">{% trans "Privacy" %}</a><span class="link-separator"> |</span>
+            <a href="http://cnprog.uservoice.com" target="_blank">{% trans "Feedback" %}</a>
         </div>
 	  <p style="margin-top:10px;">
          <a href="http://code.google.com/p/cnprog/" target="_blank">
             <img src="/content/images/djangomade124x25_grey.gif" border="0" alt="Made with Django." title="Made with Django." >
          </a>
-         <div style="font-size:90%;color:#333">当前版本: R-0120-20090406</div>
       </p>
 	  <p style="margin-top:-30px; margin-right:15px;" class="fright"><img src="/content/images/cc-wiki.png" title="Creative Commons: Attribution - Share Alike" alt="cc-wiki" width="50" height="68" /></p>
 	</div>
-	<!-- 页面底部结束： -->
         <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

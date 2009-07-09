@@ -2,9 +2,10 @@
 {% load extra_tags %}
 {% load humanize %}
 {% load extra_filters %}
-{% block title %}{% spaceless %}首页{% endspaceless %}{% endblock %}
-{% block meta %}<meta name="keywords" content="技术问答社区，中国程序员，编程技术社区，程序员社区，程序员论坛，程序员wiki，程序员博客" />
-        <meta name="description" content="中国程序员的编程技术问答社区。我们做专业的、可协作编辑的技术问答社区。" />{% endblock %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "Home" %}{% endspaceless %}{% endblock %}
+{% block meta %}<meta name="keywords" content="{{ APP_KEYWORDS }}" />
+        <meta name="description" content="{{ APP_DESCRIPTION }}" />{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -17,15 +18,14 @@
 {% endblock %}
 {% block content %}
 <div class="tabBar">
-    <div class="headQuestions">问题列表</div>
+    <div class="headQuestions">{% trans "Questions" %}</div>
     <div class="tabsA">
-    	 <a id="latest" href="?sort=latest" title="最新更新的问题" >最新问题</a>
-        <a id="hottest" href="?sort=hottest" title="被回复最多的问题" >热门问题</a>
-        <a id="mostvoted" href="?sort=mostvoted" title="投票次数最多的问题" >最有价值的问题</a>
-        <a id="all" href="/questions/" title="所有问题" >全部问题</a>
+    	 <a id="latest" href="?sort=latest" title="{% trans 'Newest updated questions' %}" >{% trans "Newest" %}</a>
+        <a id="hottest" href="?sort=hottest" title="{% trans 'Questions with most answers' %}" >{% trans "Hottest" %}</a>
+        <a id="mostvoted" href="?sort=mostvoted" title="{% trans 'Questions with most votes' %}" >{% trans "Best" %}</a>
+        <a id="all" href="/questions/" title="{% trans 'All questions' %}" >{% trans "All" %}</a>
     </div>
 </div>
-<!-- 问题列表 -->
 <div id="listA">
     {% for question in questions %}
     <div class="qstA">
@@ -42,9 +42,9 @@
                     <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
 	            </tr>  
                 <tr>
-                    <td><span class="unit">回答</span></td>
-                    <td><span class="unit">票数</span></td>
-                    <td><span class="unit">浏览</span></td>
+                    <td><span class="unit">{% trans "Answers" %}</span></td>
+                    <td><span class="unit">{% trans "Votes" %}</span></td>
+                    <td><span class="unit">{% trans "Visits" %}</span></td>
 	            </tr> 
             </table>
         </div>
@@ -52,7 +52,7 @@
             {{ question.summary }}...
         </div>
         {% if question.wiki %}
-        <span class="from wiki">社区Wiki</span>
+        <span class="from wiki">{% trans "Community wiki" %}</span>
         <span class="date" title="{{ question.last_activity_at }}">{% diff_date question.last_activity_at %}</span>
         {% else %}
         <div class="from">
@@ -64,7 +64,7 @@
         {% endif %}
         <div class="tags">
         {% for tag in question.tagname_list %}
-        <a href="{% url forum.views.tag tag|urlencode %}" title="查看有关'{{ tag }}'的问题" rel="tag">{{ tag }}</a>
+        <a href="{% url forum.views.tag tag|urlencode %}" title="{% trans 'Browse questions with tag of ' %}'{{ tag }}'" rel="tag">{{ tag }}</a>
         {% endfor %}
         </div>
     </div>
@@ -75,47 +75,46 @@
 {% block sidebar %}
 {% if not request.user.is_authenticated %}
 <div class="boxA">
-	<h3>CNProg欢迎您!</h3>
+	<h3>{% trans "Welcome" %}</h3>
 	<div class="body">
-	  <p>CNProg是一个<strong>面向程序员</strong>的可协作编辑的<strong>开放源代码问答社区</strong>。</p>
-	  <p> 您可以在这里提问各类<strong>程序技术问题</strong> - 问题不分语言和平台。 同时也希望您对力所能及的问题，给予您的宝贵答案。</p>
-	  <div class="more"><a href="/about">关于本站 »</a></div>
+        {{ APP_INTRO|safe }}
+	  <div class="more"><a href="/about">{% trans "About us" %} »</a></div>
 	  <div class="more"><a href="/faq">FAQ »</a></div>
 	</div>
 </div>
 {% endif %}
 <div class="boxB">
-	<h3>最新标签</h3>
+	<h3>{% trans "Recent tags" %}</h3>
 	<div class="body">
          <p class="tagsbox">
         {% for tag in tags %}
-            <a rel="tag" title="查看有关'{{ tag.name }}'的问题" href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <a rel="tag" title="{% trans 'Browse questions with tag of ' %}'{{ tag.name }}'" href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
         {% endfor %}
         </p>
-        <div class="more"><a href="/tags">受欢迎的标签 »</a> </div>
+        <div class="more"><a href="/tags">{% trans "Popular tags" %} »</a> </div>
     </div>
 </div>
 <div class="boxB">
-    <h3>最新奖牌</h3>
+    <h3>{% trans "Recent badges" %}</h3>
         <div class="body">
              <ul class="badge-list">
              {% for award in awards %}
                 <li>
                 <a href="/badges/{{award.badge_id}}/{{award.badge_name}}" title="{{ award.badge_description }}" class="medal">
-                <span class="badge{{ award.badge_type }}">&#9679;</span>&nbsp;{{ award.badge_name }}</a> 授予
+                <span class="badge{{ award.badge_type }}">&#9679;</span>&nbsp;{{ award.badge_name }}</a> 
                 <a href="/users/{{award.user_id}}/{{award.user_name}}">{{ award.user_name }}</a>
                 </li>
             {% endfor %}
             </ul>
-        	<div class="more"><a href="/badges/">所有奖牌 »</a> </div>
+        	<div class="more"><a href="/badges/">{% trans "All badges" %} »</a> </div>
          </div>
 </div>
 <div id="feeds">
-<a href="/feeds/rss" title="RSS订阅最新30个问题">订阅最新问题</a>
+<a href="/feeds/rss" title="{% trans 'RSS feed of recent 30 questions' %}">{% trans "Subscribe" %}</a>
 </div>
 {% endblock %}
 {% block tail %}
 <div style="padding:5px 0 5px 5px;">
-<span class="evenMore">在寻找更多问题吗？请查阅 <a href="/questions/">全部问题列表</a>，或者 <a href="/tags/">受欢迎的标签</a>。请帮助我们回答 <a href="/questions/unanswered">没有回答的问题</a>。</span>
+<span class="evenMore">{% trans "Are you looking for more questions? Try to browse" %} <a href="/questions/">{% trans "All questions" %}</a>{% trans " or "%} <a href="/tags/">{% trans "Popular tags" %}</a>{% trans ". Please help us answer "%}<a href="/questions/unanswered">{% trans "Unanswered questions" %}</a></span>
 </div>
 {% endblock %}

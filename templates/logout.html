@@ -1,7 +1,8 @@
 {% extends "base_content.html" %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}退出登录{% endspaceless %}{% endblock %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "Logout" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
     <script type="text/javascript">
     $().ready(function(){
@@ -12,12 +13,10 @@
 {% endblock %}
 {% block content %}
 <div  class="headNormal">
-    退出登录
+    {% trans "Logout" %}
 </div>
 <div id="main-body" style="width:100%">
-    <p> 您是系统的<strong class="darkred">注册</strong>用户，可以随时使用OpenID帐号登录系统或者注销登录。 </p>
- 
-    <input id="btLogout" type="button" class="submit" value="点击退出登录" style="width:150px">
+    <input id="btLogout" type="button" class="submit" value="OK" style="width:150px">
     <br><br>
 </div>
 {% endblock %}
