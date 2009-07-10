@@ -1,0 +1,40 @@
+<!-- reopen.html -->
+{% extends "base_content.html" %}
+{% load extra_tags %}
+{% load i18n %}
+{% load humanize %}
+{% block title %}{% spaceless %}{% trans "Reopen question" %}{% endspaceless %}{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">
+        $().ready(function(){
+            $('#btBack').bind('click', function(){ history.back(); });
+        });
+        </script>
+{% endblock %}
+{% block content %}
+<div id="main-bar" class="headNormal">
+	{% trans "Reopen question" %}
+</div>
+<div id="main-body" style="width:100%">
+    <p>{% trans "Open the previously closed question" %}: <a href="{{ question.get_absolute_url }}"><span class="big">{{ question.get_question_title }}</span></a>
+    
+    </p>   
+    <p><strong>{% trans "The question was closed for the following reason " %}"{{ question.get_close_reason_display }}"{% trans "reason - leave blank in english" %} <a href="{{ question.closed_by.get_profile_url }}">{{ question.closed_by.username }}</a> {% trans "on "%} {% diff_date question.closed_at %}<font class="darkred">{% trans "date closed" %}</font>
+        </strong>
+    </p>
+    
+    <form id="fmclose" action="{% url reopen question.id %}" method="post" >
+
+        <div id="" style="padding:20px 0 20px 0">
+            <input type="submit" value="{% trans "Reopen this question" %}" class="submit" />
+            <input id="btBack" type="button" value="{% trans "Cancel" %}"  class="submit"  />
+            
+        </div>
+        
+    </form>
+</div>
+{% endblock %}
+
+
+
+<!-- end reopen.html -->

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "User login" %}{% endspaceless %}{% endblock %}
+{% block forejs %}
+	<script type="text/javascript" src="/content/js/jquery.openid.js?"></script>
+    <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
+	<script type="text/javascript">
+	$().ready(function(){
+	    openid.init('id_openid_url');
+        setupFormValidation("#openid_form", {bsignin:{required: true}});
+	});
+	</script>
+{% endblock %}
+{% block content %}
+<div class="headNormal">
+	{% trans "User login" %}
+</div>
+<div class="login">
+    <form name="openid_form" action="{% url user_signin %}" method="post">
+        {{ form2.next }}
+        <p style="display:none">{% trans "we support two login modes" %}</p>
+        {% if msg %}
+            <p class="warning">{{ msg }}</p>
+        {% endif %}
+        <fieldset class="fieldset">
+    		<legend ><strong>{% trans "Login with your OpenID" %}</strong></legend>
+            <div id="openid_choice">
+                <p>{% trans "select openid provider" %}</p>
+                <div id="openid_btns">
+                </div>
+				<br><br><br>
+				<p>{% trans "verify openid link and login" %}</p>
+            </div>
+        	<p>
+                {{ form2.openid_url }} <input id="bsignin" name="bsignin" type="submit" value="{% trans "Login" %}" class="openid-login-submit" />
+        	</p>
+        </fieldset>	
+    </form>
+    <div style="display:none">
+        <br>
+        {% if form1.errors %}
+        <p class="errors">
+            <span class="big">{% trans "Sorry, looks like we have some errors:" %}</span><br>
+            <ul class="error-list">
+                {% if form1.username.errors %} 
+                <li><span class="error">{{ form1.username.errors|join:", " }}</span></li>
+                {% endif %}
+                {% if form1.password.errors %} 
+                <li><span class="error">{{ form1.password.errors|join:", " }}</span></li>
+                {% endif %}
+            </ul>
+        </p>
+        {% endif %}
+        <br>
+        <form name="fauth" action="{% url user_signin %}" method="post">
+            {{ form1.next }}
+        	<fieldset class="fieldset" >
+        		<legend class="big">{% trans "Use login name and password" %}</legend>
+        		<div class="form-row"><label for="id_username">{% trans "Login name" %}:</label><br />{{ form1.username }}</div>
+        		<div class="form-row"><label for="id_password">{% trans "Password" %}:</label><br />{{ form1.password }}</div>
+               <div class="submit-row"><input type="submit" class="submit" name="blogin" value="{% trans "Login" %}"> 
+			   <a href="">{% trans "Forgot your password?" %}</a> 
+			   <a href="">{% trans "Create new acccount" %}</a></div>
+        	</fieldset>	
+        </form>
+    </div>
+</div>	
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <h3 class="subtitle">{% trans "Why use OpenID?" %}</h3>
+    <p>
+    <ul class="list-item">
+        <li>
+		{% trans "with openid it is easier" %}
+        </li>
+        <li>
+		{% trans "reuse openid" %}
+        </li>
+        <li>
+		{% trans "openid is widely adopted" %}
+        </li>
+        <li>
+		{% trans "openid is supported open standard" %}
+        </li>
+        
+    </ul>
+    <a href="http://openid.net/what/" target="_blank" style="float:right;position:relative">{% trans "Find out more" %} »</a><br>
+    <a href="http://openid.net/get/" target="_blank" style="float:right;position:relative">{% trans "Get OpenID" %} »</a>
+    </p>
+    <br>  
+</div>
+{% endblock%}
+

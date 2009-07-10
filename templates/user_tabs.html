@@ -1,0 +1,34 @@
+<!-- user_tabs.html -->
+{% load extra_filters %}
+{% load i18n %}
+<div class="tabBar">
+    <div class="tabsA">
+        <a id="stats" {% ifequal tab_name "stats" %}class="on"{% endifequal %} 
+			title="{% trans "User profile" %}" href="/users/{{view_user.id}}/{{view_user.username}}?sort=stats">{% trans "overview" %}</a>
+        <a id="recent" {% ifequal tab_name "recent" %}class="on"{% endifequal %} 
+			title="{% trans "recent activity" %}" href="/users/{{view_user.id}}/{{view_user.username}}?sort=recent">{% trans "recent activity" %}</a>
+        {% if request.user|is_user_self:view_user %}
+        <a id="responses" {% ifequal tab_name "responses" %}class="on"{% endifequal %} 
+			title="{% trans "comments and answers to others questions" %}" 
+			href="/users/{{view_user.id}}/{{view_user.username}}?sort=responses">{% trans "responses" %}</a>
+        {% endif %}
+        <a id="reputation" {% ifequal tab_name "reputation" %}class="on"{% endifequal %} 
+			title="{% trans "graph of user reputation" %}" 
+			href="/users/{{view_user.id}}/{{view_user.username}}?sort=reputation">{% trans "reputation history" %}</a>
+        {% if request.user|can_view_user_votes:view_user %}
+        <a id="votes" {% ifequal tab_name "votes" %}class="on"{% endifequal %} 
+			title="{% trans "user vote record" %}" href="/users/{{view_user.id}}/{{view_user.username}}?sort=votes">{% trans "casted votes" %}</a>
+        {% endif %}
+        <a id="favorites" {% ifequal tab_name "favorites" %}class="on"{% endifequal %} 
+			title="{% trans "questions that user selected as his/her favorite" 
+			href="/users/{{view_user.id}}/{{view_user.username}}?sort=favorites">{% trans "favorites" %}</a>
+        <!--
+        {% if request.user|can_view_user_preferences:view_user %}
+        <a id="preferences" {% ifequal tab_name "preferences" %}class="on"{% endifequal %} 
+			title="{% trans "user preference settings" %}" 
+			href="/users/{{view_user.id}}/{{view_user.username}}?sort=preferences">{% trans "settings" %}</a>
+        {% endif %}  
+        -->
+    </div>
+</div>
+<!-- end user_tabs.html -->

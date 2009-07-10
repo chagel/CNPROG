@@ -1,0 +1,27 @@
+<!-- template pagesize.html -->
+{% spaceless %}
+{% load i18n %}
+{% if is_paginated %}
+<div class="paginator">
+    <span class="text">{% trans "posts per page" %}</span>
+    {% ifequal pagesize 10 %}
+        <span class="curr">10</span>
+    {% else %}
+        <span class="page"><a href="{{base_url}}pagesize=10">10</a></span>
+    {% endifequal %}
+    
+    {% ifequal pagesize 30 %}
+        <span class="curr">30</span>
+    {% else %}
+        <span class="page"><a href="{{base_url}}pagesize=30">30</a></span>
+    {% endifequal %}
+    
+    {% ifequal pagesize 50 %}
+        <span class="curr">50</span>
+    {% else %}
+        <span class="page"><a href="{{base_url}}pagesize=50">50</a></span>
+    {% endifequal %}
+</div> 
+{% endif %}
+{% endspaceless %}
+<!-- end template pagesize.html -->

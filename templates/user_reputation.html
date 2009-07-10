@@ -1,0 +1,41 @@
+<!-- user_reputation.html -->
+{% extends "user.html" %}
+{% load extra_tags %}
+{% load humanize %}
+{% block userjs %}
+       <script type='text/javascript' src='/content/js/excanvas.pack.js'></script>
+       <script type='text/javascript' src='/content/js/jquery.flot.pack.js'></script>
+       
+       <script type="text/javascript">
+        $().ready(function(){
+            var d = {{ reps }};
+            var placeholder = $("#diagram");
+
+            var plot = $.plot(placeholder, [d], {
+                xaxis: { mode: "time" },
+                points: { show: true },
+                lines: { show: true }
+            });
+        });
+
+        </script>
+{% endblock %}
+{% block usercontent %}
+        <div style="padding:5px;font-size:13px;">
+            <div id="diagram" style="width:550px;height:250px;float:left">
+
+            </div>
+            <div style="float:right; width:385px; height:300px; overflow-y:auto;word-wrap:break-word;" >
+                {% for rep in reputation %}
+                <p style="clear:both">
+                    <div style="float:left;text-align:right;font-family:arial;font-weight:bold;background:#eee;padding:2px 10px 2px 10px;margin-right:5px">
+                        <div style="float:left;width:20px;color:green;padding-right:5px">{{ rep.positive }}</div>
+                        <div style="float:left;width:20px;color:red">{{ rep.negative }}</div>
+                        
+                    </div>
+                    <a href="/questions/{{ rep.question_id }}/{{ rep.title }}">{{ rep.title }}</a> <span class="small">({{ rep.reputed_at }})</span>                    
+                </p>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}<!-- end user_reputation.html -->

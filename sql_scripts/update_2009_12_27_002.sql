@@ -1,0 +1,1 @@
+ALTER TABLE `vote` ADD `voted_at` DATETIME NOT NULL 

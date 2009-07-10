@@ -1,0 +1,90 @@
+<!-- user_info.html -->
+{% load extra_tags %}
+{% load extra_filters %}
+{% load humanize %}
+{% load i18n %}
+<div id="subheader" class="headUser">
+    {{view_user.username}}
+    
+</div>
+
+<table class="user-info-table">
+    <tr>
+        <td width="180" style="vertical-align:middle;text-align:center;">
+            <table width="100%">
+                <tr>
+                    <td>
+                        {% gravatar view_user 128 %}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div class="scoreNumber">{{view_user.reputation|intcomma}}</div>
+                        <p><b style="color:#777;">{% trans "reputation" %}</b></p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="360" style="vertical-align: top;">
+            <table class="user-details">
+                <tr height="30px">
+                    <th width="130" align="left"><strong>{% trans "Registered user" %}</strong></th>
+                    <th width="230"  align="right">
+                        {% if request.user|can_view_user_edit:view_user %}
+                        <span class="user-edit-link"><a href="/users/{{ view_user.id }}/edit/">{% trans "update profile" %}</a></span>
+                        {% endif %}
+                    </th>
+                </tr>
+                {% if view_user.real_name %}
+                <tr>
+                    <td>{% trans "real name" %}</td>
+                    <td><b>{{view_user.real_name}}</b></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>{% trans "member for" %}</td>
+                    <td>{{ view_user.date_joined|timesince }}</td>
+                </tr>
+                {% if view_user.last_seen %}
+                <tr>
+                    <td>{% trans "last seen" %}</td>
+                    <td><strong title="{{ view_user.last_seen }}">{{ view_user.last_seen|timesince }} {% trans "ago" %}</strong></td>
+                </tr>
+                {% endif %}
+                {% if view_user.website %}
+                <tr>
+                    <td>{% trans "user website" %}</td>
+                    <td><a rel="nofollow" target="_blank" href="{{view_user.website}}">{{view_user.website}}</a></td>
+                </tr>
+                {% endif  %}
+                {% if view_user.location %}
+                <tr>
+                    <td>{% trans "location" %}</td>
+                    <td>{{view_user.location}}</td>
+                </tr>
+                {% endif %}
+                {% if view_user.date_of_birth%}
+                <tr>
+					<!--todo  - redo this with blocktrans -->
+                    <td>{% trans "age" %}</td>
+                    <td>{% get_age view_user.date_of_birth %} {% trans "age unit" %}</td>
+                </tr>
+                {% endif %}
+                {% if votes_today_left %}
+                <tr>
+                    <td>{% trans "todays unused votes" %}</td>
+                    <td><strong class="darkred">{{ votes_today_left }}</strong> {% trans "votes left" %}</td>
+                </tr>
+                {% endif %}
+            </table>
+        </td>
+        <td width="380">
+            <div class="user-about">
+            {% if view_user.about %}
+                {{view_user.about|safe|linebreaks}}
+            {% endif %}
+            </div>
+        </td>
+    </tr>
+</table>
+<!-- end user_info.html -->

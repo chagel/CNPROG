@@ -1,0 +1,120 @@
+<!-- unanswered.html -->
+{% extends "base.html" %}
+{% load extra_tags %}
+{% load i18n %}
+{% load humanize %}
+{% load extra_filters %}
+{% block title %}{% spaceless %}{% trans "Unanswered questions" %}{% endspaceless %}{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">
+        $().ready(function(){
+            $("#nav_unanswered").attr('className',"on");
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+<div class="tabBar">
+    <span class="headQuestions">{% trans "Unanswered questions" %}</span>
+    <div class="tabsA">
+        <a id="latest" href="?sort=latest" class="on" title="{% trans "most recently asked questions" %}">{% trans "newest" %}</a> 
+    </div>
+</div>
+
+<div id="listA">
+    {% for question in questions.object_list %}
+    <div class="qstA">
+        <h2><a href="{{ question.get_absolute_url }}">{{ question.get_question_title }}</a></h2>
+        <div class="stat">
+            <table>
+	            <tr>
+                    <td><span class="num">{{ question.answer_count|intcomma }}</span> </td>
+                    <td><span class="num">{{ question.score|intcomma }}</span> </td>
+                    <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
+	            </tr>  
+                <tr>
+                    <td><span class="unit">{% trans "answers" %}</span></td>
+                    <td><span class="unit">{% trans "votes" %}</span></td>
+                    <td><span class="unit">{% trans "views" %}</span></td>
+	            </tr> 
+            </table>
+        </div>
+        <div class="summary">
+            {{ question.summary }}...                
+        </div>
+    
+        {% ifequal tab_id 'active'%}
+        {% if question.wiki %}
+        <span class="from wiki">{% trans "community wiki" %}</span>
+        <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        {% else %}
+        <div class="from">
+             {% comment %}{% gravatar question.last_activity_by 24 %}{% endcomment %}
+            <span class="author"><a href="{{ question.last_activity_by.get_profile_url }}">{{ question.last_activity_by }}</a></span>
+            <span class="score">{% get_score_badge question.last_activity_by %} </span>
+            <span class="date" title="{{ question.last_activity_at }}">{% diff_date question.last_activity_at %}</span>
+        </div>
+        {% endif %}
+        {% else %}
+        {% if question.wiki %}
+        <span class="from wiki">{% trans "community wiki" %}</span>
+        <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        {% else %}
+        <div class="from">
+             {% comment %}{% gravatar question.author 24 %}{% endcomment %}
+            <span class="author"><a href="{{ question.author.get_profile_url }}">{{ question.author }}</a></span>
+            <span class="score">{% get_score_badge question.author %} </span>
+            <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        </div>
+        {% endif %}
+        {% endifequal %}
+        
+        <div class="tags">
+			{% for tag in question.tagname_list %}
+			<a href="{% url forum.views.tag tag|urlencode %}" 
+				title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" 
+				rel="tag">{{ tag }}
+			</a>
+			{% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block tail %}
+	<div class="pager">
+		{% cnprog_paginator context %}
+	</div>
+	<div class="pagesize">
+		{% cnprog_pagesize context %}
+	</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <p>
+		{% blocktrans with questions_count|intcomma as num_q %}have {{num_q}} unanswered questions{% endblocktrans %}
+		{% comment %}
+		{% trans "Have a total of" %}<br><div class="questions-count">{{ questions_count|intcomma }}</div>
+		{% endcomment %}
+        <!---<p>问题按 <strong>问题创建时间</strong> 排序。最新加入的问题将显示在最前面。</p>-->
+    </p>
+</div>
+<div class="boxC">
+	<h3 class="subtitle">{% trans "Related tags" %}</h3>
+    <div class="body">
+    <div class="tags">
+        {% for tag in tags %}
+            <a rel="tag" title="{% trans "see questions tagged"%}'{{ tag.name }}'{% trans "using tags" %}"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <span class="tag-number">× {{ tag.used_count|intcomma }}</span>
+            <br>
+        {% endfor %}
+        <br>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- end unanswered.html -->

@@ -1,0 +1,158 @@
+<!-- questions.html -->
+{% extends "base.html" %}
+{% load extra_tags %}
+{% load i18n %}
+{% load humanize %}
+{% load extra_filters %}
+{% block title %}{% spaceless %}{% trans "Questions" %}{% endspaceless %}{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">
+        $().ready(function(){
+            var tab_id = "{{ tab_id }}";
+            $("#"+tab_id).attr('className',"on");
+            $("#nav_questions").attr('className',"on");
+            Hilite.exact = false;
+            Hilite.elementid = "listA";
+            Hilite.debug_referrer = location.href;
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+<div class="tabBar">
+    <div class="headQuestions">{% if searchtag %}{% trans "Found by tags" %}{% else %}{% if searchtitle %}{% trans "Found by title" %}{% else %}{% trans "All questions" %}{% endif %}{% endif %}</div>
+    <div class="tabsA">
+        <a id="latest" href="?sort=latest" class="off" title="{% trans "most recently asked questions" %}">{% trans "newest" %}</a>
+        <a id="active" href="?sort=active" class="off" title="{% trans "most recently updated questions" %}">{% trans "active" %}</a>
+        <a id="hottest" href="?sort=hottest" class="off" title="{% trans "hottest questions" %}">{% trans "hottest" %}</a>
+        <a id="mostvoted" href="?sort=mostvoted" class="off" title="{% trans "most voted questions" %}">{% trans "most voted" %}</a>    
+    </div>
+</div>
+<div id="listA">
+    {% for question in questions.object_list %}
+    <div class="qstA">
+        <h2>
+            <a href="{{ question.get_absolute_url }}">{{ question.get_question_title }}</a>
+        </h2>
+        <div class="stat">
+            <table>
+	            <tr>
+                    <td><span class="num">{{ question.answer_count|intcomma }}</span> </td>
+                    <td><span class="num">{{ question.score|intcomma }}</span> </td>
+                    <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
+	            </tr>  
+                <tr>
+                    <td><span class="unit">{% trans "answers" %}</span></td>
+                    <td><span class="unit">{% trans "votes" %}</span></td>
+                    <td><span class="unit">{% trans "views" %}</span></td>
+	            </tr> 
+            </table>
+        </div>
+        
+        <div class="summary">
+            {{ question.summary }}...                
+        </div>
+        
+        {% ifequal tab_id 'active'%}
+        {% if question.wiki %}
+        <span class="from wiki">{% trans "community wiki" %}</span>
+        <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        {% else %}
+        <div class="from">
+            {% comment %}{% gravatar question.last_activity_by 24 %}{% endcomment %}
+            <span class="author"><a href="{{ question.last_activity_by.get_profile_url }}">{{ question.last_activity_by }}</a></span>
+            <span class="score">{% get_score_badge question.last_activity_by %} </span>
+            <span class="date" title="{{ question.last_activity_at }}">{% diff_date question.last_activity_at %}</span>
+        </div>
+        {% endif %}
+        {% else %}
+        {% if question.wiki %}
+        <span class="from wiki">{% trans "community wiki" %}</span>
+        <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        {% else %}
+        <div class="from">
+            {% comment %}{% gravatar question.author 24 %}{% endcomment %}
+            <span class="author"><a href="{{ question.author.get_profile_url }}">{{ question.author }}</a></span>
+            <span class="score">{% get_score_badge question.author %} </span>
+            <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
+        </div>
+        {% endif %}
+        {% endifequal %}
+        
+        <div class="tags">
+        {% for tag in question.tagname_list %}
+        <a href="{% url forum.views.tag tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block tail %}
+                            
+                        <div class="pager">
+                            {% cnprog_paginator context %}
+                            
+                        </div>
+                        <div class="pagesize">
+                            {% cnprog_pagesize context %}
+                        </div>
+                        
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <p>
+		{% if searchtag %}
+			{% blocktrans count questions_count as cnt with questions_count|intcomma as q_num and searchtag as tagname %}
+			have total {{q_num}} questions tagged {{tagname}}
+			{% plural %}
+			have total {{q_num}} questions tagged {{tagname}}
+			{% endblocktrans %}
+		{% endif %}
+		{% if searchtitle %}
+			{% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
+			have total {{q_num}} questions containing {{searchtitle}}
+			{% plural %}
+			have total {{q_num}} questions containing {{searchtitle}}
+			{% endblocktrans %}
+		{% endif %}
+
+        {% ifequal tab_id "latest" %}
+			<p>{% trans "latest questions info" %}</p>
+        {% endifequal %}
+        
+        {% ifequal tab_id "active" %}
+            <p>{% trans "Questions are sorted by the <strong>time of last update</strong>." %} 
+			{% trans "Most recently answered ones are shown first." %}</p>
+        {% endifequal %}
+        
+        {% ifequal tab_id "hottest" %}
+			<p>{% trans "Questions sorted by <strong>number of responses</strong>." %}
+            {% trans "Most answered questions are shown first." %}</p>
+        {% endifequal %}
+        
+        {% ifequal tab_id "mostvoted" %}
+			<p>{% trans "Questions are sorted by the <strong>number of votes</strong>." %}
+            {% trans "Most voted questions are shown first." %}</p>
+        {% endifequal %}
+        
+        
+    </p>
+</div>
+<div class="boxC">
+	<h3 class="subtitle">{% trans "Related tags" %}</h3>
+    <div class="tags">
+        {% for tag in tags %}
+            <a rel="tag" title="{% trans "see questions tagged" %}'{{ tag.name }}'{% trans "using tags" %}"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <span class="tag-number">× {{ tag.used_count|intcomma }}</span>
+            <br>
+        {% endfor %}
+        <br>
+    </div>
+</div>
+
+{% endblock %}
+<!-- end questions.html -->

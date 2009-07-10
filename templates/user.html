@@ -1,0 +1,35 @@
+<!-- user.html -->
+{% extends "base_content.html" %}
+{% load extra_tags %}
+{% load humanize %}
+{% block title %}{% spaceless %}{{ page_title }}{% endspaceless %}{% endblock %}
+{% block forestyle%}
+    <style type="text/css">
+ 		.history-table td { padding: 5px; }
+ 		.user-stats-table { margin-left:50px; }
+	</style>
+{% endblock %}
+{% block forejs %}
+        <script type="text/javascript">
+            $().ready(function(){
+                {% ifequal view_user request.user%}
+                    $("#nav_profile").attr('className',"on");
+                {% else %}
+                    $("#nav_users").attr('className',"on");
+               
+                {% endifequal %}
+            });     
+        </script>
+        {% block userjs %}
+        {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div id="mainbar-full">
+        {% include "user_info.html" %}
+        {% include "user_tabs.html" %}
+        {% block usercontent %}
+        {% endblock %}
+        {% include "user_footer.html" %}
+	</div>
+{% endblock %}<!-- end user.html -->

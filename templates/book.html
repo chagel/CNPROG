@@ -1,0 +1,152 @@
+<!-- template book.html -->
+{% extends "base_content.html" %}
+{% load i18n %}
+{% load extra_tags %}
+{% load extra_filters %}
+{% load humanize %}
+{% block title %}{% spaceless %}{{ book.title }}-{% trans "reading channel" %}{% endspaceless %}{% endblock %}
+{% block forejs %}
+       <script type="text/javascript">        
+         $().ready(function(){
+            $("#nav_books").attr('className',"on");
+            //$("#nav_ask").hide();
+        });
+         
+        </script>
+{% endblock %}
+{% block content %}
+    <div class="headNormal"><a href="{{ book.get_absolute_url }}">《{{ book.title }}》</a></div>
+    <div class="bookInfo">
+        <div class="bookCover">
+            <img src="{{ book.cover_img }}" >
+        </div>
+        <div class="bookSummary">
+            <table>
+    	        <tr>
+    	        	<td>{% trans "[author]" %}</td>
+    	        	<td><b><a href="{% url user book.user.id %}" rel="nofollow" >{{ book.author }}</a></b></td>
+    	        </tr>
+    	        <tr>
+    	        	<td>{% trans "[publisher]" %}</td>
+    	        	<td>{{ book.publication }}</td>
+    	        </tr>
+                <tr>
+    	        	<td>{% trans "[publication date]" %}</td>
+    	        	<td>{{ book.published_at|date:"Y-m" }}</td>
+    	        </tr>
+                <tr>
+    	        	<td>{% trans "[price]" %}</td>
+    	        	<td>{{ book.price }} {% trans "currency unit" %}</td>
+    	        </tr>
+                <tr>
+    	        	<td>{% trans "[pages]" %}</td>
+    	        	<td>{{ book.pages }} {% trans "pages abbreviation" %}</td>
+    	        </tr>
+                <tr>
+    	        	<td>{% trans "[tags]" %}</td>
+    	        	<td>{{ book.tagnames }}</td>
+    	        </tr>
+                <tr>
+    	        	<td>&nbsp;</td>
+    	        	<td> </td>
+    	        </tr>
+                {% if author_info.blog_url %}
+                <tr>
+                    <td></td>
+                    <td><a href="{{ author_info.blog_url }}" rel="nofollow" >{% trans "author blog" %} »</a></td>
+    	        </tr>
+                
+                {% endif %}
+                <tr>
+                    <td> </td>
+                    <td><a href="#" rel="nofollow">{% trans "book directory" %} »</a></td>
+    	        </tr>
+                <tr>
+                    <td> </td>
+                    <td><a href="#" rel="nofollow">{% trans "buy online" %} »</a></td>
+    	        </tr>
+            </table>
+        </div>
+        <div class="blogRss">
+    
+        </div>
+    </div>
+    
+    <div class="bookQuestions">
+        
+        <div class="tabBar">
+            <div class="tabsB">
+                <a id="qa" class="on" title="{% trans "book technical Q&A %}" href="#">{% trans "reader questions" %}</a>
+            </div>
+        </div>
+        <div class="bookAsk"><a href="{% url ask_book book.short_name %}">{% trans "ask the author" %}</div>
+        <div class="user-stats-table">
+            {% for question in questions.object_list %}
+                {% if question.favourite_count %}
+                    {% if question.favorited_myself %}
+                        <div class="favorites-count">
+                            <img title="{% trans "this question was selected as favorite" %} {{question.favourite_count}} {% trans "number of times" %}" src="/content/images/vote-favorite-on.png">
+                            <div><b>{{question.favourite_count|intcomma}}</b></div>
+                        </div>
+                    {% else %}
+                        <div class="favorites-count-off">
+                            <img title="{% trans "this question was selected as favorite" %} {{question.favourite_count}} {% trans "number of times" %}" src="/content/images/vote-favorite-off.png">
+                            <div><b>{{question.favourite_count|intcomma}}</b></div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="favorites-empty"> </div>
+                {% endif %}
+            <div id="question-summary-{{question.id}}" class="question-summary narrow">
+                <a style="text-decoration: none;" href="/questions/{{question.id}}/{{question.get_question_title}}">
+                    <div class="stats">
+                        <div class="votes">
+                            <div class="vote-count-post">{{question.score|intcomma}}</div> 
+                            {% trans "votes" %}
+                          
+                        </div>
+                        <div title="{% if question.answer_accepted %}{% trans "the answer has been accepted to be correct" %}{% endif %}" class="status {% if question.answer_accepted %}answered-accepted{% endif %} {% ifequal question.answer_count 0 %}unanswered{% endifequal %}{% ifnotequal question.answer_count 0 %}answered{% endifnotequal %}">
+                            <div class="answer-count-post">{{question.answer_count|intcomma}}</div>
+							{% trans "answer" %}
+
+                        </div>
+                        <div class="views">
+                             <div class="views-count-post">{{question.view_count|cnprog_intword|safe}}</div>
+                             {% trans "views" %}
+                        </div>
+                    </div>
+                </a>
+                <div class="bookQuestionItem">
+                    <h3>
+                        <a title="{{question.summary}}" href="/questions/{{question.id}}/{{question.title}}">{{question.title}}</a>
+                    </h3>
+                    <div class="tags">
+                        {% for tag in question.tagname_list %}
+                        <a href="{% url forum.views.tag tag|urlencode %}" title="{% "see questions tagged with" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="started">
+                        <span class="author"><a href="{{ question.last_activity_by.get_profile_url }}">{{ question.last_activity_by }}</a></span>
+                        <span class="score">{% get_score_badge question.last_activity_by %} </span>
+                        <span class="date" title="{{ question.last_activity_at }}">{% diff_date question.last_activity_at %}</span>
+                    </div>
+                </div>
+            </div>
+            <br clear="both"/>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block tail %}
+                        <div class="pager">
+                            {% cnprog_paginator context %}
+                            
+                        </div>
+                        <div class="bookFeed">
+                            <div id="feeds">
+                                <a href="/feeds/rss" title="{% trans "subscribe to book RSS feed" %}">{% trans "subscribe to the questions feed" %}</a>
+                            </div>
+                        </div>
+
+{% endblock %}
+<!-- end template book.html -->

@@ -1,0 +1,43 @@
+<!-- privacy.html -->
+{% extends "base_content.html" %}
+{% load extra_tags %}
+{% load i18n %}
+{% load humanize %}
+{% block title %}{% spaceless %}{% trans "Privacy policy" %}{% endspaceless %}{% endblock %}
+{% block forejs %}
+{% endblock %}
+{% block content %}
+<div class="headNormal">
+	{% trans "Privacy policy" %}
+</div>
+<div id="main-body" style="width:100%">
+    <p>
+		{% trans "general message about privacy" %}
+    </p>
+    
+        <h3 class="subtitle">{% trans "Site Visitors" %}</h3>
+    <p>    
+	{% trans "what technical information is collected about visitors" %}
+    </p>
+    
+        <h3 class="subtitle">{% trans "Personal Information" %}</h3>
+    <p>   
+		{% trans "details on personal information policies" %}
+    </p>
+   
+        <h3 class="subtitle">{% trans "Other Services" %}</h3>
+     <p>   
+	 {% trans "details on sharing data with third parties" %}
+    </p>
+    
+        <h3 class="subtitle">Cookies</h3>
+    <p>
+		{% trans "cookie policy details" %}
+    </p>
+        <h3 class="subtitle">{% trans "Policy Changes" %}</h3>
+    <p>{% trans "how privacy policies can be changed" %}
+    </p>
+    <br><br>
+</div>
+{% endblock %}
+<!-- end privacy.html -->

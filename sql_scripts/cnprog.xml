@@ -1,0 +1,1498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Db flnm="cnprog" nm="cnprog" ver="1.3.4">
+<VerLbl></VerLbl>
+<VerNotes></VerNotes>
+<DefTblOpts></DefTblOpts>
+<DocFolder>/Users/sailing/Development/cnprog_beta2/sql_scripts</DocFolder>
+<Sch Cm="" nm="schemaA">
+<Tbl UsSo="1" nm="activity">
+<TblOpts>ENGINE=MyISAM AUTO_INCREMENT=103 DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pkactivity"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="activity_type" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="active_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="0" nm="is_auditted" nu="1">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_activity_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="activity" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="activity_content_type_id" unq="0">
+<ClNs>content_type_id</ClNs>
+</Idx>
+<Idx clu="0" nm="activity_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="answer">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkanswer"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="author_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="wiki" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="wikified_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="accepted" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="deleted" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="deleted_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="locked" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="locked_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="locked_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="score" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="comment_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="offensive_flag_count" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_edited_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_edited_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="html" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="vote_up_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="vote_down_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="accepted_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="deleted_by_id_refs_id_192b0170" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="answer" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="deleted_by_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_answer_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="answer" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="author_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_answer_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="answer" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="last_edited_by_id_refs_id_192b0170" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="answer" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="last_edited_by_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="locked_by_id_refs_id_192b0170" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="answer" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="locked_by_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="answer_author_id" unq="0">
+<ClNs>author_id</ClNs>
+</Idx>
+<Idx clu="0" nm="answer_deleted_by_id" unq="0">
+<ClNs>deleted_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="answer_last_edited_by_id" unq="0">
+<ClNs>last_edited_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="answer_locked_by_id" unq="0">
+<ClNs>locked_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="answer_question_id" unq="0">
+<ClNs>question_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="answer_revision">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci</TblOpts>
+<Pk ClNs="id" nm="pkanswer_revision"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="answer_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="revision" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="author_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="revised_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="summary" nu="0">
+<DT ds="VarChar" en="" id="12" ln="300" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="text" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_answer_revision_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="answer_revision" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="author_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="answer_revision_answer_id" unq="0">
+<ClNs>answer_id</ClNs>
+</Idx>
+<Idx clu="0" nm="answer_revision_author_id" unq="0">
+<ClNs>author_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_group">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_group"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="80" sc="null" sg="1"/>
+</Cl>
+<Idx clu="0" nm="name" unq="1">
+<ClNs>name</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_group_permissions">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_group_permissions"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="group_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="permission_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_auth_group_permissions_auth_group" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_group" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_group_permissions" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_auth_group_permissions_auth_permission" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_permission" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_group_permissions" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="permission_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="group_id" unq="1">
+<ClNs>group_id, permission_id</ClNs>
+</Idx>
+<Idx clu="0" nm="permission_id_refs_id_5886d21f" unq="0">
+<ClNs>permission_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_message">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_message"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="message" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_auth_message_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_message" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="auth_message_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_permission">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_permission"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="50" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="codename" nu="0">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_auth_permission_django_content_type" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="django_content_type" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_permission" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="content_type_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="auth_permission_content_type_id" unq="0">
+<ClNs>content_type_id</ClNs>
+</Idx>
+<Idx clu="0" nm="content_type_id" unq="1">
+<ClNs>content_type_id, codename</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_user">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_user"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="username" nu="0">
+<DT ds="VarChar" en="" id="12" ln="30" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="first_name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="30" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="30" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="email" nu="0">
+<DT ds="VarChar" en="" id="12" ln="75" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="password" nu="0">
+<DT ds="VarChar" en="" id="12" ln="128" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="is_staff" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="is_active" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="is_superuser" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_login" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="date_joined" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="0" nm="gold" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="0" nm="silver" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="0" nm="bronze" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="1" nm="reputation" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="gravatar" nu="1">
+<DT ds="VarChar" en="" id="12" ln="128" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="10" nm="questions_per_page" nu="1">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="last_seen" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="real_name" nu="1">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="website" nu="1">
+<DT ds="VarChar" en="" id="12" ln="200" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="location" nu="1">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="date_of_birth" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="about" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<Idx clu="0" nm="username" unq="1">
+<ClNs>username</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_user_groups">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_user_groups"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="group_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_auth_user_groups_auth_group" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_group" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_user_groups" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_auth_user_groups_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_user_groups" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="group_id_refs_id_f116770" unq="0">
+<ClNs>group_id</ClNs>
+</Idx>
+<Idx clu="0" nm="user_id" unq="1">
+<ClNs>user_id, group_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="auth_user_user_permissions">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkauth_user_user_permissions"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="permission_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_auth_user_user_permissions_auth_permission" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_permission" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_user_user_permissions" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="permission_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_auth_user_user_permissions_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="auth_user_user_permissions" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="permission_id_refs_id_67e79cb" unq="0">
+<ClNs>permission_id</ClNs>
+</Idx>
+<Idx clu="0" nm="user_id" unq="1">
+<ClNs>user_id, permission_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="award">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkaward"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="badge_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="awarded_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="notified" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_award_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="award" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_award_badge" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="badge" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="award" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="badge_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="award_badge_id" unq="0">
+<ClNs>badge_id</ClNs>
+</Idx>
+<Idx clu="0" nm="award_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="badge">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkbadge"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="50" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="type" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="slug" nu="0">
+<DT ds="VarChar" en="" id="12" ln="50" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="description" nu="0">
+<DT ds="VarChar" en="" id="12" ln="300" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="multiple" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="awarded_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Idx clu="0" nm="badge_slug" unq="0">
+<ClNs>slug</ClNs>
+</Idx>
+<Idx clu="0" nm="name" unq="1">
+<ClNs>name, type</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="book">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkbook"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="short_name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="author" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="price" nu="1">
+<DT ds="Decimal" en="" id="3" ln="10" sc="2" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="pages" nu="1">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="published_at" nu="0">
+<DT ds="Date" en="" id="91" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="publication" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="cover_img" nu="1">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="tagnames" nu="1">
+<DT ds="VarChar" en="" id="12" ln="125" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_edited_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_books_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="book_short_name_Idx" unq="1">
+<ClNs>short_name</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_books_auth_user" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="book_author_info">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkbook_author_info"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="blog_url" nu="1">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_edited_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="book_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_book_author_info_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book_author_info" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_book_author_info_book" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="book" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book_author_info" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="book_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_book_author_info_auth_user" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_book_author_info_book" unq="0">
+<ClNs>book_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="book_author_rss">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkbook_author_rss"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="url" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="rss_created_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="book_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_book_author_rss_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book_author_rss" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_book_author_rss_book" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="book" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book_author_rss" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="book_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_book_author_rss_auth_user" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_book_author_rss_book" unq="0">
+<ClNs>book_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="book_question">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkbook_question"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="book_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_book_question_book" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="book" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book_question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="book_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_book_question_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="book_question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_book_question_book" unq="0">
+<ClNs>book_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_book_question_question" unq="0">
+<ClNs>question_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="comment">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkcomment"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="comment" nu="0">
+<DT ds="VarChar" en="" id="12" ln="300" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_comment_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="comment" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_comment_django_content_type" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="django_content_type" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="comment" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="content_type_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="comment_content_type_id" unq="0">
+<ClNs>content_type_id</ClNs>
+</Idx>
+<Idx clu="0" nm="comment_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="content_type_id" unq="0">
+<ClNs>content_type_id, object_id, user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_admin_log">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_admin_log"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="action_time" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_id" nu="1">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_repr" nu="0">
+<DT ds="VarChar" en="" id="12" ln="200" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="action_flag" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="change_message" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_django_admin_log_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="django_admin_log" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_django_admin_log_django_content_type" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="django_content_type" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="django_admin_log" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="content_type_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="django_admin_log_content_type_id" unq="0">
+<ClNs>content_type_id</ClNs>
+</Idx>
+<Idx clu="0" nm="django_admin_log_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_authopenid_association">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_authopenid_association"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="server_url" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="handle" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="secret" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="issued" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="lifetime" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="assoc_type" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_authopenid_nonce">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_authopenid_nonce"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="server_url" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="timestamp" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="salt" nu="0">
+<DT ds="VarChar" en="" id="12" ln="40" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_authopenid_userassociation">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_authopenid_userassociation"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="openid_url" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_django_authopenid_userassociation_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="django_authopenid_userassociation" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="user_id" unq="1">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_authopenid_userpasswordqueue">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_authopenid_userpasswordqueue"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="new_password" nu="0">
+<DT ds="VarChar" en="" id="12" ln="30" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="confirm_key" nu="0">
+<DT ds="VarChar" en="" id="12" ln="40" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_django_authopenid_userpasswordqueue_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="django_authopenid_userpasswordqueue" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="user_id" unq="1">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_content_type">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_content_type"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="app_label" nu="0">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="model" nu="0">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Idx clu="0" nm="app_label" unq="1">
+<ClNs>app_label, model</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_session">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="session_key" nm="pkdjango_session"/>
+<Cl au="0" df="" nm="session_key" nu="0">
+<DT ds="VarChar" en="" id="12" ln="40" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="session_data" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="expire_date" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="django_site">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkdjango_site"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="domain" nu="0">
+<DT ds="VarChar" en="" id="12" ln="100" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="50" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="favorite_question">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkfavorite_question"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_favorite_question_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="favorite_question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_favorite_question_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="favorite_question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="favorite_question_question_id" unq="0">
+<ClNs>question_id</ClNs>
+</Idx>
+<Idx clu="0" nm="favorite_question_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="flagged_item">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkflagged_item"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="flagged_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_flagged_item_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="flagged_item" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_flagged_item_django_content_type" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="django_content_type" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="flagged_item" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="content_type_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="content_type_id" unq="1">
+<ClNs>content_type_id, object_id, user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="flagged_item_content_type_id" unq="0">
+<ClNs>content_type_id</ClNs>
+</Idx>
+<Idx clu="0" nm="flagged_item_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="question">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkquestion"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="300" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="author_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="added_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="wiki" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="wikified_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="answer_accepted" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="closed" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="closed_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="closed_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="close_reason" nu="1">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="deleted" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="deleted_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="deleted_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="locked" nu="0">
+<DT ds="TinyInt" en="" id="-6" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="locked_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="locked_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="score" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="answer_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="comment_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="view_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="offensive_flag_count" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="favourite_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="last_edited_at" nu="1">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_edited_by_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_activity_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="last_activity_by_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="tagnames" nu="0">
+<DT ds="VarChar" en="" id="12" ln="125" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="summary" nu="0">
+<DT ds="VarChar" en="" id="12" ln="180" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="html" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="vote_up_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="vote_down_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="closed_by_id_refs_id_56e9d00c" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="closed_by_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="deleted_by_id_refs_id_56e9d00c" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="deleted_by_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_question_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="author_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="last_activity_by_id_refs_id_56e9d00c" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="last_activity_by_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="last_edited_by_id_refs_id_56e9d00c" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="last_edited_by_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="locked_by_id_refs_id_56e9d00c" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="1"/>
+<CdTb mn="1" nm="question" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="locked_by_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="question_author_id" unq="0">
+<ClNs>author_id</ClNs>
+</Idx>
+<Idx clu="0" nm="question_closed_by_id" unq="0">
+<ClNs>closed_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="question_deleted_by_id" unq="0">
+<ClNs>deleted_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="question_last_activity_by_id" unq="0">
+<ClNs>last_activity_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="question_last_edited_by_id" unq="0">
+<ClNs>last_edited_by_id</ClNs>
+</Idx>
+<Idx clu="0" nm="question_locked_by_id" unq="0">
+<ClNs>locked_by_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="question_revision">
+<TblOpts>ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pkquestion_revision"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="revision" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="300" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="author_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="revised_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="tagnames" nu="0">
+<DT ds="VarChar" en="" id="12" ln="125" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="summary" nu="0">
+<DT ds="VarChar" en="" id="12" ln="300" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="text" nu="0">
+<DT ds="LongText" en="" id="712" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_question_revision_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="question_revision" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="author_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_question_revision_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="question_revision" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="question_revision_author_id" unq="0">
+<ClNs>author_id</ClNs>
+</Idx>
+<Idx clu="0" nm="question_revision_question_id" unq="0">
+<ClNs>question_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="question_tags">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkquestion_tags"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="tag_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_question_tags_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="question_tags" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_question_tags_tag" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="tag" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="question_tags" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="tag_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="question_id" unq="1">
+<ClNs>question_id, tag_id</ClNs>
+</Idx>
+<Idx clu="0" nm="tag_id_refs_id_43fcb953" unq="0">
+<ClNs>tag_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="repute">
+<TblOpts>ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pkrepute"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="positive" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="negative" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="reputed_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="reputation_type" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="reputation" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_repute_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="repute" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_repute_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="repute" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="repute_question_id" unq="0">
+<ClNs>question_id</ClNs>
+</Idx>
+<Idx clu="0" nm="repute_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="tag">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pktag"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="created_by_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="used_count" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Fk deAc="3" nm="fk_tag_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="tag" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="created_by_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="name" unq="1">
+<ClNs>name</ClNs>
+</Idx>
+<Idx clu="0" nm="tag_created_by_id" unq="0">
+<ClNs>created_by_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="user_badge">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkuser_badge"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="badge_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_user_badge_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="user_badge" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_user_badge_badge" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="badge" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="user_badge" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="badge_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_user_badge_auth_user" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_user_badge_badge" unq="0">
+<ClNs>badge_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="user_favorite_questions">
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkuser_favorite_questions"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="question_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_user_favorite_questions_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="user_favorite_questions" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_user_favorite_questions_question" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="question" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="user_favorite_questions" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="question_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_user_favorite_questions_auth_user" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_user_favorite_questions_question" unq="0">
+<ClNs>question_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="vote">
+<TblOpts>ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="id" nm="pkvote"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_type_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="object_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="0"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="vote" nu="0">
+<DT ds="SmallInt" en="" id="5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="voted_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_vote_auth_user" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="auth_user" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="vote" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_vote_django_content_type" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="django_content_type" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="vote" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="content_type_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="content_type_id" unq="1">
+<ClNs>content_type_id, object_id, user_id</ClNs>
+</Idx>
+<Idx clu="0" nm="vote_content_type_id" unq="0">
+<ClNs>content_type_id</ClNs>
+</Idx>
+<Idx clu="0" nm="vote_user_id" unq="0">
+<ClNs>user_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+</Sch>
+<Dgm nm="diagramA">
+<RnCf FtSz="12" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="0"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="activity" x="811" y="284"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="answer" x="413" y="472"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="answer_revision" x="1067" y="41"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_group" x="593" y="703"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_group_permissions" x="765" y="703"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_message" x="323" y="1441"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_permission" x="636" y="794"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_user" x="50" y="50"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_user_groups" x="403" y="703"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="auth_user_user_permissions" x="393" y="794"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="award" x="373" y="971"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="badge" x="606" y="971"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="comment" x="383" y="880"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_admin_log" x="363" y="1087"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_authopenid_association" x="1543" y="50"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_authopenid_nonce" x="1781" y="50"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_authopenid_userassociation" x="313" y="1502"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_authopenid_userpasswordqueue" x="303" y="1563"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_content_type" x="636" y="880"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_session" x="1088" y="222"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="django_site" x="1312" y="152"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="favorite_question" x="433" y="50"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="flagged_item" x="353" y="1198"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="question" x="423" y="121"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="question_revision" x="1380" y="241"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="question_tags" x="736" y="121"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="repute" x="1661" y="180"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="tag" x="343" y="1279"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="user_badge" x="916" y="200"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="user_favorite_questions" x="1070" y="366"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="vote" x="93" y="1341"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="book" x="962" y="1063"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="book_question" x="702" y="1160"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="book_author_info" x="931" y="1436"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="book_author_rss" x="619" y="1321"/>
+<FkGl bkCl="ff000000" nm="schemaA.activity.fk_activity_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.answer.deleted_by_id_refs_id_192b0170"/>
+<FkGl bkCl="ff000000" nm="schemaA.answer.fk_answer_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.answer.fk_answer_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.answer.last_edited_by_id_refs_id_192b0170"/>
+<FkGl bkCl="ff000000" nm="schemaA.answer.locked_by_id_refs_id_192b0170"/>
+<FkGl bkCl="ff000000" nm="schemaA.answer_revision.fk_answer_revision_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_group_permissions.fk_auth_group_permissions_auth_group"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_group_permissions.fk_auth_group_permissions_auth_permission"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_message.fk_auth_message_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_permission.fk_auth_permission_django_content_type"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_user_groups.fk_auth_user_groups_auth_group"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_user_groups.fk_auth_user_groups_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_user_user_permissions.fk_auth_user_user_permissions_auth_permission"/>
+<FkGl bkCl="ff000000" nm="schemaA.auth_user_user_permissions.fk_auth_user_user_permissions_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.award.fk_award_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.award.fk_award_badge"/>
+<FkGl bkCl="ff000000" nm="schemaA.book.fk_books_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.book_author_info.fk_book_author_info_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.book_author_info.fk_book_author_info_book"/>
+<FkGl bkCl="ff000000" nm="schemaA.book_author_rss.fk_book_author_rss_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.book_author_rss.fk_book_author_rss_book"/>
+<FkGl bkCl="ff000000" nm="schemaA.book_question.fk_book_question_book"/>
+<FkGl bkCl="ff000000" nm="schemaA.book_question.fk_book_question_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.comment.fk_comment_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.comment.fk_comment_django_content_type"/>
+<FkGl bkCl="ff000000" nm="schemaA.django_admin_log.fk_django_admin_log_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.django_admin_log.fk_django_admin_log_django_content_type"/>
+<FkGl bkCl="ff000000" nm="schemaA.django_authopenid_userassociation.fk_django_authopenid_userassociation_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.django_authopenid_userpasswordqueue.fk_django_authopenid_userpasswordqueue_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.favorite_question.fk_favorite_question_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.favorite_question.fk_favorite_question_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.flagged_item.fk_flagged_item_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.flagged_item.fk_flagged_item_django_content_type"/>
+<FkGl bkCl="ff000000" nm="schemaA.question.closed_by_id_refs_id_56e9d00c"/>
+<FkGl bkCl="ff000000" nm="schemaA.question.deleted_by_id_refs_id_56e9d00c"/>
+<FkGl bkCl="ff000000" nm="schemaA.question.fk_question_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.question.last_activity_by_id_refs_id_56e9d00c"/>
+<FkGl bkCl="ff000000" nm="schemaA.question.last_edited_by_id_refs_id_56e9d00c"/>
+<FkGl bkCl="ff000000" nm="schemaA.question.locked_by_id_refs_id_56e9d00c"/>
+<FkGl bkCl="ff000000" nm="schemaA.question_revision.fk_question_revision_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.question_revision.fk_question_revision_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.question_tags.fk_question_tags_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.question_tags.fk_question_tags_tag"/>
+<FkGl bkCl="ff000000" nm="schemaA.repute.fk_repute_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.repute.fk_repute_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.tag.fk_tag_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.user_badge.fk_user_badge_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.user_badge.fk_user_badge_badge"/>
+<FkGl bkCl="ff000000" nm="schemaA.user_favorite_questions.fk_user_favorite_questions_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.user_favorite_questions.fk_user_favorite_questions_question"/>
+<FkGl bkCl="ff000000" nm="schemaA.vote.fk_vote_auth_user"/>
+<FkGl bkCl="ff000000" nm="schemaA.vote.fk_vote_django_content_type"/>
+</Dgm>
+<RnmMgr NxRnmId="6">
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+<Rnm id="1" nNm="book" oNm="books"/>
+</RnmCh>
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+<Rnm id="2" nNm="book_question" oNm="books_questions"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="book_question" SupCls="Schema" SupNme="schemaA">
+<Rnm id="3" nNm="id" oNm="books_questions_id"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="book_author_rss" SupCls="Schema" SupNme="schemaA">
+<Rnm id="4" nNm="user_id" oNm="book_author_id"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="book" SupCls="Schema" SupNme="schemaA">
+<Rnm id="5" nNm="short_name" oNm="shot_name"/>
+</RnmCh>
+</RnmMgr>
+<DbDocOptionMgr>
+<BasicOptionMgr>
+<Name>db.doc.option.mgr</Name>
+<BoolOpt lbl="Diagrams" nm="doc.diagrams" on="1" spl="0"/>
+<BoolOpt lbl="Foreign Keys" nm="doc.fks" on="1" spl="0"/>
+<BoolOpt lbl="Indexes" nm="doc.indexes" on="1" spl="0"/>
+<BoolOpt lbl="Overwrite CSS File" nm="doc.overwrite.css" on="1" spl="0"/>
+<BoolOpt lbl="Procedures" nm="doc.procs" on="1" spl="0"/>
+<BoolOpt lbl="Schemas" nm="doc.schemas" on="1" spl="0"/>
+<BoolOpt lbl="Sequences" nm="doc.sequences" on="1" spl="0"/>
+<BoolOpt lbl="Tables" nm="doc.tables" on="1" spl="0"/>
+<BoolOpt lbl="Triggers" nm="doc.triggers" on="1" spl="0"/>
+<BoolOpt lbl="Views" nm="doc.views" on="1" spl="0"/>
+</BasicOptionMgr>
+</DbDocOptionMgr>
+</Db>

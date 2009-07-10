@@ -1,0 +1,51 @@
+<!-- question_edit_tips.html -->
+{% load i18n %}
+<div class="boxC">
+    <p class="subtitle darkred">{% trans "question tips" %}</p>
+    <div>
+        <ul class="list-item">
+            <li> <b>{% trans "please ask a relevant question" %}</b>
+            </li>
+            <li>
+                {% trans "please try provide enough details" %}
+            </li>
+            <li>
+				{% trans "be clear and concise" %}
+            </li>
+        </ul>
+         <a href="/faq/" target="_blank" title="{% trans "see frequently asked questions" %}" style="float:right;position:relative">faq »</a>
+         <br>  
+    </div>
+</div>
+
+<div class="boxC">
+    <p class="subtitle">{% trans "Markdown tips" %}</p>
+    <ul class="list-item">
+        <li>
+            {% trans "*italic* or __italic__" %}
+        </li>
+        <li>
+			{% trans "**bold** or __bold__" %}
+        </li>
+        <li>
+            <b>{% trans "link" %}</b>:[{% trans "text" %}](http://url.com/ "{% trans "title" %}")
+
+        </li>
+        
+        <li>
+            <b>{% trans "image" %}</b>：![alt {% trans "text" %}](/path/img.jpg "{% trans "title" %}")
+
+        </li>
+        <li>
+			{% trans "numbered list:" %}
+            1.  Foo
+            2.  Bar
+        </li>
+        <li>
+			{% trans "basic HTML tags are also supported" %}
+        </li>
+    </ul>
+    <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank" style="float:right;position:relative">{% trans "learn more about Markdown" %} »</a>
+    <br>  
+</div>
+<!-- end question_edit_tips.html -->
