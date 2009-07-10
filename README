@@ -1,0 +1,6 @@
+this is based on May23 beta2 version on google code
+
+changes:
+* added internationalization (i18n) messages to templates and .py files
+* added i18n support for javascript + English and Chinese messages
+* site runs as English version
