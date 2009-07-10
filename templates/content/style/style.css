@@ -8,7 +8,7 @@ div{margin:0 auto; padding:0;}
 h1,h2,h3,h4,h5,h6,ul,li,dl,dt,dd,form,img,p{margin:0; padding:0; border:none; }
 input, select {font-family:Trebuchet MS,"segoe ui",Helvetica,"Microsoft YaHei",宋体,Tahoma,Verdana,MingLiu,PMingLiu,Arial,sans-serif;}
 p{margin-bottom:4px; font-size:13px; line-height:160%;}
-a {color:#663333; text-decoration:none;}
+a {color:#333333; text-decoration:none;}
 a:hover {text-decoration:underline;}
 .block{width:960px; height:auto;}
 .fleft{float:left;}
@@ -81,27 +81,46 @@ blockquote
 #CALeft{width:700px; float:left; position:relative;padding-left:5px}
 #CARight{width:240px; float:right; padding-right:5px}
 #CAFull{float:left;padding:0 5px 0 5px;width:950px;}
-#ground {clear:both;border-top:6px solid #000; padding-top:6px; padding-bottom:50px; text-align:center;background:#777;}
+#ground {width:100%;border-top:1px solid #000; padding-top:6px; padding-bottom:10px; text-align:center;background:#777;}
+/*#licenseLogo {top:10px;right:10px;}*/
 
 /*顶部及导航栏*/
-#top {height:20px; text-align:right; padding:3px;background-color:#eee;}
+#top {height:20px; text-align:right; padding:3px;background-color:#ffffff;}
 #header {width:960px;}
-#top a {height:35px; text-align:right;letter-spacing:1px; margin-left:20px;text-decoration:underline; font-size:12px; color:#666;}
+#top a {height:35px; text-align:right;
+	/*letter-spacing:1px; */
+		margin-left:20px;text-decoration:underline; font-size:12px; color:#333333;}
 #logo {padding:5px;}
 #navBar {float:clear;position:relative;display:block;width:960px;}
-#navBar .nav {margin:20px 0px 0px 16px;letter-spacing:1px; }
-#navBar .nav a {color:#333; background-color:#F9F7ED; padding:0px 12px 3px 12px; height:25px; line-height:30px;margin-left:10px; font-size:15px; font-weight:400; text-decoration:none;display: block;float: left;}
+#navBar .nav {margin:20px 0px 0px 16px;
+	/*letter-spacing:1px; */
+	}
+#navBar .nav a {color:#333; background-color:#F9F7ED; 
+				border-bottom: none;
+				border-left: 1px solid #aaaaaa;
+				border-right: 1px solid #aaaaaa;
+				border-top: 1px solid #aaaaaa;
+				padding:0px 12px 3px 12px; height:25px; line-height:30px;margin-left:10px; font-size:15px; font-weight:400; text-decoration:none;display: block;float: left;}
 #navBar .nav a:hover {text-decoration:underline}
-#navBar .nav a.on {height:24px;line-height:28px;border:1px solid #B02B2C; background:#B02B2C; color:#FFF; font-weight:600; text-decoration:none}
+#navBar .nav a.on {height:24px;line-height:28px;
+	border-top:1px solid #e66222; 
+	border-bottom: 1px solid #d64000;
+	border-right:1px solid #e66222; 
+	border-left:1px solid #e66222; 
+	/*background:#A31E39; */
+	background:#d64000;
+	color:#FFF; font-weight:600; text-decoration:none}
 #navBar .nav a.special {font-size:15px; color:#B02B2C; font-weight:bold; text-decoration:none; }
 #navBar .nav a.special:hover {text-decoration:underline;}
 #navBar .nav div.focus {float:right; padding-right:0px;}
 /*搜索栏*/
-#searchBar {background-color:#B02B2C;padding:5px;}
+#searchBar {background-color:#9db2b1;padding:5px;} /* #B02B2C */
 #searchBar .content { }
 #searchBar .searchInput {font-size:13px; height:18px; width:400px;}
 #searchBar .searchBtn {font-size:14px; height:26px; width:80px;}
-#searchBar .options {padding-top:5px; font-size:100%;color:#EEE;letter-spacing:1px;}
+#searchBar .options {padding-top:5px; font-size:100%;color:#EEE;
+	/*letter-spacing:1px;*/
+	}
 #searchBar .options INPUT {margin-left:15px;}
 #searchBar .options INPUT:hover {cursor:pointer}
 
@@ -111,7 +130,9 @@ blockquote
 #listA .qstA thumb {float:left; }
 #listA .qstA H2 {font-size:15px; font-weight:800; margin:8px auto;padding:0px;}
 #listA .qstA H2 a {color:#663333; }
-#listA .qstA .stat {font-size:13px;letter-spacing:1px;float:right;}
+#listA .qstA .stat {font-size:13px;
+	/*letter-spacing:1px;*/
+	float:right;}
 #listA .qstA .stat span {margin-right:5px;}
 #listA .qstA .stat td {min-width:40px;text-align:center;}
 #listA .qstA .stat .num {font-family:arial;color:#905213; font-size:20px; font-weight:800;}
@@ -270,7 +291,9 @@ a:hover.medal  {color:#333; text-decoration:none; background:url(/content/images
 .headMedals {float:left; height:23px; line-height:23px; margin:5px 0 0 5px;padding:0px 6px 0px 15px; font-size:15px; font-weight:700; border-bottom:0px solid #777; border-left:0px solid #darkred; background-color:#FFF;background:url(/content/images/dot-list.gif) no-repeat left center;}
 .headLogin {float:left; padding:3px; font-size:15px; font-weight:800; background:url(/content/images/ico_login.gif) no-repeat; padding-left:24px;}
 .headNormal {text-align:left;padding:3px; font-size:15px; margin-bottom:12px; font-weight:800;border-bottom:1px solid #777;}
-.headUser {text-align:left;padding:5px; font-size:20px; letter-spacing:1px;margin-bottom:12px; font-weight:800;border-bottom:1px solid #777;}
+.headUser {text-align:left;padding:5px; font-size:20px; 
+	/*letter-spacing:1px;*/
+		margin-bottom:12px; font-weight:800;border-bottom:1px solid #777;}
 /*RSS订阅*/
 #feeds {margin:10px 0; }
 #feeds a {background:url(/content/images/feed-icon-small.png) no-repeat 0; padding-left:18px; font-weight:700; font-size:13px; }
@@ -330,6 +353,7 @@ a:hover.medal  {color:#333; text-decoration:none; background:url(/content/images
 	padding: 15px;
     color: White;
 	background-color: darkred;
+	text-align: center;
 }
 .vote-notification a
 {
@@ -446,9 +470,6 @@ a.comment-user, a.comment-user:hover {
 a.comment-user:hover {
     text-decoration:underline;
 }
-.deleted{
-    background:#F4E7E7 none repeat scroll 0 0;
-}
 /*回答*/
 #answers {}
 .answer{
@@ -520,6 +541,10 @@ a.comment-user:hover {
 }
 
 .answer-img-accept:hover{background:url(/content/images/vote-accepted-on.png)}
+
+.deleted{
+    background:#F4E7E7 none repeat scroll 0 0;
+}
 
 /*标签列表*/
 .tagsbox {}
@@ -616,7 +641,7 @@ span.form-error {
     font-weight:600;
     width:100%;
     color:#aaa;
-    letter-spacing:1px;
+    /*letter-spacing:1px;*/
     text-align:left;
 }
 
@@ -699,7 +724,9 @@ background-color: #97ff97;
 
 /*用户资料页面*/
 .count {font-family:Arial;font-size:200%;font-weight:700;color:#777}
-.scoreNumber{font-family:Arial;font-size:35px;font-weight:800;color:#777;line-height:40px;letter-spacing:0px}
+.scoreNumber{font-family:Arial;font-size:35px;font-weight:800;color:#777;line-height:40px;
+	/*letter-spacing:0px*/
+	}
 .user-details{font-size:13px;}
 .user-about{background-color:#EEEEEE;height:200px;line-height:20px; overflow:auto;padding:10px;width:90%;}
 .user-edit-link {background:url(/content/images/edit.png) no-repeat; padding-left:20px; font-weight:600;}
@@ -747,13 +774,18 @@ width:950;margin-bottom:10px;
     font-family:Arial;
 }
 
+.stats div {
+	font-size:11px;
+	text-align:center;
+}
+
 .narrow .votes {
     background:#EEEEEE none repeat scroll 0 0;
     float:left;
-    height:38px;
+    height:42px;
     margin:0 3px 0 0;
     padding:5px;
-    width:40px;
+    width:46px;
     text-align:center;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
@@ -771,10 +803,11 @@ width:950;margin-bottom:10px;
 
 .narrow .views {
     float:left;
-    height:38px;
+    height:42px;
     margin:0 7px 0 0;
-    padding:5px 0 5px 4px;
-    width:40px;
+    /*padding:5px 0 5px 4px;*/
+	padding: 5px;
+    width:46px;
     text-align:center;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
@@ -784,10 +817,10 @@ width:950;margin-bottom:10px;
 
 .narrow .status {
     float:left;
-    height:38px;
+    height:42px;
     margin:0 3px 0 0;
     padding:5px;
-    width:40px;
+    width:46px;
     text-align:center;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
@@ -928,7 +961,9 @@ div.started .reputation-score {
 .blogRss {float:right;margin:0 10px 0 0;width:460px;height:240px;background-color:#EEE; padding:5px;}
 .bookQuestions {margin-bottom:10px;}
 .bookFeed {float:right;}
-.bookAsk{letter-spacing:1px; float:right;margin:-30px 10px 0 0; padding:3px 5px 3px 5px;}
+.bookAsk{
+	/*letter-spacing:1px; */
+	float:right;margin:-30px 10px 0 0; padding:3px 5px 3px 5px;}
 .bookAsk a {font-size:15px; color:#FFF; font-weight:bold; text-decoration:none;background-color:#EC7000;padding:3px 6px 3px 6px; }
 .bookAsk a:hover {text-decoration:underline;}
 
@@ -944,7 +979,9 @@ div.started .reputation-score {
 .silver, .badge2 {color:#CCCCCC;}
 .bronze, .badge3 {color:#CC9933;}
 .score {font-weight:800; color:#333;}
-.footerLinks {color:#EEE; font-size:13px; letter-spacing:1px;}
+.footerLinks {color:#EEE; font-size:13px; 
+	/* letter-spacing:1px;*/
+	}
 .footerLinks a {color:#FFF; font-size:13px;}
 .subSearch {margin-bottom:12px; padding:4px;}
 a.comment {background:#EEE; color:#993300; padding:4px;}
@@ -959,7 +996,15 @@ ul.bulleta li {background:url(/content/images/bullet_green.gif) no-repeat 0px 2p
 .message{padding:5px;font-weight:bold;background-color:#eee;margin:10px 0 10px 0;}
 .warning{color:red;}
 .darkred{color:darkred;}
-.submit{cursor:pointer;letter-spacing:1px;background-color:#D4D0C8;height:40px;border:1px solid #777;width:100px;font-weight:bold;font-size:120%;}
+.submit{
+	cursor:pointer;
+	/*letter-spacing:1px;*/
+	background-color:#D4D0C8;
+	height:40px;
+	border:1px solid #777;
+/*	width:100px; */
+	font-weight:bold;
+	font-size:120%;}
 .submit:hover{text-decoration:underline;}
 .ask-body{padding-right:10px;}
 .thousand{color:orange;}

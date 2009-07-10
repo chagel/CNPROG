@@ -60,5 +60,4 @@ urlpatterns = patterns('',
     url(r'^books/ask/(?P<short_name>[^/]+)/$', app.ask_book, name='ask_book'),
     url(r'^books/(?P<short_name>[^/]+)/$', app.book, name='book'),
     url(r'^search/$', app.search, name='search'),
-    (r'^i18n/', include('django.conf.urls.i18n')),
 )

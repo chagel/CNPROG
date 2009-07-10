@@ -1,7 +1,9 @@
+<!-- user_edit.html -->
 {% extends "base_content.html" %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}修改个人资料{% endspaceless %}{% endblock %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "Edit user profile" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
         <script type="text/javascript">
             $().ready(function(){
@@ -14,7 +16,7 @@
 {% endblock %}
 {% block content %}
 <div id="main-bar" class="headNormal">
-    {{ request.user.username }} - 修改资料
+    {{ request.user.username }} - {% trans "edit profile" %}
 </div>
 <div id="main-body" style="width:100%;padding-top:10px">
     <form name="" action="{% url edit_user request.user.id %}" method="post">
@@ -25,12 +27,13 @@
             <img src="/content/images/nophoto.png">
             {% endif %}
             <div style="padding:20px 0 0 20px;font-weight:bold;font-size:150%">
-                <a href="http://www.gravatar.com/" target="_blank" title="gravatar和您的邮件地址是绑定的">修改头像</a>
+                <a href="http://www.gravatar.com/" target="_blank" 
+					title="gravatar {% trans "image associated with your email address" %}">{% trans "avatar" %}</a>
             </div>
         </div>
         
         <div id="askform" style="float:right;width:750px;text-align:left;">
-            <h2>注册用户</h2>
+            <h2>{% trans "Registered user" %}</h2>
             <table class="user-details">
                 <tr>
                     <th width="100px"></th>
@@ -76,8 +79,8 @@
 	            
             </table>
             <div style="margin:30px 0 60px 0">
-                <input type="submit" value="更新" class="submit" >
-                <input id="cancel" type="button" value="取消" class="submit" >
+                <input type="submit" value="{% trans "Update" %}" class="submit" >
+                <input id="cancel" type="button" value="{% trans "Cancel" %}" class="submit" >
           
             </div>
         </div>
@@ -85,6 +88,4 @@
     
 </div>
 {% endblock %}
-
-
-
+<!-- end user_edit.html -->

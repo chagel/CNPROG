@@ -1,7 +1,9 @@
+<!-- template pagesize.html -->
 {% spaceless %}
+{% load i18n %}
 {% if is_paginated %}
 <div class="paginator">
-    <span class="text">每页显示</span>
+    <span class="text">{% trans "posts per page" %}</span>
     {% ifequal pagesize 10 %}
         <span class="curr">10</span>
     {% else %}
@@ -22,3 +24,4 @@
 </div> 
 {% endif %}
 {% endspaceless %}
+<!-- end template pagesize.html -->

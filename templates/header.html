@@ -1,13 +1,15 @@
+<!-- template header.html -->
 {% load extra_tags %}
 {% load i18n %}
     <div id="top">
         <div id="header">
             {% if request.user.is_authenticated %}
-                <a href="/users/{{ request.user.id }}/{{ request.user.username }}/">{{ request.user.username }}</a> {% get_score_badge request.user %} <a href="/logout/">{% trans "Logout" %}</a>
+                <a href="/users/{{ request.user.id }}/{{ request.user.username }}/">{{ request.user.username }}</a> {% get_score_badge request.user %} 
+				<a href="/logout/">{% trans "logout" %}</a>
             {% else %}
-                <a href="/account/signin">{% trans "Login" %}</a>
+                <a href="/account/signin">{% trans "login" %}</a>
             {% endif %}
-            <a href="/about">{% trans "About us" %}</a>
+            <a href="/about">{% trans "about" %}</a>
             <a href="/faq">{% trans "faq" %}</a>
         </div>
     </div>
@@ -18,24 +20,26 @@
 				<td width="23%">
                 <div id="logo">
                     <a href="/">
-                        <img src="/content/images/logo.png" title="{% trans 'link to homepage'%}" />
+                        <img src="/content/images/logo.png" title="{% trans "back to home page" %}" />
                     </a>
                 </div>
             </td>
 				<td width="77%" valign="bottom">
                 <div class="nav">
-                    <a id="nav_questions" href="/questions/" >{% trans "Questions" %}</a>
-                    <a id="nav_tags" href="/tags/">{% trans "Tags" %}</a>
-                    <a id="nav_users" href="/users/">{% trans "Users" %}</a>
-                    <a id="nav_books" href="/books/">{% trans "Books" %}</a>
-                    <a id="nav_badges" href="/badges/">{% trans "Badges" %}</a>
-                    <a id="nav_unanswered" href="/questions/unanswered/">{% trans "Unanswered" %}</a>
+                    <a id="nav_questions" href="/questions/" >{% trans "questions" %}</a>
+                    <a id="nav_tags" href="/tags/">{% trans "tags" %}</a>
+                    <a id="nav_users" href="/users/">{% trans "users" %}</a>
+                    <!--<a id="nav_books" href="/books/">{% trans "books" %}</a>-->
+                    <a id="nav_badges" href="/badges/">{% trans "badges" %}</a>
+                    <a id="nav_unanswered" href="/questions/unanswered/">{% trans "unanswered questions" %}</a>
                     
+					{% comment %}<!-- i think this needs to be removed -e.f. -->
                     {% if request.user.is_authenticated %}
-                    <a id="nav_profile" href="/users/{{ request.user.id }}/{{ request.user.username }}/">{% trans "Profile" %}</a>
+                    <a id="nav_profile" href="/users/{{ request.user.id }}/{{ request.user.username }}/">{% trans "my profile" %}</a>
                     {% endif %}
+					{% endcomment %}
                     <div class="focus">
-                    <a id="nav_ask" href="/questions/ask/" class="special">{% trans "Ask a question" %}</a>
+                    <a id="nav_ask" href="/questions/ask/" class="special">{% trans "ask a question" %}</a>
                     </div>
                 </div>
 
@@ -50,12 +54,12 @@
                     <form action="/search/" method="GET">
                         <div>
                             <input type="text" class="searchInput" value="{{ keywords }}" name="q" id="keywords" >
-                            <input type="submit" name="Submit" value="{% trans 'Search' %}" class="searchBtn" >
+                            <input type="submit" name="Submit" value="{% trans "search" %}" class="searchBtn" >
                         </div>
                         <div class="options">
-                            <input id="type-question" type="radio" class="" value="question" name="t" checked >{% trans "Questions" %} 
-                            <input id="type-tag" type="radio" class="" value="tag" name="t" >{% trans "Tags" %} 
-                            <input id="type-user" type="radio" class="" value="user" name="t" >{% trans "Users" %}
+                            <input id="type-question" type="radio" class="" value="question" name="t" checked >{% trans "questions" %}
+                            <input id="type-tag" type="radio" class="" value="tag" name="t" >{% trans "tags" %}
+                            <input id="type-user" type="radio" class="" value="user" name="t" >{% trans "users" %}
                         </div>
                     </form>
                 </td>
@@ -63,3 +67,4 @@
 			</table>
 		</div>
 	</div>
+<!-- end template header.html -->

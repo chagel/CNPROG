@@ -11,13 +11,15 @@
 # Licence:     GPL V2
 #-------------------------------------------------------------------------------
 from django.contrib.syndication.feeds import Feed, FeedDoesNotExist
+from django.utils.translation import ugettext as _
 from models import Question
 class RssLastestQuestionsFeed(Feed):
-    title = u"CNProg程序员问答社区-最新问题"
-    link = u"http://www.cnprog.com/questions/"
-    description = u"中国程序员的编程技术问答社区。我们做专业的、可协作编辑的技术问答社区。"
+    title = _('site title') + _(' - ') + _('site slogan') + _(' - ')+ _('latest questions')
+	#EDIT!!!
+    link = 'http://where.com/questions/'
+    description = _('meta site content')
     #ttl = 10
-    copyright = u'Copyright(c)2009.CNPROG.COM'
+    copyright = _('copyright message')
 
     def item_link(self, item):
         return '/questions/%s/' % item.id

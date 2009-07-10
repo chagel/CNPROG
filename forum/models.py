@@ -10,6 +10,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
 from django.db.models.signals import post_delete, post_save, pre_save
+from django.utils.translation import ugettext as _
 import django.dispatch
 
 from forum.managers import *
@@ -312,9 +313,9 @@ class Badge(models.Model):
     SILVER = 2
     BRONZE = 3
     TYPE_CHOICES = (
-        (GOLD,   u'金牌'),
-        (SILVER, u'银牌'),
-        (BRONZE, u'铜牌'),
+        (GOLD,   _('gold')),
+        (SILVER, _('silver')),
+        (BRONZE, _('bronze')),
     )
 
     name        = models.CharField(max_length=50)
@@ -350,8 +351,7 @@ class Award(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     awarded_at = models.DateTimeField(default=datetime.datetime.now)
     notified   = models.BooleanField(default=False)
-    objects = AwardManager()
-    
+
     def __unicode__(self):
         return u'[%s] is awarded a badge [%s] at %s' % (self.user.username, self.badge.name, self.awarded_at)
 

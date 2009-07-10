@@ -1,9 +1,12 @@
+<!-- users.html -->
 {% extends "base_content.html" %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}用户列表{% endspaceless %}{% endblock %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "Users" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
+	   //todo move javascript out
         $().ready(function(){
             $("#nav_users").attr('className',"on");
             $("#type-user").attr('checked',true);
@@ -14,27 +17,26 @@
             Hilite.elementid = "main-body";
             Hilite.debug_referrer = location.href;
         });
-         
         </script>
 {% endblock %}
 {% block content %}
 <div class="tabBar">
-    <div class="headUsers">用户列表</div>
+    <div class="headUsers">{% trans "Users" %}</div>
     <div class="tabsA">
-        <a id="sort_reputation" href="?sort=reputation" class="off" title="积分">积分</a>
-        <a id="sort_newest" href="?sort=newest" class="off" title="最新加入">最新加入</a>
-        <a id="sort_last" href="?sort=last" class="off" title="最先加入">最先加入</a>
-        <a id="sort_user" href="?sort=user" class="off" title="用户名">用户名</a>
+        <a id="sort_reputation" href="?sort=reputation" class="off" title="{% trans "reputation" %}">{% trans "reputation" %}</a>
+        <a id="sort_newest" href="?sort=newest" class="off" title="{% trans "recent" %}">{% trans "recent" %}</a>
+        <a id="sort_last" href="?sort=last" class="off" title="{% trans "oldest" %}">{% trans "oldest" %}</a>
+        <a id="sort_user" href="?sort=user" class="off" title="{% trans "by username" %}">{% trans "by username" %}</a>
     </div>
 </div>
 <div id="main-body" style="width:100%">
     <p>        
         {% if suser %}
-            匹配查询 '<span class="darkred"><strong>{{ suser }}</strong></span>' 的所有用户名： 
+			{% blocktrans %}users matching query {{suser}}:{% endblocktrans %}
         {% endif %}
     
         {% if not users.object_list %}
-            <span >没有找到相关数据。</span>
+            <span>{% trans "Nothing found." %}</span>
         {% endif %}
     </p>
     <div class="userList">
@@ -68,3 +70,4 @@
     {% cnprog_paginator context %}
 </div>              
 {% endblock %}
+<!-- end users.html -->

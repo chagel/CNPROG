@@ -1,11 +1,11 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
 {% load extra_filters %}
-{% load i18n %}
 {% block title %}{% spaceless %}{% trans "Home" %}{% endspaceless %}{% endblock %}
-{% block meta %}<meta name="keywords" content="{{ APP_KEYWORDS }}" />
-        <meta name="description" content="{{ APP_DESCRIPTION }}" />{% endblock %}
+{% block meta %}<meta name="keywords" content="{% trans "meta site keywords, comma separated" %}" />
+        <meta name="description" content="{% trans "meta site content" %}" />{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -20,12 +20,13 @@
 <div class="tabBar">
     <div class="headQuestions">{% trans "Questions" %}</div>
     <div class="tabsA">
-    	 <a id="latest" href="?sort=latest" title="{% trans 'Newest updated questions' %}" >{% trans "Newest" %}</a>
-        <a id="hottest" href="?sort=hottest" title="{% trans 'Questions with most answers' %}" >{% trans "Hottest" %}</a>
-        <a id="mostvoted" href="?sort=mostvoted" title="{% trans 'Questions with most votes' %}" >{% trans "Best" %}</a>
-        <a id="all" href="/questions/" title="{% trans 'All questions' %}" >{% trans "All" %}</a>
+    	 <a id="latest" href="?sort=latest" title="{% trans "last updated questions" %}" >{% trans "newest" %}</a>
+        <a id="hottest" href="?sort=hottest" title="{% trans "hottest questions" %}" >{% trans "hottest" %}</a>
+        <a id="mostvoted" href="?sort=mostvoted" title="{% trans "most voted questions" %}" >{% trans "most voted" %}</a>
+        <a id="all" href="/questions/" title="{% trans "all questions" %}" >{% trans "all questions" %}</a>
     </div>
 </div>
+<!-- 问题列表 -->
 <div id="listA">
     {% for question in questions %}
     <div class="qstA">
@@ -42,9 +43,9 @@
                     <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
 	            </tr>  
                 <tr>
-                    <td><span class="unit">{% trans "Answers" %}</span></td>
-                    <td><span class="unit">{% trans "Votes" %}</span></td>
-                    <td><span class="unit">{% trans "Visits" %}</span></td>
+                    <td><span class="unit">{% trans "answers" %}</span></td>
+                    <td><span class="unit">{% trans "votes" %}</span></td>
+                    <td><span class="unit">{% trans "views" %}</span></td>
 	            </tr> 
             </table>
         </div>
@@ -52,7 +53,7 @@
             {{ question.summary }}...
         </div>
         {% if question.wiki %}
-        <span class="from wiki">{% trans "Community wiki" %}</span>
+        <span class="from wiki">{% trans "community wiki" %}</span>
         <span class="date" title="{{ question.last_activity_at }}">{% diff_date question.last_activity_at %}</span>
         {% else %}
         <div class="from">
@@ -64,7 +65,7 @@
         {% endif %}
         <div class="tags">
         {% for tag in question.tagname_list %}
-        <a href="{% url forum.views.tag tag|urlencode %}" title="{% trans 'Browse questions with tag of ' %}'{{ tag }}'" rel="tag">{{ tag }}</a>
+        <a href="{% url forum.views.tag tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
         {% endfor %}
         </div>
     </div>
@@ -75,11 +76,12 @@
 {% block sidebar %}
 {% if not request.user.is_authenticated %}
 <div class="boxA">
-	<h3>{% trans "Welcome" %}</h3>
+	<h3>{% trans "welcome to website" %}</h3>
 	<div class="body">
-        {{ APP_INTRO|safe }}
-	  <div class="more"><a href="/about">{% trans "About us" %} »</a></div>
-	  <div class="more"><a href="/faq">FAQ »</a></div>
+	  <p>{% trans "what is this website" %}</p>
+	  <p>{% trans "what can one do on this website" %}</p>
+	  <div class="more"><a href="/about">{% trans "about" %} »</a></div>
+	  <div class="more"><a href="/faq">{% trans "faq" %} »</a></div>
 	</div>
 </div>
 {% endif %}
@@ -88,33 +90,34 @@
 	<div class="body">
          <p class="tagsbox">
         {% for tag in tags %}
-            <a rel="tag" title="{% trans 'Browse questions with tag of ' %}'{{ tag.name }}'" href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <a rel="tag" 
+				title="{% blocktrans with tag.name as tagname %}see questions tagged '{{tagname}}'{% endblocktrans %}" href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
         {% endfor %}
         </p>
-        <div class="more"><a href="/tags">{% trans "Popular tags" %} »</a> </div>
+        <div class="more"><a href="/tags">{% trans "popular tags" %} »</a> </div>
     </div>
 </div>
 <div class="boxB">
-    <h3>{% trans "Recent badges" %}</h3>
+    <h3>{% trans "Recent awards" %}</h3>
         <div class="body">
              <ul class="badge-list">
              {% for award in awards %}
                 <li>
                 <a href="/badges/{{award.badge_id}}/{{award.badge_name}}" title="{{ award.badge_description }}" class="medal">
-                <span class="badge{{ award.badge_type }}">&#9679;</span>&nbsp;{{ award.badge_name }}</a> 
+                <span class="badge{{ award.badge_type }}">&#9679;</span>&nbsp;{{ award.badge_name }}</a> {% trans "given to" %}
                 <a href="/users/{{award.user_id}}/{{award.user_name}}">{{ award.user_name }}</a>
                 </li>
             {% endfor %}
             </ul>
-        	<div class="more"><a href="/badges/">{% trans "All badges" %} »</a> </div>
+        	<div class="more"><a href="/badges/">{% trans "all awards" %} »</a> </div>
          </div>
 </div>
 <div id="feeds">
-<a href="/feeds/rss" title="{% trans 'RSS feed of recent 30 questions' %}">{% trans "Subscribe" %}</a>
+<a href="/feeds/rss" title="{% trans "subscribe to last 30 questions by RSS" %}">{% trans "subscribe to the questions feed" %}</a>
 </div>
 {% endblock %}
 {% block tail %}
 <div style="padding:5px 0 5px 5px;">
-<span class="evenMore">{% trans "Are you looking for more questions? Try to browse" %} <a href="/questions/">{% trans "All questions" %}</a>{% trans " or "%} <a href="/tags/">{% trans "Popular tags" %}</a>{% trans ". Please help us answer "%}<a href="/questions/unanswered">{% trans "Unanswered questions" %}</a></span>
+<span class="evenMore">{% trans "Still looking for more? See" %} <a href="/questions/">{% trans "complete list of quesionts" %}</a>, {% trans "or" %} <a href="/tags/">{% trans "popular tags" %}</a>{% trans "." %} {% trans "Please help us answer" %} <a href="/questions/unanswered">{% trans "unanswered questions" %}</a>{% trans "." %}</span>
 </div>
 {% endblock %}

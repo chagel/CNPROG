@@ -1,11 +1,13 @@
+<!-- template ask.html -->
 {% extends "base.html" %}
-{% block title %}{% spaceless %}我要提问{% endspaceless %}{% endblock %}
+{% load i18n %}
+{% block title %}{% spaceless %}{% trans "Ask a question" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
         <script type='text/javascript' src='/content/js/com.cnprog.editor.js'></script>
-        <script type='text/javascript' src='/content/js/com.cnprog.post.pack.js'></script>
+        <script type='text/javascript' src='/content/js/com.cnprog.post.js'></script>
         <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
-        <script type='text/javascript' src='/content/js/wmd/showdown-min.js'></script>
-        <script type='text/javascript' src='/content/js/wmd/wmd-min.js'></script>
+        <script type='text/javascript' src='/content/js/wmd/showdown.js'></script>
+        <script type='text/javascript' src='/content/js/wmd/wmd.js'></script>
         <link rel="stylesheet" type="text/css" href="/content/js/wmd/wmd.css" />
         <script type="text/javascript">
         $().ready(function(){
@@ -18,11 +20,12 @@
                              captureLength: 5, callback: lanai.highlightSyntax});
 
             //toggle preview of editor
+			//todo remove copy-paste
             var display = true;
-            var txt = "[禁用预览]";
+            var txt = "[{% trans "hide preview" %}]";
             $('#pre-collapse').text(txt);
             $('#pre-collapse').bind('click', function(){
-                txt = display ? "[启用预览]" : "[禁用预览]";
+                txt = display ? "[{% trans "show preview" %}]" : "[{% trans "hide preview" %}]";
                 display = !display;
                 $('#previewer').toggle();
                 $('#pre-collapse').text(txt);
@@ -54,7 +57,7 @@
 
 {% block content %}
 <div id="main-bar" class="headNormal">
-    我要提问
+	{% trans "Ask a question" %}
 </div>
 <div id="main-body" class="ask-body">
     <div id="askform">
@@ -75,7 +78,7 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                <span id="pre-collapse" title="打开或者关闭Markdown编辑器的实时预览">预览开关</span>
+                                <span id="pre-collapse" title="{% trans "Toggle the real time Markdown editor preview" %}">{% trans "toggle preview" %}</span>
                             </td>
                             <td style="text-align:right;">
                                 {{ form.wiki }} <span style="font-weight:normal;cursor:help" title="{{form.wiki.help_text}}">{{ form.wiki.label_tag }} </span>
@@ -100,10 +103,10 @@
             <table id="login-box">
                 <tr>
                     <td style="vertical-align:middle;">
-                    <strong>使用 <a href="http://openid.net/" title="了解更多有关OpenID的信息">OpenID</a> 登录：</strong><br>
+                    <strong>{% trans "Use" %} <a href="http://openid.net/" title="{% trans "learn more about OpenID" %}">OpenID</a> {% trans "Login" %}:</strong><br>
                         {{ form.openid }}
                         <div class="title-desc">
-                            获取您自己的<a href="https://www.myopenid.com/" target=="_blank">OpenID</a>。
+                            {% trans "Get your own "%} <a href="https://www.myopenid.com/" target=="_blank">OpenID</a>。
                         </div>
                     </td>
                     <td style="vertical-align:middle; padding: 0px 40px 0px 40px">
@@ -111,17 +114,17 @@
                         <div style="width:1px; border-left:solid 1px #999; height:8em; margin:auto;"></div>
                     </td>
                     <td style="vertical-align:middle;">
-                        <strong>您的大名:</strong><br>
+                        <strong>{% trans "User name" %}:</strong><br>
                         {{ form.user }}
                         <p>
-                        <strong>电子邮件:（不会公开显示）</strong><br>
+                        <strong>{% trans "Email: (won't be shown to anyone)" %}:</strong><br>
                         {{ form.email }}
                         </p>
                     </td>
                 </tr>
             </table>
             {% endif %}
-            <input type="submit" value="现在提问" class="submit" />
+            <input type="submit" value="{% trans "Ask your question" %}" class="submit" />
             <br><br>
         </form>
     </div>
@@ -129,63 +132,9 @@
 {% endblock %}
 
 {% block sidebar %}
-<div class="boxC">
-    <p class="subtitle darkred">受欢迎的提问</p>
-    <div>
-        <ul class="list-item">
-            <li>
-                <b>您的问题与编程相关吗？</b>
-            </li>
-            <li>
-                建议您提的问题是可以被答复的，而不仅仅是可以讨论。
-            </li>
-            <li>
-                请详细描述您的问题。
-            </li>
-            <li>
-                我们推荐您使用中文描述问题，这样可以得到更多的答复机会。
-            </li>
-        </ul>
-         <a href="/faq/" target="_blank" title="查看常见问题" style="float:right;position:relative">faq »</a>
-         <br>
-    </div>
-</div>
-
-<div class="boxC">
-    <p class="subtitle">Markdown快速参考</p>
-    <ul class="list-item">
-        <li>
-            *斜体* 或者 _斜体_
-
-        </li>
-        <li>
-            **加粗** 或者 __加粗__
-
-        </li>
-        <li>
-            <b>链接</b>：一个[例子](http://url.com/ "标题")
-
-        </li>
-
-        <li>
-            <b>图片</b>：![alt 文本](/path/img.jpg "标题")
-
-        </li>
-        <li>
-            列表：
-            1.  Foo
-            2.  Bar
-        </li>
-        <li>
-            基本的HTML标签也是支持的
-        </li>
-    </ul>
-    <a href="http://en.wikipedia.org/wiki/Markdown" target="_blank" style="float:right;position:relative">有关Markdown详细说明 »</a>
-    <br>
-</div>
-
+{% include "question_edit_tips.html" %}
 {% endblock %}
 
 {% block endjs %}
 {% endblock %}
-
+<!-- end template ask.html -->

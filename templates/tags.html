@@ -1,7 +1,9 @@
+<!-- tags.html -->
 {% extends "base_content.html" %}
+{% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}标签列表{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{% trans "Tag list" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -24,25 +26,25 @@
 {% block content %}
 <!-- Tabs -->
 <div class="tabBar">
-    <div class="headQuestions">标签列表</div>
+    <div class="headQuestions">{% trans "Tag list" %}</div>
     <div class="tabsA">
-        <a id="sort_name" href="/tags/?sort=name" class="off" title="按名称的字母先后顺序排序">按名称排序</a>
-        <a id="sort_used" href="/tags/?sort=used" class="off" title="按标签被使用的次数排序">按流行程度排序</a>
+        <a id="sort_name" href="/tags/?sort=name" class="off" title="{% trans "sorted alphabetically" %}">{% trans "by name" %}</a>
+        <a id="sort_used" href="/tags/?sort=used" class="off" title="{% trans "sorted by frequency of tag use" %}">{% trans "by popularity" %}</a>
     </div>
 </div>
 <div id="searchtags">
 <p>
 {% if stag %}
-    匹配查询 '<span class="darkred"><strong>{{ stag }}</strong></span>' 的所有标签：
+    {% trans "All tags matching query" %} '<span class="darkred"><strong>{{ stag }}</strong></span>' {% trans "all tags - make this empty in english" %}:
 {% endif %}
 {% if not tags.object_list %}
-    <span >没有找到相关数据。</span>
+    <span>{% trans "Nothing found" %}</span>
 {% endif %}
 </p>
 <ul class="tagsList tags">
 {% for tag in tags.object_list %}
    <li>
-    <a href="{% url forum.views.tag tag|urlencode %}" title="查看有关'{{ tag }}'的问题" rel="tag">
+    <a href="{% url forum.views.tag tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">
         {{ tag }}
     </a>&nbsp;
     <span class="tag-number">× {{ tag.used_count|intcomma }}</span>
@@ -59,3 +61,4 @@
     {% cnprog_paginator context %}
 </div>              
 {% endblock %}
+<!-- end tags.html -->

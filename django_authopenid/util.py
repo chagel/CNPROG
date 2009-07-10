@@ -15,7 +15,7 @@ try:
 except:
     from yadis import xri
 
-import time, base64, hashlib, operator
+import time, base64, md5, operator
 import urllib
 
 from models import Association, Nonce
@@ -128,7 +128,7 @@ class DjangoOpenIDStore(OpenIDStore):
 
     def getAuthKey(self):
         # Use first AUTH_KEY_LEN characters of md5 hash of SECRET_KEY
-        return hashlib.md5(settings.SECRET_KEY).hexdigest()[:self.AUTH_KEY_LEN]
+        return md5.new(settings.SECRET_KEY).hexdigest()[:self.AUTH_KEY_LEN]
     
     def isDumb(self):
         return False

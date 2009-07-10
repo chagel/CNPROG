@@ -164,7 +164,7 @@ h4 {display:block;font-size:90%; font-family:Verdana;color:#ccc;}
     color:darkred;
     font-weight:400;
     font-size:100%;
-    letter-spacing:1px;
+    /*letter-spacing:1px;*/
 
 }
 
@@ -198,7 +198,7 @@ h4 {display:block;font-size:90%; font-family:Verdana;color:#ccc;}
     float: left;
 	font-size: 140%;
     font-weight:700;
-    letter-spacing:3px;
+    /*letter-spacing:3px;*/
 	margin-top:8px;
     padding:5px 0 0 3px ;
     height:20px;
@@ -329,7 +329,7 @@ h4 {display:block;font-size:90%; font-family:Verdana;color:#ccc;}
     font-size:120%;
     font-weight:bold;
     width:120px;
-    letter-spacing:1px;
+    /*letter-spacing:1px;*/
     background-color:#D4D0C8;
 }
 .notify
@@ -461,7 +461,7 @@ h4 {display:block;font-size:90%; font-family:Verdana;color:#ccc;}
 }
 
 .highlight-box{
-    letter-spacing:1px;
+    /*letter-spacing:1px;*/
     color:#735005;
 }
 
@@ -890,7 +890,7 @@ h4 {display:block;font-size:90%; font-family:Verdana;color:#ccc;}
     margin-bottom:-10px;
     width:600px;
     color:#aaa;
-    letter-spacing:1px;
+    /*letter-spacing:1px;*/
 
 }
 

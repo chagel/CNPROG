@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %}{% spaceless %}注册帐号{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{% trans "Signup" %}{% endspaceless %}{% endblock %}
 
 {% block content %}
 <div id="main-bar" class="">
-    <h3 >注册帐号</h3>
+    <h3 >{% trans "Signup" %}</h3>
 
 </div>
 <div class="jointxt">
-    <p>我们支持两种注册方式，你可以使用常规的用户名、密码方式注册，或者<a href="{% url user_signin %}">使用OpenID帐号注册</a>。</p>
+    <p>{% trans "We support two types of user registration: conventional username/password, and" %} <a href="{% url user_signin %}">{% trans "the OpenID method" %}</a>.</p>
 
     {% if form.errors %}
     
     <p class="errors">
-        <span class="big">请注意以下错误：</span><br>
+        <span class="big">{% trans "Sorry, looks like we have some errors" %}</span><br>
         <ul class="error-list">
         {% if form.username.errors %} 
         <li><span class="error">{{ form.username.errors|join:", " }}</span></li>
@@ -30,22 +30,23 @@
 </div>
     <form action="{% url user_signup %}" method="post" accept-charset="utf-8">
         <fieldset class="fieldset">
-        <legend class="big">常规注册</legend>	
-            <div class="form-row"><label for="id_username">选择一个用户名：</label><br>{{ form.username }}</div>
+        <legend class="big">{% trans "Conventional registration" %}</legend>	
+            <div class="form-row"><label for="id_username">{% trans "choose a user name" %}:</label><br>{{ form.username }}</div>
 
-            <div class="form-row"><label for="id_email">您的电子邮件地址：</label><br>{{ form.email }}</div>
-            <div class="form-row"><label for="id_password1">密码：</label><br />{{ form.password1 }}</div>
-            <div class="form-row"><label for="id_password2">确认密码：</label><br>{{ form.password2 }}</div>
-            <div class="submit-row"><input type="submit" class="submit" value="注册" > <a href="{% url user_signin %}">返回登录</a></div>
+            <div class="form-row"><label for="id_email">{% trans "your email address" %}:</label><br>{{ form.email }}</div>
+            <div class="form-row"><label for="id_password1">{% trans "choose password" %}:</label><br />{{ form.password1 }}</div>
+            <div class="form-row"><label for="id_password2">{% trans "retype password" %}:</label><br>{{ form.password2 }}</div>
+            <div class="submit-row"><input type="submit" class="submit" value="{% trans "login" %}" > 
+			<a href="{% url user_signin %}">{% trans "back to login" %}</a></div>
         </fieldset>
             <br >
     </form>
     <br >
     <div style="display:none">
-    <h2 class="signup">使用OpenID注册</h2>
+    <h2 class="signup">{% trans "Register with your OpenID" %}</h2>
     <form name="fopenid" action="{% url user_signin %}" method="post">
         <div class="form-row">{{ form2.openid_url }}</div>
-        <div class="submit-row "><input name="bsignin" class="submit" type="submit" value="使用OpenID登录"></div>
+        <div class="submit-row "><input name="bsignin" class="submit" type="submit" value="{% trans "Login with your OpenID" %}"></div>
     </form>
     </div>
 {% endblock %}

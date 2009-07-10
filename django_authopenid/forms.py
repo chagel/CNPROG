@@ -155,11 +155,11 @@ class OpenidRegisterForm(forms.Form):
         """ test if username is valid and exist in database """
         if 'username' in self.cleaned_data:
             if not username_re.search(self.cleaned_data['username']):
-                raise forms.ValidationError(u"用户名只能包含英文字母、数字和下划线")
+                raise forms.ValidationError(_('invalid user name'))
             if self.cleaned_data['username'] in RESERVED_NAMES:
-                raise forms.ValidationError(u'对不起，您不能注册该用户名，请换一个试试')
+                raise forms.ValidationError(_('sorry, this name can not be used, please try another'))
             if len(self.cleaned_data['username']) < 3:
-                raise forms.ValidationError(u'用户名太短，请使用三个或三个以上字符')
+                raise forms.ValidationError(_('username too short'))
             try:
                 user = User.objects.get(
                         username__exact = self.cleaned_data['username']
@@ -167,8 +167,8 @@ class OpenidRegisterForm(forms.Form):
             except User.DoesNotExist:
                 return self.cleaned_data['username']
             except User.MultipleObjectsReturned:
-                raise forms.ValidationError(u'该用户名已被注册，请换一个试试')
-            raise forms.ValidationError(u'该用户名已被注册，请换个试试')
+                raise forms.ValidationError(_('this name is already in use - please try anoter'))
+            raise forms.ValidationError(_('this name is already in use - please try anoter'))
             
     def clean_email(self):
         """For security reason one unique email in database"""
@@ -250,13 +250,13 @@ class RegistrationForm(forms.Form):
             required=False)
     username = forms.CharField(max_length=30,
             widget=forms.TextInput(attrs=attrs_dict),
-            label=u'Username')
+            label=_('choose a username'))
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(attrs_dict,
-            maxlength=200)), label=u'Email address')
+            maxlength=200)), label=_('your email address'))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
-            label=u'Password')
+            label=_('choose password'))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
-            label=u'Password (again, to catch typos)')
+            label=_('retype password'))
 
     def clean_username(self):
         """

@@ -1,8 +1,9 @@
-﻿import re
+import re
 from datetime import date
 from django import forms
 from models import *
 from const import *
+from django.utils.translation import ugettext as _
 
 class TitleField(forms.CharField):
     def __init__(self, *args, **kwargs):
@@ -10,13 +11,13 @@ class TitleField(forms.CharField):
         self.required = True
         self.widget = forms.TextInput(attrs={'size' : 70, 'autocomplete' : 'off'})
         self.max_length = 255
-        self.label  = u'标题'
-        self.help_text = u'请输入对问题具有描述性质的标题 - “帮忙！紧急求助！”不是建议的提问方式。'
+        self.label  = _('title')
+        self.help_text = _('please enter a descriptive title for your question')
         self.initial = ''
 
     def clean(self, value):
         if len(value) < 10:
-            raise forms.ValidationError(u"标题的长度必须大于10")
+            raise forms.ValidationError(_('title must be > 10 characters'))
 
         return value
 
@@ -25,13 +26,13 @@ class EditorField(forms.CharField):
         super(EditorField, self).__init__(*args, **kwargs)
         self.required = True
         self.widget = forms.Textarea(attrs={'id':'editor'})
-        self.label  = u'内容'
+        self.label  = _('content')
         self.help_text = u''
         self.initial = ''
 
     def clean(self, value):
         if len(value) < 10:
-            raise forms.ValidationError(u"内容至少要10个字符")
+            raise forms.ValidationError(_('question content must be > 10 characters'))
 
         return value
 
@@ -41,39 +42,37 @@ class TagNamesField(forms.CharField):
         self.required = True
         self.widget = forms.TextInput(attrs={'size' : 50, 'autocomplete' : 'off'})
         self.max_length = 255
-        self.label  = u'标签'
-        self.help_text = u'多个标签请用空格间隔-最多5个标签。（优先使用自动匹配的英文标签。）'
+        self.label  = _('tags')
+        self.help_text = _('please use space to separate tags (this enables autocomplete feature)')
         self.initial = ''
 
-    def clean(self, value):
-        value = super(TagNamesField, self).clean(value)
-        data = value.strip()
-        if len(data) < 1:
-            raise forms.ValidationError(u'标签不能为空')
-        list = data.split(' ')
-        list_temp = []
-        if len(list) > 5:
-            raise forms.ValidationError(u'最多只能有5个标签')
-        for tag in list:
-            if len(tag) > 20:
-                raise forms.ValidationError(u'每个标签的长度不超过20')
-
-            #TODO: regex match not allowed characters here
-
-            if tag.find('/') > -1 or tag.find('\\') > -1 or tag.find('<') > -1 or tag.find('>') > -1 or tag.find('&') > -1 or tag.find('\'') > -1 or tag.find('"') > -1:
-            #if not tagname_re.match(tag):
-                raise forms.ValidationError(u'标签请使用英文字母，中文或者数字字符串（. - _ # 也可以）')
-            # only keep one same tag
-            if tag not in list_temp and len(tag.strip()) > 0:
-                list_temp.append(tag)
-        return u' '.join(list_temp)
+	def clean(self, value):
+		value = super(TagNamesField, self).clean(value)
+		data = value.strip()
+		if len(data) < 1:
+			raise forms.ValidationError(_('tags are required'))
+		list = data.split(' ')
+		list_temp = []
+		if len(list) > 5:
+			raise forms.ValidationError(_('please use 5 tags or less'))
+		for tag in list:
+			if len(tag) > 20:
+				raise forms.ValidationError(_('tags must be shorter than 20 characters'))
+			#take tag regex from settings
+			tagname_re = re.compile(r'[a-z0-9]+')
+			if not tagname_re.match(tag):
+				raise forms.ValidationError(_('please use following characters in tags: letters \'a-z\', numbers, and characters \'.-_#\''))
+			# only keep one same tag
+			if tag not in list_temp and len(tag.strip()) > 0:
+				list_temp.append(tag)
+		return u' '.join(list_temp)
 
 class WikiField(forms.BooleanField):
     def __init__(self, *args, **kwargs):
         super(WikiField, self).__init__(*args, **kwargs)
         self.required = False
-        self.label  = u'社区wiki模式'
-        self.help_text = u'选择社区wiki模式，问答不计算积分，签名也不显示作者信息'
+        self.label  = _('community wiki')
+        self.help_text = _('if you choose community wiki option, the question and answer do not generate points and name of author will not be shown')
 
 
 class SummaryField(forms.CharField):
@@ -82,8 +81,8 @@ class SummaryField(forms.CharField):
         self.required = False
         self.widget = forms.TextInput(attrs={'size' : 50, 'autocomplete' : 'off'})
         self.max_length = 300
-        self.label  = u'更新概要：'
-        self.help_text = u'输入本次修改的简单概述（如：修改了别字，修正了语法，改进了样式等。非必填项。）'
+        self.label  = _('update summary:')
+        self.help_text = _('enter a brief summary of your revision (e.g. fixed spelling, grammar, improved style, this field is optional)')
 
 class AskForm(forms.Form):
     title  = TitleField()
@@ -158,12 +157,12 @@ class EditAnswerForm(forms.Form):
         self.fields['text'].initial = revision.text
 
 class EditUserForm(forms.Form):
-    email = forms.EmailField(label=u'Email', help_text=u'不会公开，用于头像显示服务', required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
-    realname = forms.CharField(label=u'真实姓名', required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
-    website = forms.URLField(label=u'个人网站', required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
-    city = forms.CharField(label=u'城市', required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
-    birthday = forms.DateField(label=u'生日', help_text=u'不会公开，只会显示您的年龄，格式为：YYYY-MM-DD', required=True, widget=forms.TextInput(attrs={'size' : 35}))
-    about = forms.CharField(label=u'个人简介', required=False, widget=forms.Textarea(attrs={'cols' : 60}))
+    email = forms.EmailField(label=u'Email', help_text=_('this email does not have to be linked to gravatar'), required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
+    realname = forms.CharField(label=_('Real name'), required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
+    website = forms.URLField(label=_('Website'), required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
+    city = forms.CharField(label=_('Location'), required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
+    birthday = forms.DateField(label=_('Date of birth'), help_text=_('will not be shown, used to calculate age, format: YYYY-MM-DD'), required=False, widget=forms.TextInput(attrs={'size' : 35}))
+    about = forms.CharField(label=_('Profile'), required=False, widget=forms.Textarea(attrs={'cols' : 60}))
 
     def __init__(self, user, *args, **kwargs):
         super(EditUserForm, self).__init__(*args, **kwargs)
@@ -173,7 +172,7 @@ class EditUserForm(forms.Form):
         self.fields['city'].initial = user.location
 
         if user.date_of_birth is not None:
-            self.fields['birthday'].initial = user.date_of_birth.date()
+            self.fields['birthday'].initial = user.date_of_birth
         else:
             self.fields['birthday'].initial = '1990-01-01'
         self.fields['about'].initial = user.about
@@ -188,7 +187,7 @@ class EditUserForm(forms.Form):
                 except User.DoesNotExist:
                     return self.cleaned_data['email']
                 except User.MultipleObjectsReturned:
-                    raise forms.ValidationError(u'该电子邮件已被注册，请选择另一个再试。')
-                raise forms.ValidationError("该电子邮件帐号已被注册，请选择另一个再试。")
+                    raise forms.ValidationError(_('this email has already been registered, please use another one'))
+                raise forms.ValidationError(_('this email has already been registered, please use another one'))
         else:
             return self.cleaned_data['email']

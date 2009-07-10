@@ -49,24 +49,37 @@ var Vote = function(){
     var removeQuestionLinkIdPrefix = 'question-delete-link-';
     var removeAnswerLinkIdPrefix = 'answer-delete-link-';
     
-    var acceptAnonymousMessage = "用户权限不在操作范围";
-    var acceptOwnAnswerMessage = "不能设置自己的回答为最佳答案";
-    var favoriteAnonymousMessage = "匿名用户不能收藏问题，请先<a href='/account/signin/?next=/questions/{{QuestionID}}'>注册或者登录</a>";
-    var voteAnonymousMessage = "匿名用户不能投票，请先<a href='/account/signin/?next=/questions/{{QuestionID}}'>注册或者登录</a>";
-    var upVoteRequiredScoreMessage = "需要+15积分才能投支持票。查看<a href='/faq'>faq</a>";
-    var downVoteRequiredScoreMessage = "需要+100积分才能投反对票。查看<a href='/faq'>faq</a>";
-    var voteOwnDeniedMessage = "不能给自己的帖子投票";
-    var voteRequiredMoreVotes = "对不起，您已用完今日所有的投票。查看<a href='/faq'>faq</a>";
-    var voteDenyCancelMessage = "这个投票已经过时，不能撤销。查看<a href='/faq'>faq</a>";
-    var offensiveConfirmation = "确定要归类该帖为广告、人身攻击、恶意言论吗？";
-    var offensiveAnonymousMessage = "匿名用户不能操作，请先<a href='/account/signin/?next=/questions/{{QuestionID}}'>注册或者登录</a>";
-    var offensiveTwiceMessage = "不能重复操作。查看<a href='/faq'>faq</a>";
-    var offensiveNoFlagsLeftMessage = "对不起，您已用完今日所有的5次‘水帖’操作。查看<a href='/faq'>faq</a>";
-    var offensiveNoPermissionMessage = "需要+15积分才能归类‘垃圾帖’。查看<a href='/faq'>faq</a>";
-    var removeConfirmation = "确定要删除/撤销删除该帖吗？";
-    var removeAnonymousMessage = "匿名用户不能删除或撤销删除帖子";
-    var recoveredMessage = "操作成功！该帖子已被恢复。";
-    var deletedMessage = "操作成功！该帖子已删除。"
+    var acceptAnonymousMessage = $.i18n._('insufficient privilege');
+    var acceptOwnAnswerMessage = $.i18n._('cannot pick own answer as best');
+    var favoriteAnonymousMessage = $.i18n._('anonymous user cannot select favorite questions') 
+					+ "<a href='/account/signin/?next=/questions/{{QuestionID}}'>"
+					+ $.i18n._('please login') + "</a>";
+    var voteAnonymousMessage = $.i18n._('anonymous users cannot vote') 
+					+ "<a href='/account/signin/?next=/questions/{{QuestionID}}'>"
+					+ $.i18n._('please login') + "</a>";
+    var upVoteRequiredScoreMessage = $.i18n._('>15 points requried to upvote') 
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var downVoteRequiredScoreMessage = $.i18n._('>100 points requried to downvote')
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var voteOwnDeniedMessage = $.i18n._('cannot vote for own posts');
+    var voteRequiredMoreVotes = $.i18n._('daily vote cap exhausted')
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var voteDenyCancelMessage = $.i18n._('cannot revoke old vote')
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var offensiveConfirmation = $.i18n._('please confirm offensive');
+    var offensiveAnonymousMessage = $.i18n._('anonymous users cannot flag offensive posts')
+					+ "<a href='/account/signin/?next=/questions/{{QuestionID}}'>"
+					+ $.i18n._('please login') + "</a>";
+    var offensiveTwiceMessage = $.i18n._('cannot flag message as offensive twice')
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var offensiveNoFlagsLeftMessage = $.i18n._('flag offensive cap exhausted')
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var offensiveNoPermissionMessage = $.i18n._('need >15 points to report spam')
+					+ $.i18n._('please see') + "<a href='/faq'>faq</a>";
+    var removeConfirmation = $.i18n._('confirm delete');
+    var removeAnonymousMessage = $.i18n._('anonymous users cannot delete/undelete');
+    var recoveredMessage = $.i18n._('post recovered');
+    var deletedMessage = $.i18n._('post deleted');
     
     var VoteType = {
         acceptAnswer : 0,
@@ -201,7 +214,7 @@ var Vote = function(){
         });
     
         getremoveQuestionLink().unbind('click').click(function(event){
-            Vote.remove(this, VoteType.removeQuestion)
+            Vote.remove(this, VoteType.removeQuestion);
         });
     
         getremoveAnswersLinks().unbind('click').click(function(event){
@@ -330,15 +343,22 @@ var Vote = function(){
     };
         
     var callback_remove = function(object, voteType, data){
+		alert(data.status);
         if(data.allowed == "0" && data.success == "0"){
             showMessage(object, removeAnonymousMessage.replace("{{QuestionID}}", questionId));
         }
-        else if(data.status == "1"){
-            showMessage(object, recoveredMessage);
-        }  
-        else if(data.success == "1"){
-            showMessage(object, deletedMessage);
-        }
+        else if (data.success == "1"){
+			if (removeActionType == 'delete'){
+				postNode.addClass('deleted');
+				postRemoveLink.innerHTML = $.i18n._('undelete');
+        		showMessage(object, deletedMessage);
+			}
+			else if (removeActionType == 'undelete') {
+				postNode.removeClass('deleted');
+				postRemoveLink.innerHTML = $.i18n._('delete');
+            	showMessage(object, recoveredMessage);
+			}
+		}
     };
         
     return {
@@ -395,8 +415,23 @@ var Vote = function(){
                 return false;   
             }
             if(confirm(removeConfirmation)){
-                postId = object.id.substr(object.id.lastIndexOf('-') + 1);
+				bits = object.id.split('-');
+				postId = bits.pop();/* this seems to be used within submit! */
+				postType = bits.shift();
+
+				if (postType == 'answer'){
+					postNode = $('#answer-container-' + postId);
+					postRemoveLink = object;
+					if (postNode.hasClass('deleted')){
+						removeActionType = 'undelete';
+					}
+					else {
+						removeActionType = 'delete';
+					}
+				}
                 submit($(object), voteType, callback_remove);
+
+
             }
         }
     }
@@ -426,7 +461,8 @@ function createComments(type) {
                 var form = '<form id="' + formId + '" class="post-comments"><div>';
                 form += '<textarea name="comment" cols="60" rows="5" maxlength="300" onblur="'+ objectType +'Comments.updateTextCounter(this)" ';
                 form += 'onfocus="' + objectType + 'Comments.updateTextCounter(this)" onkeyup="'+ objectType +'Comments.updateTextCounter(this)"></textarea>';
-                form += '<input type="submit" value="添加评论" /><br><span class="text-counter"></span>';
+                form += '<input type="submit" value="'
+						+ $.i18n._('add comment') + '" /><br><span class="text-counter"></span>';
                 form += '<span class="form-error"></span></div></form>';
 
                 jDiv.append(form);
@@ -439,7 +475,10 @@ function createComments(type) {
         else {
             var divId = "comments-rep-needed-" + objectType + '-' + id;
             if (jDiv.find("#" + divId).length == 0) {
-                jDiv.append('<div id="' + divId + '" style="color:red">评论需要 ' + repNeededForComments + ' 社区积分 - <a href="/faq" class="comment-user">查看faq</a></span>');
+                jDiv.append('<div id="' + divId + '" style="color:red">'
+					+ $.i18n._('to comment, need') + ' ' +
+					+ repNeededForComments + ' ' + $.i18n._('community reputation points')
+					+ '<a href="/faq" class="comment-user">' + $.i18n._('please see') + 'faq</a></span>');
             }
         }
     };
@@ -477,7 +516,7 @@ function createComments(type) {
             var imgHover = "/content/images/close-small-hover.png";
             html += '<img onclick="' + objectType + 'Comments.deleteComment($(this), ' + json.object_id + ', \'' + json.delete_url + '\')" src="' + img;
             html += '" onmouseover="$(this).attr(\'src\', \'' + imgHover + '\')" onmouseout="$(this).attr(\'src\', \'' + img
-            html += '\')" title="删除此评论" />';
+            html += '\')" title="' + $.i18n._('delete this comment') + '" />';
         }
 
         html += '</div>';
@@ -524,13 +563,15 @@ function createComments(type) {
             renderForm(id, jDiv);
             jDiv.show();
             if (canPostComments(id, jDiv)) jDiv.find("textarea").get(0).focus();
-            jDiv.siblings("a").unbind("click").click(function() { commentsFactory[objectType].hide(id); }).text("隐藏评论");
+            jDiv.siblings("a").unbind("click").click(function(){ 
+													commentsFactory[objectType].hide(id); 
+													}).text($.i18n._('hide comments'));
         },
 
         hide: function(id) {
             var jDiv = jDivInit(id);
             var len = jDiv.children("div.comments").children().length;
-            var anchorText = len == 0 ? "添加评论" : "评论 (<b>" + len + "</b>)";
+            var anchorText = len == 0 ? $.i18n._('add a comment') : $.i18n._('comments') + ' (<b>' + len + "</b>)";
 
             jDiv.hide();
             jDiv.siblings("a").unbind("click").click(function() { commentsFactory[objectType].show(id); }).html(anchorText);
@@ -538,7 +579,7 @@ function createComments(type) {
         },
 
         deleteComment: function(jImg, id, deleteUrl) {
-            if (confirm("真要删除此评论吗？")) {
+            if (confirm($.i18n._('confirm delete comment'))) {
                 jImg.hide();
                 appendLoaderImg(id);
                 $.post(deleteUrl, { dataNeeded: "forIIS7" }, function(json) {
@@ -551,7 +592,9 @@ function createComments(type) {
             var length = textarea.value ? textarea.value.length : 0;
             var color = length > 270 ? "#f00" : length > 200 ? "#f60" : "#999";
             var jSpan = $(textarea).siblings("span.text-counter");
-            jSpan.html('还可写' + (300 - length) + ' 字符').css("color", color);
+            jSpan.html($.i18n._('can write')
+					+ (300 - length) + ' ' 
+					+ $.i18n._('characters')).css("color", color);
         }
     };
 }

@@ -15,6 +15,7 @@ from django.utils import simplejson
 from django.core import serializers
 from django.db import transaction
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext as _
 
 from utils.html import sanitize_html
 from markdown2 import Markdown
@@ -76,17 +77,29 @@ def index(request):
         orderby = "-last_activity_at"
     # group questions by author_id of 28,29
     if view_id == 'trans':
-        questions = Question.objects.get_translation_questions(orderby, INDEX_PAGE_SIZE)
+        questions = Question.objects.filter(deleted=False, author__id__in=[28,29]).order_by(orderby)[:INDEX_PAGE_SIZE]
     else:
-        questions = Question.objects.get_questions_by_pagesize(orderby, INDEX_PAGE_SIZE)
+        questions = Question.objects.filter(deleted=False).order_by(orderby)[:INDEX_PAGE_SIZE]
     # RISK - inner join queries
-    questions = questions.select_related()
-    tags = Tag.objects.get_valid_tags(INDEX_TAGS_SIZE)
+    questions = questions.select_related();
+    tags = Tag.objects.all().filter(deleted=False).exclude(used_count=0).order_by("-id")[:INDEX_TAGS_SIZE]
 
-    awards = Award.objects.get_recent_awards()
+    awards = Award.objects.extra(
+        select={'badge_id': 'badge.id', 'badge_name':'badge.name',
+                      'badge_description': 'badge.description', 'badge_type': 'badge.type',
+                      'user_id': 'auth_user.id', 'user_name': 'auth_user.username'
+                      },
+        tables=['award', 'badge', 'auth_user'],
+        order_by=['-awarded_at'],
+        where=['auth_user.id=award.user_id AND badge_id=badge.id'],
+    ).values('badge_id', 'badge_name', 'badge_description', 'badge_type', 'user_id', 'user_name')
+
+    class testvar:
+        content = 'haha'
 
     return render_to_response('index.html', {
         "questions" : questions,
+        'testvar':testvar,
         "tab_id" : view_id,
         "tags" : tags,
         "awards" : awards[:INDEX_AWARD_SIZE],
@@ -114,11 +127,29 @@ def questions(request, tagname=None, unanswered=False):
     # Set flag to False by default. If it is equal to True, then need to be saved.
     pagesize_changed = False
     # get pagesize from session, if failed then get default value
-    pagesize = request.session.get("pagesize")
+    user_page_size = request.session.get("pagesize", QUESTIONS_PAGE_SIZE)
+    # set pagesize equal to logon user specified value in database
+    if request.user.is_authenticated() and request.user.questions_per_page > 0:
+        user_page_size = request.user.questions_per_page
+
     try:
         page = int(request.GET.get('page', '1'))
+        # get new pagesize from UI selection
+        pagesize = int(request.GET.get('pagesize', user_page_size))
+        if pagesize <> user_page_size:
+            pagesize_changed = True
+
     except ValueError:
         page = 1
+        pagesize  = user_page_size
+
+    # save this pagesize to user database
+    if pagesize_changed:
+        request.session["pagesize"] = pagesize
+        if request.user.is_authenticated():
+            user = request.user
+            user.questions_per_page = pagesize
+            user.save()
 
     view_id = request.GET.get('sort', None)
     view_dic = {"latest":"-added_at", "active":"-last_activity_at", "hottest":"-answer_count", "mostvoted":"-score" }
@@ -130,24 +161,29 @@ def questions(request, tagname=None, unanswered=False):
 
     # check if request is from tagged questions
     if tagname is not None:
-        objects = Question.objects.get_questions_by_tag(tagname, orderby)
+        #print datetime.datetime.now()
+        objects = Question.objects.filter(deleted=False, tags__name = unquote(tagname)).order_by(orderby)
+        #print datetime.datetime.now()
     elif unanswered:
         #check if request is from unanswered questions
         template_file = "unanswered.html"
-        objects = Question.objects.get_unanswered_questions(orderby)
+        objects = Question.objects.filter(deleted=False, answer_count=0).order_by(orderby)
     else:
-        objects = Question.objects.get_questions(orderby)
+        objects = Question.objects.filter(deleted=False).order_by(orderby)
 
     # RISK - inner join queries
-    objects = objects.select_related(depth=1);
+    objects = objects.select_related();
     objects_list = Paginator(objects, pagesize)
     questions = objects_list.page(page)
 
     # Get related tags from this page objects
-    if questions.object_list.count() > 0:
-        related_tags = Tag.objects.get_tags_by_questions(questions.object_list)
-    else:
-        related_tags = None
+    related_tags = []
+    for question in questions.object_list:
+        tags = list(question.tags.all())
+        for tag in tags:
+            if tag not in related_tags:
+                related_tags.append(tag)
+
     return render_to_response(template_file, {
         "questions" : questions,
         "tab_id" : view_id,
@@ -986,7 +1022,6 @@ def user_stats(request, user_id, user_view):
                         'title',
                         'author_id',
                         'accepted',
-                        'vote_count',
                         'answer_count',
                         'vote_up_count',
                         'vote_down_count')[:100]
@@ -1055,8 +1090,7 @@ def user_recent(request, user_id, user_view):
             'activity_type' : 'activity.activity_type'
             },
         tables=['activity', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = ' +
-            'question.id AND activity.user_id = %s AND activity.activity_type = %s'],
+        where=['activity.content_type_id = %s AND activity.object_id = question.id AND activity.user_id = %s AND activity.activity_type = %s'],
         params=[question_type_id, user_id, TYPE_ACTIVITY_ASK_QUESTION],
         order_by=['-activity.active_at']
     ).values(
@@ -1080,8 +1114,8 @@ def user_recent(request, user_id, user_view):
             'activity_type' : 'activity.activity_type'
             },
         tables=['activity', 'answer', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND ' + 
-            'answer.question_id=question.id AND activity.user_id=%s AND activity.activity_type=%s'],
+        where=['activity.content_type_id = %s AND activity.object_id = answer.id '
+			     'AND answer.question_id=question.id AND activity.user_id=%s AND activity.activity_type=%s'],
         params=[answer_type_id, user_id, TYPE_ACTIVITY_ANSWER],
         order_by=['-activity.active_at']
     ).values(
@@ -1106,9 +1140,7 @@ def user_recent(request, user_id, user_view):
             },
         tables=['activity', 'question', 'comment'],
 
-        where=['activity.content_type_id = %s AND activity.object_id = comment.id AND '+
-            'activity.user_id = comment.user_id AND comment.object_id=question.id AND '+
-            'comment.content_type_id=%s AND activity.user_id = %s AND activity.activity_type=%s'],
+        where=['activity.content_type_id = %s AND activity.object_id = comment.id AND activity.user_id = comment.user_id AND comment.object_id=question.id AND comment.content_type_id=%s AND activity.user_id = %s AND activity.activity_type=%s'],
         params=[comment_type_id, question_type_id, user_id, TYPE_ACTIVITY_COMMENT_QUESTION],
         order_by=['-comment.added_at']
     ).values(
@@ -1134,10 +1166,7 @@ def user_recent(request, user_id, user_view):
             },
         tables=['activity', 'question', 'answer', 'comment'],
 
-        where=['activity.content_type_id = %s AND activity.object_id = comment.id AND '+
-            'activity.user_id = comment.user_id AND comment.object_id=answer.id AND '+
-            'comment.content_type_id=%s AND question.id = answer.question_id AND '+
-            'activity.user_id = %s AND activity.activity_type=%s'],
+        where=['activity.content_type_id = %s AND activity.object_id = comment.id AND activity.user_id = comment.user_id AND comment.object_id=answer.id AND comment.content_type_id=%s AND question.id = answer.question_id AND activity.user_id = %s AND activity.activity_type=%s'],
         params=[comment_type_id, answer_type_id, user_id, TYPE_ACTIVITY_COMMENT_ANSWER],
         order_by=['-comment.added_at']
     ).values(
@@ -1163,9 +1192,7 @@ def user_recent(request, user_id, user_view):
             'summary' : 'question_revision.summary'
             },
         tables=['activity', 'question_revision'],
-        where=['activity.content_type_id = %s AND activity.object_id = question_revision.id AND '+
-            'activity.user_id = question_revision.author_id AND activity.user_id = %s AND '+
-            'activity.activity_type=%s'],
+        where=['activity.content_type_id = %s AND activity.object_id = question_revision.id AND activity.user_id = question_revision.author_id AND activity.user_id = %s AND activity.activity_type=%s'],
         params=[question_revision_type_id, user_id, TYPE_ACTIVITY_UPDATE_QUESTION],
         order_by=['-activity.active_at']
     ).values(
@@ -1193,10 +1220,7 @@ def user_recent(request, user_id, user_view):
             },
         tables=['activity', 'answer_revision', 'question', 'answer'],
 
-        where=['activity.content_type_id = %s AND activity.object_id = answer_revision.id AND '+
-            'activity.user_id = answer_revision.author_id AND activity.user_id = %s AND '+
-            'answer_revision.answer_id=answer.id AND answer.question_id = question.id AND '+
-            'activity.activity_type=%s'],
+        where=['activity.content_type_id = %s AND activity.object_id = answer_revision.id AND activity.user_id = answer_revision.author_id AND activity.user_id = %s AND answer_revision.answer_id=answer.id AND answer.question_id = question.id AND activity.activity_type=%s'],
         params=[answer_revision_type_id, user_id, TYPE_ACTIVITY_UPDATE_ANSWER],
         order_by=['-activity.active_at']
     ).values(
@@ -1222,9 +1246,7 @@ def user_recent(request, user_id, user_view):
             'activity_type' : 'activity.activity_type',
             },
         tables=['activity', 'answer', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND '+
-            'activity.user_id = question.author_id AND activity.user_id = %s AND '+
-            'answer.question_id=question.id AND activity.activity_type=%s'],
+        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND activity.user_id = question.author_id AND activity.user_id = %s AND answer.question_id=question.id AND activity.activity_type=%s'],
         params=[answer_type_id, user_id, TYPE_ACTIVITY_MARK_ANSWER],
         order_by=['-activity.active_at']
     ).values(
@@ -1245,8 +1267,7 @@ def user_recent(request, user_id, user_view):
             'activity_type' : 'activity.activity_type'
             },
         tables=['activity', 'award', 'badge'],
-        where=['activity.user_id = award.user_id AND activity.user_id = %s AND '+
-            'award.badge_id=badge.id AND activity.object_id=award.id AND activity.activity_type=%s'],
+        where=['activity.user_id = award.user_id AND activity.user_id = %s AND award.badge_id=badge.id AND activity.object_id=award.id AND activity.activity_type=%s'],
         params=[user_id, TYPE_ACTIVITY_PRIZE],
         order_by=['-activity.active_at']
     ).values(
@@ -1299,8 +1320,7 @@ def user_responses(request, user_id, user_view):
             },
         select_params=[user_id],
         tables=['answer', 'question', 'auth_user'],
-        where=['answer.question_id = question.id AND answer.deleted=0 AND question.deleted = 0 AND '+
-            'question.author_id = %s AND answer.author_id <> %s AND answer.author_id=auth_user.id'],
+        where=['answer.question_id = question.id AND answer.deleted=0 AND question.deleted = 0 AND question.author_id = %s AND answer.author_id <> %s AND answer.author_id=auth_user.id'],
         params=[user_id, user_id],
         order_by=['-answer.id']
     ).values(
@@ -1329,8 +1349,7 @@ def user_responses(request, user_id, user_view):
             'user_id' : 'auth_user.id'
             },
         tables=['question', 'auth_user', 'comment'],
-        where=['question.deleted = 0 AND question.author_id = %s AND comment.object_id=question.id AND '+
-            'comment.content_type_id=%s AND comment.user_id <> %s AND comment.user_id = auth_user.id'],
+        where=['question.deleted = 0 AND question.author_id = %s AND comment.object_id=question.id AND comment.content_type_id=%s AND comment.user_id <> %s AND comment.user_id = auth_user.id'],
         params=[user_id, question_type_id, user_id],
         order_by=['-comment.added_at']
     ).values(
@@ -1359,9 +1378,7 @@ def user_responses(request, user_id, user_view):
             'user_id' : 'auth_user.id'
             },
         tables=['answer', 'auth_user', 'comment', 'question'],
-        where=['answer.deleted = 0 AND answer.author_id = %s AND comment.object_id=answer.id AND '+
-            'comment.content_type_id=%s AND comment.user_id <> %s AND comment.user_id = auth_user.id '+
-            'AND question.id = answer.question_id'],
+        where=['answer.deleted = 0 AND answer.author_id = %s AND comment.object_id=answer.id AND comment.content_type_id=%s AND comment.user_id <> %s AND comment.user_id = auth_user.id AND question.id = answer.question_id'],
         params=[user_id, answer_type_id, user_id],
         order_by=['-comment.added_at']
     ).values(
@@ -1392,8 +1409,7 @@ def user_responses(request, user_id, user_view):
             },
         select_params=[user_id],
         tables=['answer', 'question', 'auth_user'],
-        where=['answer.question_id = question.id AND answer.deleted=0 AND question.deleted = 0 AND '+
-            'answer.author_id = %s AND answer.accepted=1 AND question.author_id=auth_user.id'],
+        where=['answer.question_id = question.id AND answer.deleted=0 AND question.deleted = 0 AND answer.author_id = %s AND answer.accepted=1 AND question.author_id=auth_user.id'],
         params=[user_id],
         order_by=['-answer.id']
     ).values(
@@ -1437,8 +1453,7 @@ def user_votes(request, user_id, user_view):
             },
         select_params=[user_id],
         tables=['vote', 'question', 'auth_user'],
-        where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = question.id '+
-            'AND vote.user_id=auth_user.id'],
+        where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = question.id AND vote.user_id=auth_user.id'],
         params=[question_type_id, user_id],
         order_by=['-vote.id']
     ).values(
@@ -1461,8 +1476,7 @@ def user_votes(request, user_id, user_view):
             },
         select_params=[user_id],
         tables=['vote', 'answer', 'question', 'auth_user'],
-        where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = answer.id '+
-            'AND answer.question_id = question.id AND vote.user_id=auth_user.id'],
+        where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = answer.id AND answer.question_id = question.id AND vote.user_id=auth_user.id'],
         params=[answer_type_id, user_id],
         order_by=['-vote.id']
     ).values(
@@ -1487,8 +1501,7 @@ def user_votes(request, user_id, user_view):
 def user_reputation(request, user_id, user_view):
     user = get_object_or_404(User, id=user_id)
     reputation = Repute.objects.extra(
-        select={'positive': 'sum(positive)', 'negative': 'sum(negative)', 'question_id':'question_id', 
-            'title': 'question.title'},
+        select={'positive': 'sum(positive)', 'negative': 'sum(negative)', 'question_id':'question_id', 'title': 'question.title'},
         tables=['repute', 'question'],
         order_by=['-reputed_at'],
         where=['user_id=%s AND question_id=question.id'],
@@ -1496,7 +1509,6 @@ def user_reputation(request, user_id, user_view):
     ).values('positive', 'negative', 'question_id', 'title', 'reputed_at', 'reputation')
 
     reputation.query.group_by = ['question_id']
-
 
     rep_list = []
     for rep in Repute.objects.filter(user=user).order_by('reputed_at'):
@@ -1519,8 +1531,7 @@ def user_favorites(request, user_id, user_view):
     questions = Question.objects.extra(
         select={
             'vote_count' : 'question.vote_up_count + question.vote_down_count',
-            'favorited_myself' : 'SELECT count(*) FROM favorite_question f WHERE f.user_id = %s '+
-                'AND f.question_id = question.id',
+            'favorited_myself' : 'SELECT count(*) FROM favorite_question f WHERE f.user_id = %s AND f.question_id = question.id',
             'la_user_id' : 'auth_user.id',
             'la_username' : 'auth_user.username',
             'la_user_gold' : 'auth_user.gold',
@@ -1530,8 +1541,7 @@ def user_favorites(request, user_id, user_view):
             },
         select_params=[user_id],
         tables=['question', 'auth_user', 'favorite_question'],
-        where=['question.deleted = 0 AND question.last_activity_by_id = auth_user.id '+
-            'AND favorite_question.question_id = question.id AND favorite_question.user_id = %s'],
+        where=['question.deleted = 0 AND question.last_activity_by_id = auth_user.id AND favorite_question.question_id = question.id AND favorite_question.user_id = %s'],
         params=[user_id],
         order_by=['-vote_count', '-question.id']
     ).values('vote_count',
@@ -1662,12 +1672,7 @@ def badges(request):
 def badge(request, id):
     badge = get_object_or_404(Badge, id=id)
     awards = Award.objects.extra(
-        select={'id': 'auth_user.id', 
-                'name': 'auth_user.username', 
-                'rep':'auth_user.reputation', 
-                'gold': 'auth_user.gold', 
-                'silver': 'auth_user.silver', 
-                'bronze': 'auth_user.bronze'},
+        select={'id': 'auth_user.id', 'name': 'auth_user.username', 'rep':'auth_user.reputation', 'gold': 'auth_user.gold', 'silver': 'auth_user.silver', 'bronze': 'auth_user.bronze'},
         tables=['award', 'auth_user'],
         where=['badge_id=%s AND user_id=auth_user.id'],
         params=[id]
@@ -1722,13 +1727,13 @@ def upload(request):
 
         result = xml_template % ('Good', '', default_storage.url(new_file_name))
     except UploadPermissionNotAuthorized:
-        result = xml_template % ('', u"上传图片只限于积分+60以上注册用户!", '')
+        result = xml_template % ('', _('uploading images is limited to users with >60 reputation points'), '')
     except FileTypeNotAllow:
-        result = xml_template % ('', u"只允许上传'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'类型的文件！", '')
+        result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
     except FileSizeNotAllow:
-        result = xml_template % ('', u"只允许上传%sK大小的文件！" % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
-    except Exception:
-        result = xml_template % ('', u"在文件上传过程中产生了错误，请联系管理员，谢谢^_^", '')
+        result = xml_template % ('', _("maximum upload file size is %sK") % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
+    except Exception as e:
+        result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % e), '')
 
     return HttpResponse(result, mimetype="application/xml")
 

@@ -1,8 +1,10 @@
+<!-- questions.html -->
 {% extends "base.html" %}
 {% load extra_tags %}
+{% load i18n %}
 {% load humanize %}
 {% load extra_filters %}
-{% block title %}{% spaceless %}问题列表{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{% trans "Questions" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -18,12 +20,12 @@
 {% endblock %}
 {% block content %}
 <div class="tabBar">
-    <div class="headQuestions">{% if searchtag %}标签问题{% else %}{% if searchtitle %}查询结果{% else %}所有问题{% endif %}{% endif %}</div>
+    <div class="headQuestions">{% if searchtag %}{% trans "Found by tags" %}{% else %}{% if searchtitle %}{% trans "Found by title" %}{% else %}{% trans "All questions" %}{% endif %}{% endif %}</div>
     <div class="tabsA">
-        <a id="latest" href="?sort=latest" class="off" title="最新加入系统的问题">最新问题</a>
-        <a id="active" href="?sort=active" class="off" title="最近被更新的问题">活跃问题</a>
-        <a id="hottest" href="?sort=hottest" class="off" title="被回复最多的问题">热门问题</a>
-        <a id="mostvoted" href="?sort=mostvoted" class="off" title="投票次数最多的问题">最有价值问题</a>    
+        <a id="latest" href="?sort=latest" class="off" title="{% trans "most recently asked questions" %}">{% trans "newest" %}</a>
+        <a id="active" href="?sort=active" class="off" title="{% trans "most recently updated questions" %}">{% trans "active" %}</a>
+        <a id="hottest" href="?sort=hottest" class="off" title="{% trans "hottest questions" %}">{% trans "hottest" %}</a>
+        <a id="mostvoted" href="?sort=mostvoted" class="off" title="{% trans "most voted questions" %}">{% trans "most voted" %}</a>    
     </div>
 </div>
 <div id="listA">
@@ -40,9 +42,9 @@
                     <td><span class="num">{{ question.view_count|cnprog_intword|safe }}</span> </td>
 	            </tr>  
                 <tr>
-                    <td><span class="unit">回答</span></td>
-                    <td><span class="unit">票数</span></td>
-                    <td><span class="unit">浏览</span></td>
+                    <td><span class="unit">{% trans "answers" %}</span></td>
+                    <td><span class="unit">{% trans "votes" %}</span></td>
+                    <td><span class="unit">{% trans "views" %}</span></td>
 	            </tr> 
             </table>
         </div>
@@ -53,7 +55,7 @@
         
         {% ifequal tab_id 'active'%}
         {% if question.wiki %}
-        <span class="from wiki">社区Wiki</span>
+        <span class="from wiki">{% trans "community wiki" %}</span>
         <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
         {% else %}
         <div class="from">
@@ -65,7 +67,7 @@
         {% endif %}
         {% else %}
         {% if question.wiki %}
-        <span class="from wiki">社区Wiki</span>
+        <span class="from wiki">{% trans "community wiki" %}</span>
         <span class="date" title="{{ question.added_at }}">{% diff_date question.added_at %}</span>
         {% else %}
         <div class="from">
@@ -79,7 +81,7 @@
         
         <div class="tags">
         {% for tag in question.tagname_list %}
-        <a href="{% url forum.views.tag tag|urlencode %}" title="查看有关'{{ tag }}'的问题" rel="tag">{{ tag }}</a>
+        <a href="{% url forum.views.tag tag|urlencode %}" title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
         {% endfor %}
         </div>
     </div>
@@ -103,45 +105,48 @@
 {% block sidebar %}
 <div class="boxC">
     <p>
-        您正在浏览所有<br><div class="questions-count">{{ questions_count|intcomma }}</div>
-        <p>个
-            {% if searchtag %}
-                标记为
-                <span class="tag">
-                    {{ searchtag }} 
-                </span>
-            {% endif %}
-            {% if searchtitle %}
-                标题含有
-                <strong class="darkred">
-                    {{ searchtitle }}
-                </strong>
-            {% endif %}
-         的问题。</p>
+		{% if searchtag %}
+			{% blocktrans count questions_count as cnt with questions_count|intcomma as q_num and searchtag as tagname %}
+			have total {{q_num}} questions tagged {{tagname}}
+			{% plural %}
+			have total {{q_num}} questions tagged {{tagname}}
+			{% endblocktrans %}
+		{% endif %}
+		{% if searchtitle %}
+			{% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
+			have total {{q_num}} questions containing {{searchtitle}}
+			{% plural %}
+			have total {{q_num}} questions containing {{searchtitle}}
+			{% endblocktrans %}
+		{% endif %}
+
         {% ifequal tab_id "latest" %}
-        <p>问题按<strong>提问时间</strong>显示排序。新加入的问题将显示在最前面。</p>
+			<p>{% trans "latest questions info" %}</p>
         {% endifequal %}
         
         {% ifequal tab_id "active" %}
-            <p>问题按<strong>最后更新时间</strong>显示排序。最后被回答或者更新的问题将显示在最前面。</p>
+            <p>{% trans "Questions are sorted by the <strong>time of last update</strong>." %} 
+			{% trans "Most recently answered ones are shown first." %}</p>
         {% endifequal %}
         
         {% ifequal tab_id "hottest" %}
-            <p>问题按<strong>回复数量</strong>显示排序。回复最多的问题将显示在最前面。</p>
+			<p>{% trans "Questions sorted by <strong>number of responses</strong>." %}
+            {% trans "Most answered questions are shown first." %}</p>
         {% endifequal %}
         
         {% ifequal tab_id "mostvoted" %}
-            <p>问题按<strong>投票数量</strong>显示排序。投票最多的问题将显示在最前面。</p>
+			<p>{% trans "Questions are sorted by the <strong>number of votes</strong>." %}
+            {% trans "Most voted questions are shown first." %}</p>
         {% endifequal %}
         
         
     </p>
 </div>
 <div class="boxC">
-	<h3 class="subtitle">相关标签</h3>
+	<h3 class="subtitle">{% trans "Related tags" %}</h3>
     <div class="tags">
         {% for tag in tags %}
-            <a rel="tag" title="查看有关'{{ tag.name }}'的问题"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <a rel="tag" title="{% trans "see questions tagged" %}'{{ tag.name }}'{% trans "using tags" %}"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
             <span class="tag-number">× {{ tag.used_count|intcomma }}</span>
             <br>
         {% endfor %}
@@ -150,4 +155,4 @@
 </div>
 
 {% endblock %}
-
+<!-- end questions.html -->

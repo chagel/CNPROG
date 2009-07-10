@@ -1,0 +1,110 @@
+{% extends "base_content.html" %}
+{% load extra_tags %}
+{% load humanize %}
+{% block title %}{% spaceless %}FAQ{% endspaceless %}{% endblock %}
+{% block forejs %}
+{% endblock %}
+{% block content %}
+<div class="headNormal">
+    {% trans "Frequently Asked Questions " %}(FAQ)
+</div>
+<div id="main-body" style="width:100%">
+    
+    <h3 class="subtitle">{% trans "What kinds of questions can I ask here?" %}</h3>
+    <p>{% trans "Most importanly - questions should be <strong>relevant</strong> to this community." %}<br>
+	{% trans "Before asking the question - please make sure to use search to see whether your question has alredy been answered."%}<br>
+    </p><br>
+    
+        <h3 class="subtitle">{% trans "What questions should I avoid asking?" %}</h3>
+		<p>{% trans "Please avoid asking questions that are not relevant to this community, too subjective and argumentative." %}</p>
+    </p><br>
+    
+        <h3 class="subtitle">{% trans "What should I avoid in my answers?" %}</h3>
+        <p>{% trans "site title" %} {% trans "is a Q&A site, not a discussion group. Therefore - please avoid having discussions in your answers, comment facility allows some space for brief discussions." %} 
+    </p><br>
+    
+        <h3 class="subtitle">{% trans "Who moderates this community?" %}</h3>
+		<p>{% trans "The short answer is: <strong>you</strong>." %}<br>
+		{% trans "This website is moderated by the users." %}
+		{% trans "The reputation system allows users earn the authorization to perform a variety of moderation tasks." %}
+    </p><br>
+    
+        <h3 class="subtitle">{% trans "How does reputation system work?" %}</h3>
+		<p>{% trans "Anyone can ask questions and give answers, points are not necessary for that." %}<br>
+        {% trans "As we've said before, users help running this site. Point system helps select users who can administer this community."%}
+		{% trans "Reputation points roughly measure how community trusts you. These points are given to you directly by other members of the community." %}
+		</p>
+		<p>
+		 {% trans "For example, if you ask an interesting question or give a helpful answer, your input will be upvoted and you will gain more trust in the community." %}
+         {% trans "If on the other hand someone gives a misleading answer, the answer will be voted down and he/she loses some points." %}
+		 {% trans "Each vote in favor will generate <strong>10</strong> points, each vote against will subtract <strong>2</strong> points." trans %}
+		 {% trans "Through the votes of other people you can accumulate a maximum of <strong>200</strong> points." %}
+		 {% "After accumulating certain number of points, you can do more:" %}
+        <table style="font-family:arial;" cellspacing="3" cellpadding="3">
+            <tr>
+                <th width="40px" style="text-align:right"></th>
+                <th width="300px"></th>
+            </tr>
+	        <tr>
+                <td style="text-align:right;padding-right:5px"><strong>15</strong></td>
+                <td>{% trans "upvote" %}</td>
+	        </tr>
+	        <tr>
+                <td style="text-align:right;padding-right:5px"><strong>15</strong></td>
+                <td>{% trans "use tags" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>50</strong></td>
+                <td>{% trans "add comments" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>100</strong></td>
+                <td>{% trans "downvote" %}</td>
+	        </tr><tr>
+                <td style="text-align:right;padding-right:5px"><strong>250</strong></td>
+                <td>打开关闭自己的问题</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>500</strong></td>
+                <td>{% trans "retag questions" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>750</strong></td>
+                <td>{% trans "edit community wiki questions" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>2000</strong></td>
+                <td>{% trans "edit any answer" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>3000</strong></td>
+                <td>{% trans "open any closed question" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>5000</strong></td>
+                <td>{% trans "delete any comment" %}</td>
+	        </tr>
+            <tr>
+                <td style="text-align:right;padding-right:5px"><strong>10000</strong></td>
+                <td>{% trans "delete any questions and answers and perform other moderation tasks" %}</td>
+	        </tr>
+
+        </table>
+        
+    </p><br>
+   
+        <h3 class="subtitle">{% trans "To register, do I need to create new password?"</h3>
+        <p>{% trans "No, you don't have to. You can login through any service that supports OpenID, e.g. Google, Yahoo, AOL, etc." %}
+		<strong><a href="/account/signin">{% trans "Login now!" %}</a> »</strong>
+    </p><br>
+    
+        <h3 class="subtitle">{% trans "Why other people can edit my questions/answers?" %}</h3>
+    <p> {% trans "Goal of this site is..." %} {% trans "So questions and answers can be edited like wiki pages by experienced users of this site and this improves the overall quality of the knowledge base content." %}
+	{% trans "If this approach is not for you, we respect your choice." %}
+    </p><br>
+        <h3 class="subtitle">{% trans "Still have questions?" %}</h3>
+    <p>{% "Please ask your question, help make our community better!" %} <a href="/tags/faq" class="big">{% trans "site title" %} {% trans "questions" %}</a>{% trans "." %}
+    </p>
+    <br><br>
+</div>
+{% endblock %}
