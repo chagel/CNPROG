@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-09 15:42+0000\n"
+"POT-Creation-Date: 2009-07-15 13:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,7 +229,7 @@ msgstr "用户收藏的问题"
 msgid "Favorites - User Profile"
 msgstr "收藏-用户资料"
 
-#: forum/user.py:60 templates/index.html:46
+#: forum/user.py:60 templates/index.html:46 templates/questions.html:45
 msgid "Votes"
 msgstr "投票"
 
@@ -336,31 +336,32 @@ msgstr "搜索"
 msgid "Home"
 msgstr "首页"
 
-#: templates/index.html:23
+#: templates/index.html:23 templates/questions.html:25
 msgid "Newest updated questions"
 msgstr "最新更新的问题"
 
-#: templates/index.html:23
+#: templates/index.html:23 templates/questions.html:24
 msgid "Newest"
 msgstr "最新问题"
 
-#: templates/index.html:24
+#: templates/index.html:24 templates/questions.html:26
 msgid "Questions with most answers"
 msgstr "被回复最多的问题"
 
-#: templates/index.html:24
+#: templates/index.html:24 templates/questions.html:26
 msgid "Hottest"
 msgstr "最热问题"
 
-#: templates/index.html:25
+#: templates/index.html:25 templates/questions.html:27
 msgid "Questions with most votes"
 msgstr "被投票最多的问题"
 
-#: templates/index.html:25
+#: templates/index.html:25 templates/questions.html:27
 msgid "Best"
 msgstr "最有价值问题"
 
 #: templates/index.html:26 templates/index.html.py:118
+#: templates/questions.html:22
 msgid "All questions"
 msgstr "所有问题"
 
@@ -368,19 +369,21 @@ msgstr "所有问题"
 msgid "All"
 msgstr "所有问题"
 
-#: templates/index.html:45
+#: templates/index.html:45 templates/questions.html:44
 msgid "Answers"
 msgstr "回答"
 
-#: templates/index.html:47
+#: templates/index.html:47 templates/questions.html:46
 msgid "Visits"
 msgstr "访问"
 
-#: templates/index.html:55
+#: templates/index.html:55 templates/questions.html:57
+#: templates/questions.html.py:69
 msgid "Community wiki"
 msgstr "社区wiki"
 
 #: templates/index.html:67 templates/index.html.py:91
+#: templates/questions.html:83
 msgid "Browse questions with tag of "
 msgstr "查看所有以下主题问题："
 
@@ -423,6 +426,38 @@ msgstr "。请帮助我们回答"
 #: templates/index.html:118
 msgid "Unanswered questions"
 msgstr "没有回答的问题"
+
+#: templates/pagesize.html:5
+msgid "Size per page:"
+msgstr "每页显示："
+
+#: templates/paginator.html:5
+msgid "Previous"
+msgstr "上一页"
+
+#: templates/questions.html:6
+msgid "Question list"
+msgstr "问题列表"
+
+#: templates/questions.html:22
+msgid "Tagged questions"
+msgstr "标签问题"
+
+#: templates/questions.html:22
+msgid "Query result"
+msgstr "查询结果"
+
+#: templates/questions.html:24
+msgid "New questions"
+msgstr "最新问题"
+
+#: templates/questions.html:25
+msgid "Active"
+msgstr "活跃问题"
+
+#: templates/questions.html:125
+msgid "Related tags"
+msgstr "相关标签"
 
 #: templates/authopenid/changeemail.html:10
 msgid "Account: change email"
