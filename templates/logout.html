@@ -7,7 +7,7 @@
 {% block forejs %}
     <script type="text/javascript">
     $().ready(function(){
-        $('#btLogout').bind('click', function(){ window.location.href='/account/signout/?next={{ next }}'; });
+        $('#btLogout').bind('click', function(){ window.location.href='{% url user_signout %}?next={{ next }}'; });
     
     });
     </script>
