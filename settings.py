@@ -4,7 +4,7 @@ import os.path
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-SITE_SRC_ROOT = '/var/www/vhosts/cnprog'
+
 #David Cramer debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_PANELS = (
@@ -21,11 +21,6 @@ DEBUG_TOOLBAR_PANELS = (
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS":False
 }
-
-#for logging
-import logging
-LOG_FILENAME = '/var/www/vhosts/cnprog/log/cnprog.log'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG,)
 
 #for OpenID auth
 ugettext = lambda s: s
@@ -144,3 +139,6 @@ INSTALLED_APPS = (
     'django_authopenid',
     'debug_toolbar' ,
 )
+#local configs
+from settings_local import *
+
