@@ -1,9 +1,8 @@
+﻿{% load i18n %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- template base_content.html -->
-{% load i18n %}
 <html>
     <head>
-        <title>{% block title %}{% endblock %} - {% trans "site title" %} - {% trans "site slogan" %}</title>
+        <title>{% block title %}{% endblock %} - {{ APP_TITLE }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="verify-v1" content="55uGNnQVJW8p1bbXeF/Xbh9I7nZBM/wLhRz6N/I1kkA=" />
         <link rel="shortcut icon" href="/content/images/favicon.ico" >
@@ -83,4 +82,3 @@
         {% endblock %}
     </body>
 </html>
-<!-- end template base_content.html -->

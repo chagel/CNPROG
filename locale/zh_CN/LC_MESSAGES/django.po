@@ -1,0 +1,629 @@
+# Chinese translations for CNProg.com
+# Copyright (C) 2009
+# This file is distributed under the same license as the CNPROG package.
+# Mike Chen <chagel@gmail.com>, 2009.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-07-15 13:53+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings.py:12
+msgid "account/"
+msgstr ""
+
+#: settings.py:12 django_authopenid/urls.py:9 django_authopenid/urls.py:11
+msgid "signin/"
+msgstr ""
+
+#: django_authopenid/forms.py:67 django_authopenid/views.py:93
+msgid "i-names are not supported"
+msgstr "i-names不支持。"
+
+#: django_authopenid/forms.py:102 django_authopenid/forms.py:207
+msgid ""
+"Usernames can only contain                     letters, numbers and "
+"underscores"
+msgstr "用户名格式有误。只有字母，数字和下划线是允许的。"
+
+#: django_authopenid/forms.py:109
+msgid ""
+"This username does not exist                     in our database. Please "
+"choose another."
+msgstr "用户名不存在。请重新输入。"
+
+#: django_authopenid/forms.py:126 django_authopenid/forms.py:231
+msgid ""
+"Please enter a valid                     username and password. Note that "
+"both fields are                     case-sensitive."
+msgstr "请输入用户名和密码。注意区分大小写。"
+
+#: django_authopenid/forms.py:130 django_authopenid/forms.py:235
+msgid "This account is inactive."
+msgstr "用户已冻结。"
+
+#: django_authopenid/forms.py:184
+msgid ""
+"This email is already                 registered in our database. Please "
+"choose another."
+msgstr "电子邮件已被注册。请使用一个新的邮件地址。"
+
+#: django_authopenid/forms.py:214
+msgid ""
+"This username don't exist.                         Please choose another."
+msgstr "用户名不存在"
+
+#: django_authopenid/forms.py:330
+msgid ""
+"Old password is incorrect.                     Please enter the correct "
+"password."
+msgstr "旧密码错误。"
+
+#: django_authopenid/forms.py:342
+msgid "new passwords do not match"
+msgstr "新密码不匹配"
+
+#: django_authopenid/forms.py:434
+msgid "Incorrect username."
+msgstr "用户名不正确"
+
+#: django_authopenid/urls.py:10
+msgid "signout/"
+msgstr ""
+
+#: django_authopenid/urls.py:11
+msgid "complete/"
+msgstr ""
+
+#: django_authopenid/urls.py:13
+msgid "register/"
+msgstr ""
+
+#: django_authopenid/urls.py:14
+msgid "signup/"
+msgstr ""
+
+#: django_authopenid/urls.py:16
+msgid "sendpw/"
+msgstr ""
+
+#: django_authopenid/urls.py:26
+msgid "delete/"
+msgstr ""
+
+#: django_authopenid/views.py:99
+#, python-format
+msgid "非法OpenID地址： %s"
+msgstr ""
+
+#: django_authopenid/views.py:366 templates/index.html:78
+msgid "Welcome"
+msgstr "欢迎"
+
+#: django_authopenid/views.py:456
+msgid "Password changed."
+msgstr "密码已更新。"
+
+#: django_authopenid/views.py:488
+msgid "Email changed."
+msgstr "邮件地址已更新。"
+
+#: django_authopenid/views.py:519 django_authopenid/views.py:671
+#, python-format
+msgid "No OpenID %s found associated in our database"
+msgstr "该OpenID %s 不在系统中。"
+
+#: django_authopenid/views.py:523 django_authopenid/views.py:678
+#, python-format
+msgid "The OpenID %s isn't associated to current user logged in"
+msgstr "OpenID %s 没有和当前登录用户绑定。"
+
+#: django_authopenid/views.py:531
+msgid "Email Changed."
+msgstr "邮件地址已更新。"
+
+#: django_authopenid/views.py:606
+msgid "This OpenID is already associated with another account."
+msgstr "这个OpenID已经绑定到另外一个帐号。"
+
+#: django_authopenid/views.py:611
+#, python-format
+msgid "OpenID %s is now associated with your account."
+msgstr "OpenID %s 已经绑定到您的帐号。"
+
+#: django_authopenid/views.py:681
+msgid "Account deleted."
+msgstr "帐号已删除。"
+
+#: django_authopenid/views.py:721
+msgid "Request for new password"
+msgstr "找回密码"
+
+#: django_authopenid/views.py:734
+msgid "A new password has been sent to your email address."
+msgstr "新的密码已经发送到您的邮件帐号。"
+
+#: django_authopenid/views.py:764
+#, python-format
+msgid ""
+"Could not change password. Confirmation key '%s'                is not "
+"registered."
+msgstr "不能修改密码。确认信息 '%s' 有误。"
+
+#: django_authopenid/views.py:773
+msgid ""
+"Can not change password. User don't exist anymore                 in our "
+"database."
+msgstr "不能修改密码。用户帐号不存在。"
+
+#: django_authopenid/views.py:782
+#, python-format
+msgid "Password changed for %s. You may now sign in."
+msgstr "帐号 %s 的密码已经修改。您现在可以用它来登录。"
+
+#: forum/user.py:17
+msgid "Overview"
+msgstr "概览"
+
+#: forum/user.py:18
+msgid "User overview"
+msgstr "用户概览"
+
+#: forum/user.py:19
+msgid "Overview - User Profile"
+msgstr "概览-用户资料"
+
+#: forum/user.py:25
+msgid "Recent"
+msgstr "最近活动"
+
+#: forum/user.py:26
+msgid "Recent activities"
+msgstr "用户最近活动情况"
+
+#: forum/user.py:27
+msgid "Recent - User Profile"
+msgstr "最近活动-用户资料"
+
+#: forum/user.py:34
+msgid "Response"
+msgstr "回应"
+
+#: forum/user.py:35
+msgid "Responses from others"
+msgstr "其他用户的回答和评论"
+
+#: forum/user.py:36
+msgid "Response - User Profile"
+msgstr "回应-用户资料"
+
+#: forum/user.py:43
+msgid "Reputation"
+msgstr "积分"
+
+#: forum/user.py:44
+msgid "Community reputation"
+msgstr "社区积分"
+
+#: forum/user.py:45
+msgid "Reputation - User Profile"
+msgstr "积分-用户资料"
+
+#: forum/user.py:51
+msgid "Favorites"
+msgstr "收藏"
+
+#: forum/user.py:52
+msgid "User's favorite questions"
+msgstr "用户收藏的问题"
+
+#: forum/user.py:53
+msgid "Favorites - User Profile"
+msgstr "收藏-用户资料"
+
+#: forum/user.py:60 templates/index.html:46 templates/questions.html:45
+msgid "Votes"
+msgstr "投票"
+
+#: forum/user.py:61
+msgid "Votes history"
+msgstr "用户投票历史"
+
+#: forum/user.py:62
+msgid "Votes - User Profile"
+msgstr "投票-用户资料"
+
+#: forum/user.py:69
+msgid "Preferences"
+msgstr "设置"
+
+#: forum/user.py:70
+msgid "User preferences"
+msgstr "用户参数设置"
+
+#: forum/user.py:71
+msgid "Preferences - User Profile"
+msgstr "设置-用户资料"
+
+#: templates/badges.html:5 templates/badges.html.py:16
+#: templates/header.html:31
+msgid "Badges"
+msgstr "奖牌榜"
+
+#: templates/base.html:53 templates/base_content.html:52
+msgid "Congratulations! You have new badges: "
+msgstr "恭喜您被授予奖牌："
+
+#: templates/base.html:54 templates/base_content.html:53
+msgid "go to see"
+msgstr "查看"
+
+#: templates/base.html:55 templates/base_content.html:54
+#: templates/header.html:35
+msgid "Profile"
+msgstr "我的资料"
+
+#: templates/footer.html:5 templates/header.html:10 templates/index.html:81
+msgid "About us"
+msgstr "关于我们"
+
+#: templates/footer.html:6 templates/header.html:11
+msgid "faq"
+msgstr "常见问题"
+
+#: templates/footer.html:8
+msgid "Contact"
+msgstr "联系我们"
+
+#: templates/footer.html:9
+msgid "Privacy"
+msgstr "隐私政策"
+
+#: templates/footer.html:10
+msgid "Feedback"
+msgstr "用户反馈"
+
+#: templates/header.html:6 templates/logout.html:5 templates/logout.html.py:16
+msgid "Logout"
+msgstr "退出登录"
+
+#: templates/header.html:8
+msgid "Login"
+msgstr "登录"
+
+#: templates/header.html:21
+msgid "link to homepage"
+msgstr "返回首页"
+
+#: templates/header.html:27 templates/header.html.py:56
+#: templates/index.html:21
+msgid "Questions"
+msgstr "问题"
+
+#: templates/header.html:28 templates/header.html.py:57
+msgid "Tags"
+msgstr "标签"
+
+#: templates/header.html:29 templates/header.html.py:58
+msgid "Users"
+msgstr "用户"
+
+#: templates/header.html:30
+msgid "Books"
+msgstr "读书"
+
+#: templates/header.html:32
+msgid "Unanswered"
+msgstr "没有回答的问题"
+
+#: templates/header.html:38
+msgid "Ask a question"
+msgstr "我要提问"
+
+#: templates/header.html:53
+msgid "Search"
+msgstr "搜索"
+
+#: templates/index.html:6
+msgid "Home"
+msgstr "首页"
+
+#: templates/index.html:23 templates/questions.html:25
+msgid "Newest updated questions"
+msgstr "最新更新的问题"
+
+#: templates/index.html:23 templates/questions.html:24
+msgid "Newest"
+msgstr "最新问题"
+
+#: templates/index.html:24 templates/questions.html:26
+msgid "Questions with most answers"
+msgstr "被回复最多的问题"
+
+#: templates/index.html:24 templates/questions.html:26
+msgid "Hottest"
+msgstr "最热问题"
+
+#: templates/index.html:25 templates/questions.html:27
+msgid "Questions with most votes"
+msgstr "被投票最多的问题"
+
+#: templates/index.html:25 templates/questions.html:27
+msgid "Best"
+msgstr "最有价值问题"
+
+#: templates/index.html:26 templates/index.html.py:118
+#: templates/questions.html:22
+msgid "All questions"
+msgstr "所有问题"
+
+#: templates/index.html:26
+msgid "All"
+msgstr "所有问题"
+
+#: templates/index.html:45 templates/questions.html:44
+msgid "Answers"
+msgstr "回答"
+
+#: templates/index.html:47 templates/questions.html:46
+msgid "Visits"
+msgstr "访问"
+
+#: templates/index.html:55 templates/questions.html:57
+#: templates/questions.html.py:69
+msgid "Community wiki"
+msgstr "社区wiki"
+
+#: templates/index.html:67 templates/index.html.py:91
+#: templates/questions.html:83
+msgid "Browse questions with tag of "
+msgstr "查看所有以下主题问题："
+
+#: templates/index.html:87
+msgid "Recent tags"
+msgstr "最新标签"
+
+#: templates/index.html:94 templates/index.html.py:118
+msgid "Popular tags"
+msgstr "受欢迎的标签"
+
+#: templates/index.html:98
+msgid "Recent badges"
+msgstr "最新奖牌"
+
+#: templates/index.html:109
+msgid "All badges"
+msgstr "所有奖牌"
+
+#: templates/index.html:113
+msgid "RSS feed of recent 30 questions"
+msgstr "RSS订阅最新30个问题"
+
+#: templates/index.html:113
+msgid "Subscribe"
+msgstr "订阅最新问题"
+
+#: templates/index.html:118
+msgid "Are you looking for more questions? Try to browse"
+msgstr "在寻找更多问题吗？请查阅"
+
+#: templates/index.html:118
+msgid " or "
+msgstr " 或者 "
+
+#: templates/index.html:118
+msgid ". Please help us answer "
+msgstr "。请帮助我们回答"
+
+#: templates/index.html:118
+msgid "Unanswered questions"
+msgstr "没有回答的问题"
+
+#: templates/pagesize.html:5
+msgid "Size per page:"
+msgstr "每页显示："
+
+#: templates/paginator.html:5
+msgid "Previous"
+msgstr "上一页"
+
+#: templates/questions.html:6
+msgid "Question list"
+msgstr "问题列表"
+
+#: templates/questions.html:22
+msgid "Tagged questions"
+msgstr "标签问题"
+
+#: templates/questions.html:22
+msgid "Query result"
+msgstr "查询结果"
+
+#: templates/questions.html:24
+msgid "New questions"
+msgstr "最新问题"
+
+#: templates/questions.html:25
+msgid "Active"
+msgstr "活跃问题"
+
+#: templates/questions.html:125
+msgid "Related tags"
+msgstr "相关标签"
+
+#: templates/authopenid/changeemail.html:10
+msgid "Account: change email"
+msgstr "修改电子邮件"
+
+#: templates/authopenid/changeemail.html:13
+msgid ""
+"This is where you can change the email address associated with your account. "
+"Please keep this email address up to date so we can send you a password-"
+"reset email if you request one."
+msgstr ""
+"您可以在这里修改您的电子邮件，请确保这个邮件地址有效-找回密码将发送新密码到您"
+"的邮件地址。"
+
+#: templates/authopenid/changeemail.html:15
+#: templates/authopenid/changeopenid.html:13
+#: templates/authopenid/changepw.html:18 templates/authopenid/delete.html:14
+#: templates/authopenid/delete.html:24
+msgid "Please correct errors below:"
+msgstr "请改正以下错误："
+
+#: templates/authopenid/changeemail.html:32
+msgid "Email"
+msgstr "电子邮件"
+
+#: templates/authopenid/changeemail.html:33
+msgid "Password"
+msgstr "密码"
+
+#: templates/authopenid/changeemail.html:35
+msgid "Change email"
+msgstr "修改电子邮件"
+
+#: templates/authopenid/changeopenid.html:7
+msgid "Account: change OpenID URL"
+msgstr "修改OpenID地址"
+
+#: templates/authopenid/changeopenid.html:11
+msgid ""
+"This is where you can change your OpenID URL. Make sure you remember it!"
+msgstr "请修改您的OpenID地址，请不要忘记这个地址！"
+
+#: templates/authopenid/changeopenid.html:28
+msgid "OpenID URL:"
+msgstr "OpenID地址："
+
+#: templates/authopenid/changeopenid.html:29
+msgid "Change OpenID"
+msgstr "修改OpenID"
+
+#: templates/authopenid/changepw.html:13
+msgid "Account: change password"
+msgstr "修改密码"
+
+#: templates/authopenid/changepw.html:16
+msgid "This is where you can change your password. Make sure you remember it!"
+msgstr "请修改您的密码，切记不要忘记！"
+
+#: templates/authopenid/changepw.html:26
+msgid "Current password"
+msgstr "旧密码"
+
+#: templates/authopenid/changepw.html:27
+msgid "New password"
+msgstr "新密码"
+
+#: templates/authopenid/changepw.html:28
+msgid "New password again"
+msgstr "重复密码"
+
+#: templates/authopenid/changepw.html:29
+msgid "Change password"
+msgstr "修改密码"
+
+#: templates/authopenid/delete.html:8
+msgid "Account: delete account"
+msgstr "删除帐号"
+
+#: templates/authopenid/delete.html:12
+msgid ""
+"Note: After deleting your account, anyone will be able to register this "
+"username."
+msgstr "注意：删除您的帐号后，任何其他人可以再注册这个帐号。"
+
+#: templates/authopenid/delete.html:16
+msgid "Check confirm box, if you want delete your account."
+msgstr "如果确定删除，请选中多选框。"
+
+#: templates/authopenid/delete.html:19
+msgid "Password:"
+msgstr "密码："
+
+#: templates/authopenid/delete.html:31
+msgid "I am sure I want to delete my account."
+msgstr "我确认要删除这个帐号。"
+
+#: templates/authopenid/delete.html:32
+msgid "Password/OpenID URL"
+msgstr "密码/OpenID地址"
+
+#: templates/authopenid/delete.html:32
+msgid "(required for your security)"
+msgstr "（必需）"
+
+#: templates/authopenid/delete.html:34
+msgid "Delete account permanently"
+msgstr "永久删除帐号"
+
+#: templates/authopenid/settings.html:29
+msgid "Give your  account a new password."
+msgstr "修改密码"
+
+#: templates/authopenid/settings.html:31
+msgid "Add or update the email address associated with your account."
+msgstr "添加或者更新您的邮件地址。"
+
+#: templates/authopenid/settings.html:34
+msgid "Change openid associated to your account"
+msgstr "修改和你帐号绑定的OpenID地址"
+
+#: templates/authopenid/settings.html:38
+msgid "Erase your username and all your data from website"
+msgstr "删除您的帐号和所有内容"
+
+#, fuzzy
+#~ msgid "Badges "
+#~ msgstr "奖牌列表"
+
+#~ msgid ""
+#~ "This username is already                 taken. Please choose another."
+#~ msgstr "用户名已经被注册，请选用一个新的帐号。"
+
+#~ msgid "Your OpenID is verified! "
+#~ msgstr "您的OpenID帐号已经验证通过"
+
+#~ msgid "Associate your OpenID"
+#~ msgstr "绑定您的OpenID"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t<p>If you're joining <strong>Sitename</strong>, associate your OpenID "
+#~ "with a new account. If you're already a member, associate with your "
+#~ "existing account.</p>\n"
+#~ "\t"
+#~ msgstr ""
+#~ "\n"
+#~ "\t<p>输入您的新帐号或者指定已经存在的帐号。</p>\n"
+#~ "\t"
+
+#~ msgid "A new account"
+#~ msgstr "新帐号"
+
+#~ msgid "An exisiting account"
+#~ msgstr "已经存在的帐号"
+
+#~ msgid "Account: Send a new password"
+#~ msgstr "发送一个新的密码"
+
+#~ msgid ""
+#~ "Lost your password ? Here you can ask to reset your password. Enter the "
+#~ "username you use  and you will get a confirmation email with your new "
+#~ "password. This new password will be activated only after you have clicked "
+#~ "on the link in the email."
+#~ msgstr ""
+#~ "丢失了您的密码？你可以在这里重设密码。输入用户名你会收到新的密码的邮件。密"
+#~ "码只有您在激活邮件中的链接才会被激活。"
+
+#~ msgid "Send new password"
+#~ msgstr "发送新密码"

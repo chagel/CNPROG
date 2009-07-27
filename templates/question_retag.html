@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}{% spaceless %}修改问题标签{% endspaceless %}{% endblock %}
+{% block forejs %}
+        <script type='text/javascript' src='/content/js/com.cnprog.editor.js'></script>
+        <script type='text/javascript' src='/content/js/com.cnprog.post.js'></script>
+        <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
+        <script type="text/javascript">
+        
+        $().ready(function(){
+            $("#nav_questions").attr('className',"on");
+            //Tags autocomplete action
+            var tags = {{ tags|safe }};
+        	$("#id_tags").autocomplete(tags, {
+                minChars: 1,
+        		matchContains: true,
+                max: 20,
+                multiple: true,
+                multipleSeparator: " ",
+        		formatItem: function(row, i, max) {
+        			return row.n + " ("+ row.c +")";
+        		},
+                formatResult: function(row, i, max){
+                    return row.n;
+                }
+                
+            });
+           
+             $("#fmretag").validate({
+                rules: {
+        			tags: {
+        				required: true,
+        				maxength: 105
+        			}
+        		},
+                messages: {
+        			tags: {
+                        required: " 标签不能为空。",
+                        maxlength: " 最多5个标签，每个标签长度小于20个字符。"
+                    }
+                }
+                
+            });
+            lanai.highlightSyntax();
+
+        });
+        </script>
+{% endblock %}
+        
+{% block content %}
+<div id="main-bar" class="headNormal">
+    修改标签 [<a href="{{ question.get_absolute_url }}">返回</a>]
+</div>
+<div id="main-body" class="ask-body">
+    <div id="askform">
+        <form id="fmretag" action="{% url edit_question question.id %}" method="post" >
+            <h3>
+                {{ question.get_question_title }}
+            </h3>
+            <div id="description" class="edit-content-html">
+                {{ question.html|safe }}
+            </div>
+           
+            
+            <div class="form-item">
+                <strong>{{ form.tags.label_tag }}:</strong> <span class="form-error"></span><br>
+                {{ form.tags }}  {{ form.tags.errors }}
+                <div class="title-desc">
+                    {{ form.tags.help_text }}
+                </div>
+            </div>
+            <br>
+            
+            <div class="error" ></div>
+            <input type="submit" value="现在修改" class="submit" />
+            <input type="button" value="取消" class="submit" onclick="history.back(-1);" />
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="boxC">
+    <p class="subtitle">为什么我只能修改问题标签？</p>
+    <ul class="list-item">
+        
+        <li>
+            CNProg用标签来分类系统的信息
+
+        </li>
+        <li>
+            修改完整问题需要用户的积分达到一定条件（比如：积分 >= 3000分，自己发布的问题除外），而用户积分达到比较低的时候，就可以修改问题的标签（比如：积分 >= 500, 这里指所有问题的标签）。
+
+        </li>
+        <li>
+            修改标签的用户将授予特殊的社区奖牌 
+
+        </li>
+    </ul>
+    <a href="{% url faq %}" style="float:right;position:relative">faq »</a>
+    <br>  
+</div>
+
+{% endblock %}
+
+{% block endjs %}
+{% endblock %}
+

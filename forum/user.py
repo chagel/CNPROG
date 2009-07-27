@@ -1,3 +1,4 @@
+﻿# coding=utf-8
 from django.utils.translation import ugettext as _
 class UserView:
     def __init__(self, id, tab_title, tab_description, page_title, view_name, template_file, data_size=0):

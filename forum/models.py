@@ -351,7 +351,8 @@ class Award(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     awarded_at = models.DateTimeField(default=datetime.datetime.now)
     notified   = models.BooleanField(default=False)
-
+    objects = AwardManager()
+    
     def __unicode__(self):
         return u'[%s] is awarded a badge [%s] at %s' % (self.user.username, self.badge.name, self.awarded_at)
 

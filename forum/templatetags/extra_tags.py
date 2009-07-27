@@ -1,4 +1,4 @@
-import time
+﻿import time
 import datetime
 import math
 import re
@@ -50,10 +50,10 @@ def tag_font_size(max_size, min_size, current_size):
         weight = 0
     return MIN_FONTSIZE + round((MAX_FONTSIZE - MIN_FONTSIZE) * weight)
 
-    
+
 LEADING_PAGE_RANGE_DISPLAYED = TRAILING_PAGE_RANGE_DISPLAYED = 5
 LEADING_PAGE_RANGE = TRAILING_PAGE_RANGE = 4
-NUM_PAGES_OUTSIDE_RANGE = 1 
+NUM_PAGES_OUTSIDE_RANGE = 1
 ADJACENT_PAGES = 2
 @register.inclusion_tag("paginator.html")
 def cnprog_paginator(context):
@@ -65,10 +65,10 @@ def cnprog_paginator(context):
         " Initialize variables "
         in_leading_range = in_trailing_range = False
         pages_outside_leading_range = pages_outside_trailing_range = range(0)
- 
+
         if (context["pages"] <= LEADING_PAGE_RANGE_DISPLAYED):
             in_leading_range = in_trailing_range = True
-            page_numbers = [n for n in range(1, context["pages"] + 1) if n > 0 and n <= context["pages"]]           
+            page_numbers = [n for n in range(1, context["pages"] + 1) if n > 0 and n <= context["pages"]]
         elif (context["page"] <= LEADING_PAGE_RANGE):
             in_leading_range = True
             page_numbers = [n for n in range(1, LEADING_PAGE_RANGE_DISPLAYED + 1) if n > 0 and n <= context["pages"]]
@@ -77,11 +77,11 @@ def cnprog_paginator(context):
             in_trailing_range = True
             page_numbers = [n for n in range(context["pages"] - TRAILING_PAGE_RANGE_DISPLAYED + 1, context["pages"] + 1) if n > 0 and n <= context["pages"]]
             pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
-        else: 
+        else:
             page_numbers = [n for n in range(context["page"] - ADJACENT_PAGES, context["page"] + ADJACENT_PAGES + 1) if n > 0 and n <= context["pages"]]
             pages_outside_leading_range = [n + context["pages"] for n in range(0, -NUM_PAGES_OUTSIDE_RANGE, -1)]
             pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
-            
+
         extend_url = context.get('extend_url', '')
         return {
             "base_url": context["base_url"],
@@ -205,12 +205,12 @@ def format_number(value):
         m = re.match(pattern, strValue)
     return first + result
 
-@register.simple_tag   
+@register.simple_tag
 def convert2tagname_list(question):
     question['tagnames'] = [name for name in question['tagnames'].split(u' ')]
     return ''
 
-@register.simple_tag    
+@register.simple_tag
 def diff_date(date, limen=2):
     current_time = datetime.datetime(*time.localtime()[0:6])
     diff = current_time - date
