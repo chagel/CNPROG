@@ -1,6 +1,8 @@
+<!-- user_info.html -->
 {% load extra_tags %}
 {% load extra_filters %}
 {% load humanize %}
+{% load i18n %}
 <div id="subheader" class="headUser">
     {{view_user.username}}
     
@@ -18,7 +20,7 @@
                 <tr>
                     <td align="center">
                         <div class="scoreNumber">{{view_user.reputation|intcomma}}</div>
-                        <p><b style="color:#777;">积分</b></p>
+                        <p><b style="color:#777;">{% trans "reputation" %}</b></p>
                     </td>
                 </tr>
             </table>
@@ -26,51 +28,52 @@
         <td width="360" style="vertical-align: top;">
             <table class="user-details">
                 <tr height="30px">
-                    <th width="130" align="left"><strong>注册用户</strong></th>
+                    <th width="130" align="left"><strong>{% trans "Registered user" %}</strong></th>
                     <th width="230"  align="right">
                         {% if request.user|can_view_user_edit:view_user %}
-                        <span class="user-edit-link"><a href="/users/{{ view_user.id }}/edit/">更新我的资料</a></span>
+                        <span class="user-edit-link"><a href="/users/{{ view_user.id }}/edit/">{% trans "update profile" %}</a></span>
                         {% endif %}
                     </th>
                 </tr>
                 {% if view_user.real_name %}
                 <tr>
-                    <td >姓名</td>
-                    <td ><b>{{view_user.real_name}}</b></td>
+                    <td>{% trans "real name" %}</td>
+                    <td><b>{{view_user.real_name}}</b></td>
                 </tr>
                 {% endif %}
                 <tr>
-                    <td>已加入</td>
+                    <td>{% trans "member for" %}</td>
                     <td>{{ view_user.date_joined|timesince }}</td>
                 </tr>
                 {% if view_user.last_seen %}
                 <tr>
-                    <td>上次活动时间</td>
-                    <td><strong title="{{ view_user.last_seen }}">{{ view_user.last_seen|timesince }}前</strong></td>
+                    <td>{% trans "last seen" %}</td>
+                    <td><strong title="{{ view_user.last_seen }}">{{ view_user.last_seen|timesince }} {% trans "ago" %}</strong></td>
                 </tr>
                 {% endif %}
                 {% if view_user.website %}
                 <tr>
-                    <td>个人网站</td>
+                    <td>{% trans "user website" %}</td>
                     <td><a rel="nofollow" target="_blank" href="{{view_user.website}}">{{view_user.website}}</a></td>
                 </tr>
                 {% endif  %}
                 {% if view_user.location %}
                 <tr>
-                    <td>城市</td>
+                    <td>{% trans "location" %}</td>
                     <td>{{view_user.location}}</td>
                 </tr>
                 {% endif %}
                 {% if view_user.date_of_birth%}
                 <tr>
-                    <td>年龄</td>
-                    <td>{% get_age view_user.date_of_birth %} 岁</td>
+					<!--todo  - redo this with blocktrans -->
+                    <td>{% trans "age" %}</td>
+                    <td>{% get_age view_user.date_of_birth %} {% trans "age unit" %}</td>
                 </tr>
                 {% endif %}
                 {% if votes_today_left %}
                 <tr>
-                    <td>今日剩余投票数</td>
-                    <td><strong class="darkred">{{ votes_today_left }}</strong> 票</td>
+                    <td>{% trans "todays unused votes" %}</td>
+                    <td><strong class="darkred">{{ votes_today_left }}</strong> {% trans "votes left" %}</td>
                 </tr>
                 {% endif %}
             </table>
@@ -84,3 +87,4 @@
         </td>
     </tr>
 </table>
+<!-- end user_info.html -->

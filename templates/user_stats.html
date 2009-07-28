@@ -1,4 +1,6 @@
+<!-- user_stats.html -->
 {% extends "user.html" %}
+{% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
 		{% block usercontent %}
@@ -10,7 +12,7 @@
                     <div style="text-align: right;" class="count">{{questions|length}}</div>
                 </td>
                 <td>
-                    <h2>个问题</h2>
+                    <h2>{% trans "User questions" %}</h2>
                 </td>
             </tr>
         </table>
@@ -23,7 +25,7 @@
                     <div style="text-align: right;" class="count">{{answered_questions|length}}</div>
                 </td>
                 <td >
-                    <h2>个回答</h2>
+                    <h2>{% trans "Answers" %}</h2>
                 </td>
             </tr>
         </table>
@@ -31,12 +33,14 @@
             {% for answered_question in answered_questions %}
             <div class="answer-summary">
                 <a title="{{answered_question.summary}}" href="/questions/{{answered_question.id}}/{{answered_question.title}}#{{answered_question.answer_id}}">
-                    <div class="answer-votes {% if answered_question.accepted %}answered-accepted{% endif %}" title="该回答总共有{{ answered_question.vote_count }}个投票&#13;{% if answered_question.accepted %}该回答已被设为最佳答案{%endif%}">
+                    <div class="answer-votes {% if answered_question.accepted %}answered-accepted{% endif %}" 
+						title="{% blocktrans with answered_question.vote_count as vote_count %}the answer has been voted for {{ vote_count }} times{% endblocktrans %}&#13;{% if answered_question.accepted %}{% trans "this answer has been selected as correct" %}{%endif%}">
                         {{ answered_question.vote_count }}
                     </div>
                 </a>
                 <div class="answer-link">
-                    <a href="/questions/{{answered_question.id}}/{{answered_question.title}}#{{answered_question.answer_id}}">{{answered_question.title}}</a> {% if answered_question.comment_count %}<span title="该回答有{{ answered_question.comment_count }}条评论">({{answered_question.comment_count}})</span>{% endif %}
+                    <a href="/questions/{{answered_question.id}}/{{answered_question.title}}#{{answered_question.answer_id}}">{{answered_question.title}}</a> {% if answered_question.comment_count %}<span 
+					title="{% blocktrans %}the answer has been commented {{ answered_question.comment_count }} times{% endblocktrans %}">({{answered_question.comment_count}})</span>{% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -49,7 +53,7 @@
                     <div style="text-align: right;" class="count">{{total_votes}}</div>
                 </td>
                 <td >
-                    <h2>个投票</h2>                    
+                    <h2>{% trans "votes total" %}</h2>                    
                 </td>
             </tr>
         </table>
@@ -58,12 +62,12 @@
                 <tr>
                     <td width="60">
                         <img style="cursor: default;" align="absmiddle" src="/content/images/vote-arrow-up-on.png"/>
-                            <span title="该用户投的赞成票总数" class="vote-count">{{up_votes}}</span>
+                            <span title="{% trans "user has voted up this many times" %}" class="vote-count">{{up_votes}}</span>
 
                     </td>
                     <td width="60">
                         <img style="cursor: default;" align="absmiddle" src="/content/images/vote-arrow-down-on.png"/>
-                            <span title="用户投的反对票总数" class="vote-count">{{down_votes}}</span>
+                            <span title="{% trans "user voted down this many times" %}" class="vote-count">{{down_votes}}</span>
 
                     </td>
                 </tr>
@@ -77,7 +81,7 @@
                     <div style="text-align: right;" class="count">{{tags|length}}</div>
                 </td>
                 <td >
-                    <h2>个标签</h2>
+                    <h2>{% trans "Tags" %}</h2>
                 </td>
             </tr>
         </table>
@@ -86,7 +90,9 @@
                 <tr>
                     <td width="180" valign="top">
                         {% for tag in tags%}
-                        <a rel="tag" title="查看有关'{{ tag }}'的问题" href="{% url forum.views.tag tag|urlencode %}">{{tag.name}}</a><span class="tag-number"> × {{ tag.used_count|intcomma }}</span><br>
+                        <a rel="tag" 
+							title="{% blocktrans %}see other questions tagged '{{ tag }}' {% endblocktrans %}" 
+							href="{% url forum.views.tag tag|urlencode %}">{{tag.name}}</a><span class="tag-number"> × {{ tag.used_count|intcomma }}</span><br>
                             {% if forloop.counter|divisibleby:"10" %}
                                 </td>
                                 <td width="180"  valign="top">
@@ -104,7 +110,7 @@
                     <div style="text-align: right;" class="count">{{total_awards}}</div>
                 </td>
                 <td >
-                    <h2>枚奖牌</h2>
+                    <h2>{% trans "Badges" %}</h2>
                 </td>
             </tr>
         </table>
@@ -125,3 +131,4 @@
         </div>
 
 {% endblock %}
+<!-- end user_stats.html -->

@@ -1,5 +1,6 @@
 var showMessage = function(object, msg) {
-    var div = $('<div class="vote-notification"><h3>' + msg + '</h3>(点击消息框关闭)</div>');
+    var div = $('<div class="vote-notification"><h3>' + msg + '</h3>(' 
+				+ $.i18n._('click to close') + ')</div>');
 
     div.click(function(event) {
         $(".vote-notification").fadeOut("fast", function() { $(this).remove(); });
@@ -33,7 +34,12 @@ var notify = function() {
 } ();
 
 function appendLoader(containerSelector) {
-    $(containerSelector).append('<img class="ajax-loader" src="/content/images/indicator.gif" title="读取中..." alt="读取中..." />');
+    $(containerSelector).append('<img class="ajax-loader" '
+		+'src="/content/images/indicator.gif" title="'
+		+$.i18n._('loading...')
+		+'" alt="'
+		+$.i18n._('loading...')
+		+'" />');
 }
 
 function removeLoader() {
@@ -96,16 +102,16 @@ var CPValidator = function(){
         getQuestionFormMessages: function(){
             return {
                 tags: {
-                    required: " 标签不能为空。",
-                    maxlength: " 最多5个标签，每个标签长度小于20个字符。"
+                    required: " " + $.i18n._('tags cannot be empty'),
+                    maxlength: " " + $.i18n._('tablimits info'),
                 },
                 text: {
-                    required: " 内容不能为空。",
-                    minlength: jQuery.format(" 请输入至少 {0} 字符。")
+                    required: " " + $.i18n._('content cannot be empty'),
+                    minlength: jQuery.format(' ' + $.i18n._('content minchars'))
                 },
                 title: {
-                    required: " 请输入标题。",
-                    minlength: jQuery.format(" 请输入至少 {0} 字符。")
+                    required: " " + $.i18n._('please enter title'),
+                    minlength: jQuery.format(' ' + $.i18n._('title minchars'))
                 }
             };
         }

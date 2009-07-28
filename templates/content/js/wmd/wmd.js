@@ -27,18 +27,18 @@ Attacklab.wmdBase = function(){
 	global.isOpera 		= /opera/.test(nav.userAgent.toLowerCase());
 	global.isKonqueror 	= /konqueror/.test(nav.userAgent.toLowerCase());
 	
-	var toolbar_strong_label = "粗体 <strong> Ctrl-B";
-    var toolbar_emphasis_label = "斜体 <em> Ctrl-I";
-    var toolbar_hyperlink_label = "超链接 <a> Ctrl-L";
-    var toolbar_blockquote_label = "引用 <blockquote> Ctrl-.";
-    var toolbar_code_label = "代码 <pre><code> Ctrl-K";
-    var toolbar_image_label = "图片 <img> Ctrl-G";
-    var toolbar_numbered_label = "数字编号列表 <ol> Ctrl-O";
-    var toolbar_bulleted_label = "项目符号列表 <ul> Ctrl-U";
-    var toolbar_heading_label = "标题 <h1>/<h2> Ctrl-H";
-    var toolbar_horizontal_label = "水平线 <hr> Ctrl-R";
-    var toolbar_undo_label = "撤销 Ctrl-Z";
-    var toolbar_redo_label = "重做 Ctrl-Y";
+	var toolbar_strong_label = $.i18n._('bold') + " <strong> Ctrl-B";
+    var toolbar_emphasis_label = $.i18n._('italic') + " <em> Ctrl-I";
+    var toolbar_hyperlink_label = $.i18n._('link') + " <a> Ctrl-L";
+    var toolbar_blockquote_label = $.i18n._('quote') + " <blockquote> Ctrl-.";
+    var toolbar_code_label = $.i18n._('preformatted text') + " <pre><code> Ctrl-K";
+    var toolbar_image_label = $.i18n._('image') + " <img> Ctrl-G";
+    var toolbar_numbered_label = $.i18n._('numbered list') + " <ol> Ctrl-O";
+    var toolbar_bulleted_label = $.i18n._('bulleted list') + " <ul> Ctrl-U";
+    var toolbar_heading_label = $.i18n._('heading') + " <h1>/<h2> Ctrl-H";
+    var toolbar_horizontal_label = $.i18n._('horizontal bar') + " <hr> Ctrl-R";
+    var toolbar_undo_label = $.i18n._('undo') + " Ctrl-Z";
+    var toolbar_redo_label = $.i18n._('redo') + " Ctrl-Y";
     
 	// -------------------------------------------------------------------
 	//  YOUR CHANGES GO HERE
@@ -49,11 +49,9 @@ Attacklab.wmdBase = function(){
 	
 	// The text that appears on the upper part of the dialog box when
 	// entering links.
-	var imageDialogText = "<p style='margin-top: 0px'><b>输入图片地址</b></p><p>示例：<br />"+
-    "http://www.cnprog.com/images/temp.jpg   \"我的截图\"</p>";
-	var linkDialogText = "<p style='margin-top: 0px'><b>输入Web地址</b></p><p>示例：<br />"+
-        "http://www.cnprog.com/   \"我的网站\"</p>";
-	var uploadImageHTML ="<div>或者上传本地图片：</div>" + 
+	var imageDialogText = "<p style='margin-top: 0px'>" + $.i18n._('enter image url') + '</p>';
+	var linkDialogText = "<p style='margin-top: 0px'>" + $.i18n._('enter url') + '</p>';
+	var uploadImageHTML ="<div>" + $.i18n._('upload image') + "</div>" + 
         "<input type=\"file\" name=\"file-upload\" id=\"file-upload\" size=\"26\" "+
         "onchange=\"return ajaxFileUpload($('#image-url'));\"/><br>" + 
         "<img id=\"loading\" src=\"/content/images/indicator.gif\" style=\"display:none;\"/>";
@@ -1079,7 +1077,7 @@ Attacklab.wmdBase = function(){
 			}
 			else {
 				// mac and other non-Windows platforms
-				redoButton.title = "重做 - Ctrl+Shift+Z";
+				redoButton.title = $.i18n._('redo') + " - Ctrl+Shift+Z";
 			}
 			redoButton.XShift = "-220px";
 			redoButton.execute = function(manager){

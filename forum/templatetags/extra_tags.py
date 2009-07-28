@@ -8,6 +8,7 @@ from django.utils.encoding import smart_unicode
 from django.utils.safestring import mark_safe
 from django.utils.timesince import timesince
 from forum.const import *
+from django.utils.translation import ugettext as _
 
 register = template.Library()
 
@@ -110,23 +111,23 @@ def cnprog_pagesize(context):
             "pagesize" : context["pagesize"],
             "is_paginated": context["is_paginated"]
         }
-
+        
 @register.simple_tag
 def get_score_badge(user):
-    BADGE_TEMPLATE = '<span class="score" title="%(reputation)s用户积分">%(reputation)s</span>'
+    BADGE_TEMPLATE = '<span class="score" title="%(reputation)s %(reputationword)s">%(reputation)s</span>'
     if user.gold > 0 :
-        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, ' <span title="%(gold)s枚金牌">'
-        '<span class="badge1">●</span>'
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(gold)s %(badgesword)s">'
+        '<span class="badge1">&#9679;</span>'
         '<span class="badgecount">%(gold)s</span>'
         '</span>')
     if user.silver > 0:
-        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, ' <span title="%(silver)s枚银牌">'
-        '<span class="silver">●</span>'
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(silver)s %(badgesword)s">'
+        '<span class="silver">&#9679;</span>'
         '<span class="badgecount">%(silver)s</span>'
         '</span>')
     if user.bronze > 0:
-        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, ' <span title="%(bronze)s枚铜牌">'
-        '<span class="bronze">●</span>'
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(bronze)s %(badgesword)s">'
+        '<span class="bronze">&#9679;</span>'
         '<span class="badgecount">%(bronze)s</span>'
         '</span>')
     BADGE_TEMPLATE = smart_unicode(BADGE_TEMPLATE, encoding='utf-8', strings_only=False, errors='strict')
@@ -135,24 +136,26 @@ def get_score_badge(user):
         'gold' : user.gold,
         'silver' : user.silver,
         'bronze' : user.bronze,
+		'badgesword' : _('badges'),
+		'reputationword' : _('reputation points'),
     })
-
+    
 @register.simple_tag
 def get_score_badge_by_details(rep, gold, silver, bronze):
-    BADGE_TEMPLATE = '<span class="reputation-score" title="%(reputation)s用户积分">%(reputation)s</span>'
+    BADGE_TEMPLATE = '<span class="reputation-score" title="%(reputation)s %(repword)s">%(reputation)s</span>'
     if gold > 0 :
-        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(gold)s枚金牌">'
-        '<span class="badge1">●</span>'
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(gold)s %(badgeword)s">'
+        '<span class="badge1">&#9679;</span>'
         '<span class="badgecount">%(gold)s</span>'
         '</span>')
     if silver > 0:
-        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(silver)s枚银牌">'
-        '<span class="badge2">●</span>'
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(silver)s %(badgeword)s">'
+        '<span class="badge2">&#9679;</span>'
         '<span class="badgecount">%(silver)s</span>'
         '</span>')
     if bronze > 0:
-        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(bronze)s枚铜牌">'
-        '<span class="badge3">●</span>'
+        BADGE_TEMPLATE = '%s%s' % (BADGE_TEMPLATE, '<span title="%(bronze)s %(badgeword)s">'
+        '<span class="badge3">&#9679;</span>'
         '<span class="badgecount">%(bronze)s</span>'
         '</span>')
     BADGE_TEMPLATE = smart_unicode(BADGE_TEMPLATE, encoding='utf-8', strings_only=False, errors='strict')
@@ -161,19 +164,24 @@ def get_score_badge_by_details(rep, gold, silver, bronze):
         'gold' : gold,
         'silver' : silver,
         'bronze' : bronze,
-    })
-
+		'repword' : _('reputation points'),
+		'badgeword' : _('badges'),
+    })      
+    
 @register.simple_tag
 def get_user_vote_image(dic, key, arrow):
     if dic.has_key(key):
         if int(dic[key]) == int(arrow):
             return '-on'
     return ''
-
+        
 @register.simple_tag
 def get_age(birthday):
     current_time = datetime.datetime(*time.localtime()[0:6])
-    diff = current_time - birthday
+    year = birthday.year
+    month = birthday.month
+    day = birthday.day
+    diff = current_time - datetime.datetime(year,month,day,0,0,0)
     return diff.days / 365
 
 @register.simple_tag
@@ -210,8 +218,8 @@ def diff_date(date, limen=2):
     if diff_days > limen:
         return date
     else:
-        return timesince(date) + u'前'
-
+        return timesince(date) + _(' ago')
+        
 @register.simple_tag
 def get_latest_changed_timestamp():
     try:

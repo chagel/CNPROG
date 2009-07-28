@@ -10,17 +10,24 @@
 		 {% spaceless %}
         {% block forestyle %}{% endblock %}
         {% endspaceless %}
-        <script type='text/javascript' src='/content/js/com.cnprog.utils.js'></script>
         <script src="http://www.google.com/jsapi"></script>
-       <script>google.load("jquery", "1.2.6");</script>
-        <script type="text/javascript">
+        <script>google.load("jquery", "1.2.6");</script>
+		<script type="text/javascript">
+			var i18nLang = 'en';
+		</script>
+        <script type='text/javascript' src='/content/js/com.cnprog.i18n.js'></script>
+	    <script type='text/javascript' src='/content/js/jquery.i18n.js'></script>
+        <script type='text/javascript' src='/content/js/com.cnprog.utils.js'></script>
+
+       <!-- <script type="text/javascript">
         var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
         document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
         </script>
         <script type="text/javascript">
         UserVoice.Tab.show({ 
-            key: 'cnprog',
-            host: 'cnprog.uservoice.com', 
+			//EDIT!!!
+            key: 'uservoicekey',
+            host: 'where.uservoice.com', 
             forum: 'general', 
             alignment: 'left', /* 'left', 'right' */
             background_color:'#777', 
@@ -28,7 +35,8 @@
             hover_color: '#06C',
             lang: 'en' /* 'en', 'de', 'nl', 'es', 'fr' */
         })
-        </script>
+        </script>-->
+		<!-- todo move this to settings-->
 
         {% with request.user.get_messages as messages%}
         {% if messages %}
@@ -49,10 +57,10 @@
     <body>
         <div class="notify" style="display:none">
             <span>{% if request.user.get_messages %}
-            {% trans "Congratulations! You have new badges: " %}{% for message in request.user.get_messages %}
-            <font class="darkred">{{ message }}</font>, {% endfor %}{% trans "go to see" %}
-            <a href="{{ request.user.get_profile_url }}">{% trans "Profile" %}</a>{% endif %}</span>
-           <a class="close-notify" onclick="notify.close(true)">&times;</a>
+            {% trans "congratulations, community gave you a badge" %}:{% for message in request.user.get_messages %}
+            <font class="darkred">{{ message }}</font>, {% endfor %}{% trans "see" %}
+            <a href="{{ request.user.get_profile_url }}">{% trans "profile" %}</a>{% endif %}</span>
+            <a class="close-notify" onclick="notify.close(true)">&times;</a>
         </div>
         {% include "header.html" %}
         <div id="wrapper">

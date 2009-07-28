@@ -1,7 +1,9 @@
+<!-- template close.html -->
 {% extends "base_content.html" %}
+{% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}关闭问题{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{% trans "Close question" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -11,26 +13,24 @@
 {% endblock %}
 {% block content %}
 <div id="main-bar" class="headNormal">
-    关闭问题
+	{% trans "Close question" %}
 </div>
 <div id="main-body" style="width:100%;margin-bottom:10px">
-    <p>由于以下原因，你要关闭这个问题： <a href="{{ question.get_absolute_url }}">
+    <p>{% trans "Close the question" %}: <a href="{{ question.get_absolute_url }}">
     <strong>{{ question.get_question_title }}</strong></a>
     </p>   
     
     <form id="fmclose" action="{% url close question.id %}" method="post" >
         <p>
-            <strong>原因：</strong> {{ form.reason }}
+            <strong>{% trans "Reasons" %}:</strong> {{ form.reason }}
         </p>
         <div id="" style="padding-top:20px">
-            <input type="submit" value="确定关闭" class="submit" />
-            <input id="btBack" type="button" class="submit" value="取消"  />
+            <input type="submit" value="{% trans "OK to close" %}" class="submit" />
+            <input id="btBack" type="button" class="submit" value="{% trans "Cancel" %}"  />
             
         </div>
         
     </form>
 </div>
 {% endblock %}
-
-
-
+<!-- end template close.html -->

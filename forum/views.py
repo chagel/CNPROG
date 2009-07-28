@@ -15,6 +15,7 @@ from django.utils import simplejson
 from django.core import serializers
 from django.db import transaction
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext as _
 
 from utils.html import sanitize_html
 from markdown2 import Markdown
@@ -1722,13 +1723,13 @@ def upload(request):
 
         result = xml_template % ('Good', '', default_storage.url(new_file_name))
     except UploadPermissionNotAuthorized:
-        result = xml_template % ('', u"上传图片只限于积分+60以上注册用户!", '')
+        result = xml_template % ('', _('uploading images is limited to users with >60 reputation points'), '')
     except FileTypeNotAllow:
-        result = xml_template % ('', u"只允许上传'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'类型的文件！", '')
+        result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
     except FileSizeNotAllow:
-        result = xml_template % ('', u"只允许上传%sK大小的文件！" % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
-    except Exception:
-        result = xml_template % ('', u"在文件上传过程中产生了错误，请联系管理员，谢谢^_^", '')
+        result = xml_template % ('', _("maximum upload file size is %sK") % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
+    except Exception as e:
+        result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % e), '')
 
     return HttpResponse(result, mimetype="application/xml")
 

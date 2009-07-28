@@ -14,61 +14,61 @@ class UserView:
 USER_TEMPLATE_VIEWS = (
     UserView(
         id = 'stats',
-        tab_title = _("Overview"),
-        tab_description = _('User overview'),
-        page_title = _('Overview - User Profile'),
+        tab_title = _('overview'),
+        tab_description = _('user profile'),
+        page_title = _('user profile overview'),
         view_name = 'user_stats',
         template_file = 'user_stats.html'
     ),
     UserView(
         id = 'recent',
-        tab_title = _('Recent'),
-        tab_description = _("Recent activities"),
-        page_title = _('Recent - User Profile'),
+        tab_title = _('recent activity'),
+        tab_description = _('recent user activity'),
+        page_title = _('profile - recent activity'),
         view_name = 'user_recent',
         template_file = 'user_recent.html',
         data_size = 50
     ),
     UserView(
         id = 'responses',
-        tab_title = _("Response"),
-        tab_description = _("Responses from others"),
-        page_title = _("Response - User Profile"),
+        tab_title = _('responses'),
+        tab_description = _('comments and answers to others questions'),
+        page_title = _('profile - responses'),
         view_name = 'user_responses',
         template_file = 'user_responses.html',
         data_size = 50
     ),
     UserView(
         id = 'reputation',
-        tab_title = _("Reputation"),
-        tab_description = _("Community reputation"),
-        page_title = _("Reputation - User Profile"),
+        tab_title = _('reputation'),
+        tab_description = _('user reputation in the community'),
+        page_title = _('profile - user reputation'),
         view_name = 'user_reputation',
         template_file = 'user_reputation.html'
     ),
     UserView(
         id = 'favorites',
-        tab_title = _("Favorites"),
-        tab_description = _("User's favorite questions"),
-        page_title = _("Favorites - User Profile"),
+        tab_title = _('favorite questions'),
+        tab_description = _('users favorite questions'),
+        page_title = _('profile - favorite questions'),
         view_name = 'user_favorites',
         template_file = 'user_favorites.html',
         data_size = 50
     ),
     UserView(
         id = 'votes',
-        tab_title = _("Votes"),
-        tab_description = _("Votes history"),
-        page_title = _("Votes - User Profile"),
+        tab_title = _('casted votes'),
+        tab_description = _('user vote record'),
+        page_title = _('profile - votes'),
         view_name = 'user_votes',
         template_file = 'user_votes.html',
         data_size = 50
     ),
     UserView(
         id = 'preferences',
-        tab_title = _("Preferences"),
-        tab_description = _("User preferences"),
-        page_title = _("Preferences - User Profile"),
+        tab_title = _('preferences'),
+        tab_description = _('user preference settings'),
+        page_title = _('profile - user preferences'),
         view_name = 'user_preferences',
         template_file = 'user_preferences.html'
     )

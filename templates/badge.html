@@ -1,7 +1,9 @@
+<!-- template badge.html -->
 {% extends "base_content.html" %}
+{% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
-{% block title %}{% spaceless %}{{ badge.name }}-奖牌{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{{ badge.name }} - {% trans "Badge" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -12,7 +14,7 @@
 {% endblock %}
 {% block content %}
 <div id="main-bar" class="headNormal">
-    奖牌
+	{% trans "Badge" %}
 </div>
 <div id="main-body" style="width:100%;margin-bottom:20px">
     <p>
@@ -21,7 +23,7 @@
     <div>
         {% if badge.awarded_count %}
         <p style="float:left"><span class="count">{{ awards|length|intcomma }}</span>
-        <strong>用户已被授予该奖牌：</strong></p>
+        <strong>{% trans "The users have been awarded with badges:" %}</strong></p>
         {% endif %}
     </div>
     <div id="award-list" style="clear:both;margin-left:20px;line-height:25px;">
@@ -32,7 +34,4 @@
 
 </div>
 {% endblock %}
-
-
-
-
+<!-- end template badge.html -->

@@ -1,19 +1,19 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block head %}{% endblock %}
-{% block title %}{% spaceless %}绑定OpenID{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{% trans "Connect your OpenID with this site" %}{% endspaceless %}{% endblock %}
 {% block content %}
     <div id="main-bar" class="headNormal">
-        绑定OpenID帐号
-
+		{% trans "Connect your OpenID with your account on this site" %}
     </div>      
 	<p id="completetxt" >
-    	<h3>您的OpenID帐号已经验证通过! 请完成最后一步 - 绑定OpenID到您的帐号。</h3>
-    	<p style="display:none">输入您的新帐号或者指定已经存在的帐号。</p>
+    	<h3>{% trans "Your OpenID is accepted. Please complete this to finish registration." %}</h3>
+    	<p style="display:none">{% trans "This account already exists, please use another." %}</p>
 	</p>
 
 	{% if form1.errors %}
 	<p class="errors">
-        <span class="big">请注意以下错误：</span><br>
+        <span class="big">{% trans "Sorry, looks like we have some errors:" %}</span><br>
         <ul class="error-list">
 		{% if form1.username.errors %} 
 			<li><span class="error">{{ form1.username.errors|join:", " }}</span></li>
@@ -26,7 +26,7 @@
 	{% endif %}
 	{% if form2.errors %}
 	<p class="errors">
-        <span class="big">请注意以下错误：</span><br>
+        <span class="big">{% trans "Sorry, looks like we have some errors:" %}</span><br>
         <ul class="error-list">
 		{% if form2.username.errors %} 
 			<li><span class="error">{{ form2.username.errors|join:", " }}</span></li>
@@ -42,10 +42,10 @@
         <form name="fregister" action="{% url user_register %}" method="POST">
             {{ form.next }}
             <fieldset style="padding:10px">
-            <legend class="big">新帐号</legend>
-				<div class="form-row"><label for="id_username">用户名（<i>在社区显示友好名称，不可更改</i>）</label><br />{{ form1.username }}</div>
-				<div class="form-row"><label for="id_email">电子邮件（<i>用于头像显示服务</i>）</label><br />{{ form1.email }}</div>
-				<div class="submit-row"><input type="submit" class="submit" name="bnewaccount" value="创建帐号"></div>
+            <legend class="big">{% trans "New account" %}</legend>
+				<div class="form-row"><label for="id_username">{% trans "User name (<i>will be shown to others, cannot be modified</i>)" %}</label><br />{{ form1.username }}</div>
+				<div class="form-row"><label for="id_email">{% trans "Email (<i>not shared with anyone</i>)" %}</label><br />{{ form1.email }}</div>
+				<div class="submit-row"><input type="submit" class="submit" name="bnewaccount" value="{% trans "create account" %}"></div>
             </fieldset>
 		</form>
 	</div>
@@ -53,14 +53,15 @@
         <form name="fverify" action="{% url user_register %}" method="POST">
             {{ form.next }}
 			<fieldset style="padding:10px">
-				<legend class="big">已经存在的用户</legend>
-				<div class="form-row"><label for="id_username">用户名</label><br />{{ form2.username }}</div>
-				<div class="form-row"><label for="id_passwordl">密码</label><br />{{ form2.password }}</div>
-				<div class="submit-row"><input type="submit" class="submit" name="bverify" value="确认"> <a href="">忘记密码？</a></div>
+				<legend class="big">{% trans "Existing account" %}</legend>
+				<div class="form-row"><label for="id_username">{% trans "user name" %}</label><br />{{ form2.username }}</div>
+				<div class="form-row"><label for="id_passwordl">{% trans "password" %}</label><br />{{ form2.password }}</div>
+				<!--todo double check translation from chinese 确认 = "Register" -->
+				<div class="submit-row">
+					<input type="submit" class="submit" name="bverify" value="{% trans "Register" %}"> 
+					<a href="">{% trans "Forgot your password?" %}</a>
+				</div>
 			</fieldset>
 		</form>
 	</div>
 {% endblock %}
-
-	
-

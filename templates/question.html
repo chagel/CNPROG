@@ -1,13 +1,15 @@
+<!-- question.html -->
 {% extends "base.html" %}{% load extra_tags %}{% load extra_filters %}{% load humanize %}
+{% load i18n %}
 {% block title %}{% spaceless %}{{ question.get_question_title }}{% endspaceless %}{% endblock %}
 {% block forejs %}
         {% if not question.closed and request.user.is_authenticated %}
         <script type='text/javascript' src='/content/js/com.cnprog.editor.js'></script>
-        <script type='text/javascript' src='/content/js/wmd/showdown-min.js'></script>
-        <script type='text/javascript' src='/content/js/wmd/wmd-min.js'></script>
+        <script type='text/javascript' src='/content/js/wmd/showdown.js'></script>
+        <script type='text/javascript' src='/content/js/wmd/wmd.js'></script>
         <link rel="stylesheet" type="text/css" href="/content/js/wmd/wmd.css" />
         {% endif %}
-        <script type='text/javascript' src='/content/js/com.cnprog.post.pack.js'></script>
+        <script type='text/javascript' src='/content/js/com.cnprog.post.js'></script>
         <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
         <script type="text/javascript">
         // define reputation needs for comments
@@ -32,10 +34,10 @@
                              captureLength: 5, callback: lanai.highlightSyntax});
                              
             var display = true;
-            var txt = "[禁用预览]";
+            var txt = "[{% trans "hide preview" %}]";
             $('#pre-collapse').text(txt);
             $('#pre-collapse').bind('click', function(){
-                txt = display ? "[启用预览]" : "[禁用预览]";
+                txt = display ? "[{% trans "show preview" %}]" : "[{% trans "hide preview" %}]";
                 display = !display;
                 $('#previewer').toggle();
                 $('#pre-collapse').text(txt);
@@ -59,29 +61,39 @@
                     <td style="width:30px;vertical-align:top">
                         <div class="vote-buttons">
                             {% if question_vote %}
-                            <img id="question-img-upvote-{{ question.id }}" class="question-img-upvote" src="/content/images/vote-arrow-up{% if question_vote.is_upvote %}-on{% endif %}.png" title="这篇帖子有价值（再次点击取消操作）" >
-                            <div id="question-vote-number-{{ question.id }}" class="vote-number" title="当前总票数">
+                            <img id="question-img-upvote-{{ question.id }}" class="question-img-upvote" 
+								src="/content/images/vote-arrow-up{% if question_vote.is_upvote %}-on{% endif %}.png" 
+								title="{% trans "i like this post (click again to cancel)" %}" >
+                            <div id="question-vote-number-{{ question.id }}" class="vote-number" 
+								title="{% trans "current number of votes" %}">
                                 {{ question.score }}
                             </div>
-                            <img id="question-img-downvote-{{ question.id }}" class="question-img-downvote" src="/content/images/vote-arrow-down{% if question_vote.is_downvote %}-on{% endif %}.png" title="这篇帖子没有价值（再次点击取消操作）" >
+                            <img id="question-img-downvote-{{ question.id }}" class="question-img-downvote" 
+								src="/content/images/vote-arrow-down{% if question_vote.is_downvote %}-on{% endif %}.png" 
+								title="{% trans "i dont like this post (click again to cancel)" %}" >
                            
                             {% else %}
-                            <img id="question-img-upvote-{{ question.id }}" class="question-img-upvote" src="/content/images/vote-arrow-up.png" title="这篇帖子有价值（再次点击取消操作）" >
-                            <div id="question-vote-number-{{ question.id }}" class="vote-number" title="当前总票数">
+                            <img id="question-img-upvote-{{ question.id }}" class="question-img-upvote" 
+								src="/content/images/vote-arrow-up.png" 
+								title="{% trans "i like this post (click again to cancel)" %}" >
+                            <div id="question-vote-number-{{ question.id }}" class="vote-number" 
+								title="{% trans "current number of votes" %}">
                                 {{ question.score }}
                             </div>
-                            <img id="question-img-downvote-{{ question.id }}" class="question-img-downvote" src="/content/images/vote-arrow-down.png" title="这篇帖子没有价值（再次点击取消操作）" >    
+                            <img id="question-img-downvote-{{ question.id }}" class="question-img-downvote" 
+								src="/content/images/vote-arrow-down.png" title="{% trans "i dont like this post (click again to cancel)" %}" >    
           
                             {% endif %}
                             <br><br>
                             {% if favorited %}
-                            <img class="question-img-favorite" src="/content/images/vote-favorite-on.png" title="我要收藏这个问题（再次点击取消操作）" >
+                            <img class="question-img-favorite" src="/content/images/vote-favorite-on.png" 
+								title="{% trans "mark this question as favorite (click again to cancel)" %}" >
                             <div id="favorite-number" class="favorite-number my-favorite-number">
                                 {{ question.favourite_count }}
                             </div>
                             {% else %}
-                            <img class="question-img-favorite" src="/content/images/vote-favorite-off.png" title="我要收藏这个问题（再次点击取消操作）" >   
-                                
+                            <img class="question-img-favorite" src="/content/images/vote-favorite-off.png" 
+								title="{% trans "remove favorite mark from this question (click again to restore mark)" %}" >   
                             <div id="favorite-number" class="favorite-number">{% ifnotequal question.favourite_count 0 %}{{ question.favourite_count }}{% endifnotequal %}
                             </div>
                         
@@ -96,7 +108,8 @@
                             </div>
                             <div id="question-tags" class="tags" >
                                 {% for tag in question.tagname_list %}
-                                    <a href="{% url forum.views.tag tag|urlencode %}" class="post-tag" title="查看有关'{{ tag }}'的问题" rel="tag">{{ tag }}</a>
+                                    <a href="{% url forum.views.tag tag|urlencode %}" class="post-tag" 
+										title="{% trans "see questions tagged" %}'{{ tag }}'{% trans "using tags" %}" rel="tag">{{ tag }}</a>
                                 {% endfor %}
                             </div>
                             <div id="question-controls" style="clear:both;">
@@ -105,27 +118,30 @@
                                         <td width="210px" style="vertical-align:top">
                                             
                                             {% if request.user|can_edit_post:question %}
-                                            <span class="action-link"><a href="{% url edit_question question.id %}">编辑</a></span>
+                                            <span class="action-link"><a href="{% url edit_question question.id %}">{% trans 'edit' %}</a></span>
                                             <span class="action-link-separator">|</span>
                                             {% endif %}
                                             {% if request.user|can_delete_post:question %}
-                                            <span class="action-link"><a id="question-delete-link-{{question.id}}">删除</a></span>
+                                            <span class="action-link"><a id="question-delete-link-{{question.id}}">{% trans "delete" %}</a></span>
                                             <span class="action-link-separator">|</span>
                                             {% endif %}
                                             {% if question.closed %}
                                             {% if request.user|can_reopen_question:question %}
-                                            <span class="action-link"><a href="{% url reopen question.id %}">打开</a></span>
+                                            <span class="action-link"><a href="{% url reopen question.id %}">{% trans "reopen" %}</a></span>
                                             <span class="action-link-separator">|</span>
                                             {% endif %}
                                             {% else %}
                                             {% if request.user|can_close_question:question %}
-                                            <span class="action-link"><a href="{% url close question.id %}">关闭</a></span>
+                                            <span class="action-link"><a href="{% url close question.id %}">{% trans "close" %}</a></span>
                                             <span class="action-link-separator">|</span>
                                             {% endif %}
                                             {% endif %}
                                             
-                                            <span id="question-offensive-flag-{{ question.id }}" class="offensive-flag" title="检举该帖为垃“水帖”（含广告、人身攻击、恶意言论等）"><a>垃圾帖？</a><span class="darkred">{% if request.user|can_view_offensive_flags %}{% if question.offensive_flag_count %}({{ question.offensive_flag_count }}){% endif %}{% endif %}</span>
-                                                             
+                                            <span id="question-offensive-flag-{{ question.id }}" class="offensive-flag" 
+												title="{% trans "report as offensive (i.e containing spam, advertising, malicious text, etc.)" %}">
+												<a>{% trans "flag offensive" %}</a>
+												<span class="darkred">{% if request.user|can_view_offensive_flags %}
+												{% if question.offensive_flag_count %}({{ question.offensive_flag_count }}){% endif %}{% endif %}</span>
                                             </span>
                                             
                                         </td>
@@ -135,7 +151,7 @@
                                                 <table width="200px" >
                                                     <tr>
                                                         <td colspan="2"> 
-                                                         更新于<a href="{% url question_revisions question.id %}"><strong title="{{question.last_edited_at }}">{% diff_date question.last_edited_at  %}</strong></a>
+                                                         {% trans "updated" %} <a href="{% url question_revisions question.id %}"><strong title="{{question.last_edited_at }}">{% diff_date question.last_edited_at  %}</strong></a>
                                                         </td>
                                                         
                                                     </tr>
@@ -177,14 +193,14 @@
                                         </td>
                                         <td style="vertical-align:top">
                                             {% if question.wiki %}
-                                            <span class="wiki-category">社区Wiki</span>
+                                            <span class="wiki-category">{% trans "community wiki" %}</span>
                                             <div style="margin-bottom:10px"></div>
                                             {% else %}
                                             <div  class="question-mark">
                                                 <table width="200px">
                                                     <tr>
                                                         <td colspan="2"> 
-                                                        提问于<strong title="{{ question.added_at }}">{% diff_date question.added_at %}</strong>
+                                                        {% trans "asked" %} <strong title="{{ question.added_at }}">{% diff_date question.added_at %}</strong>
                                                         </td>
                                                         
                                                     </tr>
@@ -213,7 +229,10 @@
                             
                             <div class="post-comments" style="margin-bottom:20px">
                                 <input id="can-post-comments-question-{{question.id}}" type="hidden" value="{{ request.user|can_add_comments }}"/>
-                                <a id="comments-link-question-{{question.id}}" class="comments-link">{% if question.comment_count %}评论 <strong>({{question.comment_count}})</strong>{% else %}添加评论{% endif %}</a>
+                                <a id="comments-link-question-{{question.id}}" class="comments-link">
+								{% if question.comment_count %}{% trans "comments" %} <strong>({{question.comment_count}})</strong>
+								{% else %}{% trans "add comment" %}
+								{% endif %}</a>
                                 <div id="comments-question-{{question.id}}" class="comments-container">
                                 <div class="comments"/></div>
                             </div>
@@ -225,41 +244,49 @@
             </table>
             {% if question.closed %}
             <div class="question-status" style="margin-bottom:15px">
-            <h3>问题以“{{ question.get_close_reason_display }}”的原因已被 <a href="{{ question.closed_by.get_profile_url }}">{{ question.closed_by.username }}</a> 于{% diff_date question.closed_at %}<font class="darkred">关闭</font></h3>
+            <h3>{% blocktrans %}The question has been closed for the following reason "{{ question.get_close_reason_display }}" by{% endblocktrans %} 
+			<a href="{{ question.closed_by.get_profile_url }}">{{ question.closed_by.username }}</a> 
+			{% blocktrans %}close date {{question.closed_at}}{% endblocktrans %}</h3>
             </div>
             {% endif %}
             
             {% ifnotequal question.answer_count 0 %}
                 <div class="tabBar">
                     <a name="sort-top"></a>
-                    <div class="headQuestions">{{ question.answer_count }}个回答：</div>
+                    <div class="headQuestions">{{ question.answer_count }}{% trans "Answers" %}:</div>
                     <div class="tabsA">
-                         <a id="oldest" href="?sort=oldest#sort-top" title="最先回答显示在最前面">最先回答</a>
-                        <a id="latest" href="?sort=latest#sort-top" title="最晚回答显示在最前面">最近回答</a>
-                        <a id="votes" href="?sort=votes#sort-top" title="投票次数最多的显示在最前面">投票最多</a>   
+                         <a id="oldest" href="?sort=oldest#sort-top" title="{% trans "oldest answers will be shown first" %}">{% trans "oldest answers" %}</a>
+                        <a id="latest" href="?sort=latest#sort-top" title="{% trans "newest answers will be shown first" %}">{% trans "newest answers" %}</a>
+                        <a id="votes" href="?sort=votes#sort-top" title="{% trans "most voted answers will be shown first" %}">{% trans "popular answers" %}</a>   
                     </div>
                 </div>
                 {% cnprog_paginator context %}
   
                 {% for answer in answers %}
                     <a name="{{ answer.id }}"></a>
-                    <div id="answer-container-{{ answer.id }}" class="answer {% if answer.accepted %}accepted-answer{% endif %}{% if answer.deleted %}deleted{% endif %} {% ifequal answer.author_id question.author_id %} answered-by-owner{% endifequal %}">
+                    <div id="answer-container-{{ answer.id }}" class="answer {% if answer.accepted %}accepted-answer{% endif %} {% ifequal answer.author_id question.author_id %} answered-by-owner{% endifequal %} {% if answer.deleted %}deleted{% endif %}">
                         <table style="width:100%;">
                             <tr>
                                 <td style="width:30px;vertical-align:top">
                                     <div class="vote-buttons">
-                                        <img id="answer-img-upvote-{{ answer.id }}" class="answer-img-upvote" src="/content/images/vote-arrow-up{% get_user_vote_image user_answer_votes answer.id 1 %}.png" title="这篇帖子有价值（再次点击取消操作）" >
-                                        <div id="answer-vote-number-{{ answer.id }}" class="vote-number" title="当前总票数">
+                                        <img id="answer-img-upvote-{{ answer.id }}" class="answer-img-upvote" src="/content/images/vote-arrow-up{% get_user_vote_image user_answer_votes answer.id 1 %}.png" title="{% trans "i like this answer (click again to cancel)" %}">
+                                        <div id="answer-vote-number-{{ answer.id }}" class="vote-number" title="{% trans "current number of votes" %}">
                                             {{ answer.score }}
                                         </div>
-                                        <img id="answer-img-downvote-{{ answer.id }}" class="answer-img-downvote" src="/content/images/vote-arrow-down{% get_user_vote_image user_answer_votes answer.id -1 %}.png" title="这篇帖子没有价值（再次点击取消操作）" >
+                                        <img id="answer-img-downvote-{{ answer.id }}" class="answer-img-downvote" 
+											src="/content/images/vote-arrow-down{% get_user_vote_image user_answer_votes answer.id -1 %}.png" 
+											title="{% trans "i dont like this answer (click again to cancel)" %}" >
                                      
                                         <br><br>
                                         {% ifequal request.user question.author  %}
-                                        <img id="answer-img-accept-{{ answer.id }}" class="answer-img-accept" src="/content/images/vote-accepted{% if answer.accepted %}-on{% endif %}.png" title="最佳答案（再次点击取消操作）" >
+                                        <img id="answer-img-accept-{{ answer.id }}" class="answer-img-accept" 
+											src="/content/images/vote-accepted{% if answer.accepted %}-on{% endif %}.png" 
+											title="{% trans "mark this answer as favorite (click again to undo)" %}" >
                                         {% else %}
                                             {% if answer.accepted %}
-                                            <img id="answer-img-accept-{{ answer.id }}" class="answer-img-accept" src="/content/images/vote-accepted{% if answer.accepted %}-on{% endif %}.png" title="这个答案已经被提问作者标记为最佳答案" >
+                                            <img id="answer-img-accept-{{ answer.id }}" class="answer-img-accept" 
+												src="/content/images/vote-accepted{% if answer.accepted %}-on{% endif %}.png" 
+												title="{% trans "the author of the question has selected this answer as correct" %}" >
                                             {% endif %}
                                         {% endifequal %}
                                     </div>
@@ -272,32 +299,43 @@
                                         <div class="answer-controls" style="clear:both;">
                                             <table width="100%">
                         	                    <tr>
-                                                    <td width="210px" style="vertical-align:top">
+                                                    <td width="400px" style="vertical-align:top">
                                                         {% if request.user|can_edit_post:answer %}
-                                                        <span class="action-link"><a href="{% url edit_answer answer.id %}">编辑</a></span>
+                                                        <span class="action-link"><a href="{% url edit_answer answer.id %}">{% trans "edit" %}</a></span>
                                                         <span class="action-link-separator">|</span>
                                                         {% endif %}
                                                         {% if request.user|can_delete_post:answer %}
-                                                        <span class="action-link"><a id="answer-delete-link-{{answer.id}}">删除</a></span>
+                                                        <span class="action-link">
+															<a id="answer-delete-link-{{answer.id}}">
+																{% if answer.deleted %}
+																	{% trans "undelete" %}
+																{% endif %}
+																{% if not answer.deleted %}
+																	{% trans "delete" %}
+																{% endif %}
+															</a>
+														</span>
                                                         <span class="action-link-separator">|</span>
                                                         {% endif %}
                                                         <span class="linksopt">
-                                                            <a href="#{{ answer.id }}" title="该回答的链接地址">
-                                                            永久链接
+                                                            <a href="#{{ answer.id }}" title="{% trans "answer permanent link" %}">
+															{% trans "permanent link" %}
                                                             </a>
                                                         </span>
                                                         <span class="action-link-separator">|</span>
-                                                        <span id="answer-offensive-flag-{{ answer.id }}" class="offensive-flag" title="检举该帖为垃“水帖”（含广告、人身攻击、恶意言论等）"><a>垃圾帖？</a><span class="darkred">{% if request.user|can_view_offensive_flags %}{% if answer.offensive_flag_count %}({{ answer.offensive_flag_count }}){% endif %}{% endif %}</span></span>
+                                                        <span id="answer-offensive-flag-{{ answer.id }}" class="offensive-flag" 
+															title="{% trans "report as offensive (i.e containing spam, advertising, malicious text, etc.)" %}">
+															<a>{% trans "flag offensive" %}</a>
+															<span class="darkred">{% if request.user|can_view_offensive_flags %}{% if answer.offensive_flag_count %}({{ answer.offensive_flag_count }}){% endif %}{% endif %}</span></span>
                                                     </td>
-                        	                    	<td width="210px" style="vertical-align:top">
+                        	                    	<td width="110px" style="vertical-align:top">
                                                     {% if answer.last_edited_by %}
                                                     <div class="question-edit" >
                                                         <table width="200px" >
                                                             <tr>
                                                                 <td colspan="2"> 
-                                                                 更新于<a href="{% url answer_revisions answer.id %}"><strong title="{{answer.last_edited_at }}">{% diff_date answer.last_edited_at  %}</strong></a>
+                                                                 {% trans "updated" %}<a href="{% url answer_revisions answer.id %}"><strong title="{{answer.last_edited_at }}">{% diff_date answer.last_edited_at  %}</strong></a>
                                                                 </td>
-                                                                
                                                             </tr>
                                                             {% if answer.wiki %}
                                                             <tr>
@@ -336,16 +374,15 @@
                                                 </td>
                                                  <td style="vertical-align:top">
                                                     {% if answer.wiki %}
-                                                    <span class="wiki-category">社区Wiki</span>
+                                                    <span class="wiki-category">{% trans "community wiki" %}</span>
                                                     <div style="margin-bottom:10px"></div>
                                                     {% else %}
                                                     <div  class="answer-mark">
                                                         <table width="200px">
                             	                            <tr>
-                                	                            	<td colspan="2"> 
-                                                                回答于<strong title="{{answer.added_at}}">{% diff_date answer.added_at %}</strong>
+                                	                           	<td colspan="2"> 
+                                                                {% trans "asked" %} <strong title="{{answer.added_at}}">{% diff_date answer.added_at %}</strong>
                                                                 </td>
-                            	                            	
                             	                            </tr>
                             	                            <tr>
                                                                 <td width="40px" style="vertical-align:bottom">
@@ -370,7 +407,9 @@
                                         </div>
                                         <div id="comment-{{ answer.id }}" class="post-comments" >
                                             <input id="can-post-comments-answer-{{answer.id}}" type="hidden" value="{{ request.user|can_add_comments }}"/>
-                                            <a id="comments-link-answer-{{answer.id}}" class="comments-link">{% if answer.comment_count %}评论 <strong>({{answer.comment_count}})</strong>{% else %}添加评论{% endif %}</a>
+                                            <a id="comments-link-answer-{{answer.id}}" class="comments-link">
+												{% if answer.comment_count %}{% trans "comments" %} 
+												<strong>({{answer.comment_count}})</strong>{% else %}{% trans "add comment" %}{% endif %}</a>
                                             <div id="comments-answer-{{answer.id}}" class="comments-container">
                                             <div class="comments"/></div>
                                         </div>
@@ -394,7 +433,7 @@
             {% if not question.closed %}
             {% if request.user.is_authenticated %}
             <div style="padding:10px 0 0 0;">
-                <div class="headNormal">您的回答：</div>
+                <div class="headNormal">{% trans "Your answer" %}:</div>
             </div>
 
             <div id="description" class="" >
@@ -404,7 +443,8 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                <span id="pre-collapse" title="打开或者关闭Markdown编辑器的实时预览">预览开关</span>
+                                <span id="pre-collapse" 
+									title="{% trans "Toggle the real time Markdown editor preview" %}">{% trans "toggle preview" %}</span>
                             </td>
                             <td style="text-align:right;">
                                 {{ answer.wiki }} <span style="font-weight:normal;cursor:help" title="{{answer.wiki.help_text}}">{{ answer.wiki.label_tag }} </span>
@@ -415,12 +455,11 @@
                 </div>
                 <div id="previewer" class="wmd-preview"></div>
                 {{ answer.text.errors }}
-                
             </div>
             <br>
-            <input type="submit" value="回答该问题" class="submit"><span class="form-error"></span>
+            <input type="submit" value="{% trans "Answer the question" %}" class="submit"><span class="form-error"></span>
             {% else %}
-            <input id="btLogin" type="button" class="submit" style="width:200px" value="登录并回答该问题">
+            <input id="btLogin" type="button" class="submit" style="width:200px" value="{% trans "Login to answer" %}">
             {% endif %}
             {% endif %}
             <br><br>
@@ -432,26 +471,28 @@
 {% block sidebar %}
 <div class="boxC">
     <p>
-        您正在浏览的问题含有以下标签：
+		{% trans "Question tags" %}:
     </p>
     <p class="tags" >
         {% for tag in tags %}
-        <a href="{% url forum.views.tag tag.name|urlencode %}" title="查看有关'{{ tag.name }}'的问题" rel="tag">{{ tag.name }}</a> <span class="tag-number">× {{ tag.used_count|intcomma }}</span><br>
+        	<a href="{% url forum.views.tag tag.name|urlencode %}" 
+			title="{% trans "see questions tagged"%}'{{tag.name}}'{% trans "using tags" %}" 
+			rel="tag">{{ tag.name }}</a> <span class="tag-number">× {{ tag.used_count|intcomma }}</span><br>
         {% endfor %}
     </p>
     <p>
-        提问时间： <br><strong title="{{ question.added_at }}">{{ question.added_at|timesince }}前</strong>
+        {% trans "question asked" %}: <strong title="{{ question.added_at }}">{{ question.added_at|timesince }} {% trans "ago" %}</strong>
     </p>
     <p> 
-     目前浏览数量：<br><strong>{{ question.view_count|intcomma }} 次</strong>
+     	{% trans "question was seen" %}: <strong>{{ question.view_count|intcomma }} {% trans "times" %}</strong>
     </p>
     <p> 
-        最后更新时间：<br><strong title="{{ question.last_activity_at }}">{{ question.last_activity_at|timesince }}前</strong>
+        {% trans "last updated" %}: <strong title="{{ question.last_activity_at }}">{{ question.last_activity_at|timesince }} {% trans "ago" %}</strong>
     </p>
 </div>
 
 <div class="boxC">
-    <h3 class="subtitle">相似的问题</h3>
+    <h3 class="subtitle">{% trans "Related questions" %}</h3>
     <div class="questions-related">
         {% for question in similar_questions %}
         <p>
@@ -466,4 +507,4 @@
 
 {% block endjs %}
 {% endblock %}
-
+<!-- end question.html -->
