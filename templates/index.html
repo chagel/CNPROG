@@ -4,8 +4,8 @@
 {% load humanize %}
 {% load extra_filters %}
 {% block title %}{% spaceless %}{% trans "Home" %}{% endspaceless %}{% endblock %}
-{% block meta %}<meta name="keywords" content="{% trans "meta site keywords, comma separated" %}" />
-        <meta name="description" content="{% trans "meta site content" %}" />{% endblock %}
+{% block meta %}<meta name="keywords" content="{{ APP_KEYWORDS }}" />
+        <meta name="description" content="{{ APP_DESCRIPTION }}" />{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -78,8 +78,7 @@
 <div class="boxA">
 	<h3>{% trans "welcome to website" %}</h3>
 	<div class="body">
-	  <p>{% trans "what is this website" %}</p>
-	  <p>{% trans "what can one do on this website" %}</p>
+      {{ APP_INTRO|safe }}
 	  <div class="more"><a href="/about">{% trans "about" %} »</a></div>
 	  <div class="more"><a href="/faq">{% trans "faq" %} »</a></div>
 	</div>
