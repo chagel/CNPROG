@@ -115,7 +115,11 @@ def questions(request, tagname=None, unanswered=False):
     # Set flag to False by default. If it is equal to True, then need to be saved.
     pagesize_changed = False
     # get pagesize from session, if failed then get default value
-    pagesize = request.session.get("pagesize")
+    #ERROR: this does not do what it wants ^^
+    #pagesize = request.session.get("pagesize")
+    #HACK: temporal hack
+    pagesize = int(request.GET.get("pagesize", QUESTIONS_PAGE_SIZE))
+
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
