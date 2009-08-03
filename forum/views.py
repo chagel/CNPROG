@@ -1728,8 +1728,8 @@ def upload(request):
         result = xml_template % ('', _("allowed file types are 'jpg', 'jpeg', 'gif', 'bmp', 'png', 'tiff'"), '')
     except FileSizeNotAllow:
         result = xml_template % ('', _("maximum upload file size is %sK") % settings.ALLOW_MAX_FILE_SIZE / 1024, '')
-    except Exception as e:
-        result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % e), '')
+    except Exception:
+        result = xml_template % ('', _('Error uploading file. Please contact the site administrator. Thank you. %s' % Exception), '')
 
     return HttpResponse(result, mimetype="application/xml")
 

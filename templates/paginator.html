@@ -5,7 +5,6 @@
 <div class="paginator">
 {% if has_previous %}<span class="prev"><a href="{{base_url}}page={{ previous }}{{ extend_url }}" title="{% trans "previous" %}">
 &laquo; {% trans "previous" %}</a></span>{% endif %}
- 
 {% if not in_leading_range %}
 	{% for num in pages_outside_trailing_range %}
 		<span class="page"><a href="{{base_url}}page={{ num }}{{ extend_url }}" >{{ num }}</a></span>
