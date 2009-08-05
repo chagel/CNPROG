@@ -1,21 +1,25 @@
 # encoding:utf-8
-SITE_SRC_ROOT = '/change_me/'
+
+#path must have slash appended!!!
+SITE_SRC_ROOT = '/path/to/dir/contating/this/file/'
+LOG_FILENAME = 'django.lanai.log'
 
 #for logging
 import logging
-LOG_FILENAME = SITE_SRC_ROOT + 'django.lanai.log'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG,)
+logging.basicConfig(filename=SITE_SRC_ROOT + 'log/' + LOG_FILENAME, level=logging.DEBUG,)
 
-DATABASE_NAME = 'cnprog'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'root'               # Not used with sqlite3.
+DATABASE_NAME = ''             # Or path to database file if using sqlite3.
+DATABASE_USER = ''               # Not used with sqlite3.
 DATABASE_PASSWORD = ''               # Not used with sqlite3.
+DATABASE_ENGINE = ''  #mysql, etc
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.gzip.GZipMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
+#why does this stuff go here?
+#MIDDLEWARE_CLASSES = (
+#    'django.middleware.gzip.GZipMiddleware',
+#    'django.contrib.sessions.middleware.SessionMiddleware',
+#    'django.middleware.locale.LocaleMiddleware',
+#    'django.middleware.common.CommonMiddleware',
+#    'django.contrib.auth.middleware.AuthenticationMiddleware',
+#    'django.middleware.transaction.TransactionMiddleware',
+#    'debug_toolbar.middleware.DebugToolbarMiddleware',
+#)

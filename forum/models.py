@@ -155,7 +155,7 @@ class Question(models.Model):
         return [name for name in self.tagnames.split(u' ')]
 
     def get_absolute_url(self):
-        return '%s%s' % (reverse('question', args=[self.id]), self.title)
+        return '%s%s' % (reverse('question', args=[self.id]), self.title.replace(' ', '-'))
 
     def has_favorite_by_user(self, user):
         if not user.is_authenticated():

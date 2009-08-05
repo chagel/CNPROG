@@ -18,7 +18,7 @@
 <div class="login">
     <form name="openid_form" action="{% url user_signin %}" method="post">
         {{ form2.next }}
-        <p style="display:none">{% trans "we support two login modes" %}</p>
+        <p>{% trans "we support two login modes" %}</p>
         {% if msg %}
             <p class="warning">{{ msg }}</p>
         {% endif %}
@@ -36,7 +36,7 @@
         	</p>
         </fieldset>	
     </form>
-    <div style="display:none">
+    <div>
         <br>
         {% if form1.errors %}
         <p class="errors">

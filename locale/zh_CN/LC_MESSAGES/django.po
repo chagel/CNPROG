@@ -1103,10 +1103,6 @@ msgstr "标签问题"
 msgid "Active"
 msgstr "活跃问题"
 
-#: templates/questions.html:125
-msgid "Related tags"
-msgstr "相关标签"
-
 #: templates/authopenid/changeemail.html:10
 msgid "Account: change email"
 msgstr "修改电子邮件"
@@ -1449,11 +1445,6 @@ msgstr "有关Markdown详细说明"
 msgid "All questions"
 msgstr "所有问题"
 
-#: templates/questions.html:25
-#, fuzzy
-msgid "Active"
-msgstr "活跃问题"
-
 #: templates/questions.html:26
 #, fuzzy
 msgid "Questions with most answers"
@@ -1465,7 +1456,6 @@ msgstr ""
 
 # index.html
 #: templates/questions.html:57 templates/questions.html.py:69
-#, fuzzy
 msgid "Community wiki"
 msgstr "社区Wiki"
 
@@ -1739,11 +1729,6 @@ msgstr "这个问题被"
 msgid "this answer has been accepted to be correct"
 msgstr "有答案已被接受为正确答案"
 
-#: templates/authopenid/changeemail.html:6
-#, fuzzy
-msgid "Account: change email"
-msgstr "更换电子邮件"
-
 #: templates/authopenid/changeemail.html:9
 msgid ""
 "This is where you can change the email address associated with your account. "
@@ -1947,7 +1932,6 @@ msgid "Give your  account a new password."
 msgstr ""
 
 #: templates/authopenid/settings.html:30
-#, fuzzy
 msgid "Change email "
 msgstr "更换电子邮件"
 

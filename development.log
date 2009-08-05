@@ -1,27 +1,36 @@
 # development 
 
+==Aug 4 2009, Evgeny==
+===Changes===
+* commented out LocaleMiddleware - language can be now switched with settings.LANGUAGE_CODE
+* added DATABASE_ENGINE line to settings_local
+===Merges===
+* Adolfo's slugification of urls
+* Added Chaitanyas changes for traditional login/signup and INSTALL file
+
 ==July 26 2009, Evgeny==
 
 django_authopenid:
 considerably changed user interface
+[comment] - sorry - this is not done yet
 
 log/forum/forms.py:
-- added tag input validation using regex
-- fixed bug with date type mismatch near self.fields['birthday'] = 
+* added tag input validation using regex
+* fixed bug with date type mismatch near self.fields['birthday'] = 
   in EditUserForm.__init__()
 
 /forum/templatetags/extra_tags.py:
-- fixed date type mismatch in get_age()
+* fixed date type mismatch in get_age()
 
 /templates/content/js/com.cnprog.post.js:
-- fixed bug with post deletion/recovery
+* fixed bug with post deletion/recovery
 
 javascript:
-- changed to use of non-minified code - better for editing 
+* changed to use of non-minified code - better for editing 
 and debugging
 
 /templates/question.html:
-- fixed display of delete/undelete links
+* fixed display of delete/undelete links
 
 templates:
 added comments in the beginning/end of each template

@@ -8,6 +8,7 @@
 				<a href="{% url user_signout %}">{% trans "logout" %}</a>
             {% else %}
                 <a href="{% url user_signin %}">{% trans "login" %}</a>
+                <a href="{% url user_signup %}">{% trans "signup" %}</a>
             {% endif %}
             <a href="/about">{% trans "about" %}</a>
             <a href="/faq">{% trans "faq" %}</a>
