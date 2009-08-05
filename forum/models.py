@@ -173,7 +173,10 @@ class Question(models.Model):
             attr = CONST['deleted']
         else:
             attr = None
-        return u'%s %s' % (self.title, attr) if attr is not None else self.title
+        if (attr is not None):
+            return u'%s %s' % (self.title, attr) 
+        else:
+            self.title
 
     def get_revision_url(self):
         return reverse('question_revisions', args=[self.id])
@@ -517,7 +520,12 @@ def record_comment_event(instance, created, **kwargs):
         from django.contrib.contenttypes.models import ContentType
         question_type = ContentType.objects.get_for_model(Question)
         question_type_id = question_type.id
-        type = TYPE_ACTIVITY_COMMENT_QUESTION if instance.content_type_id == question_type_id else TYPE_ACTIVITY_COMMENT_ANSWER
+        #python 2.4 issues - Adolfo Fitoria
+        #type = TYPE_ACTIVITY_COMMENT_QUESTION if instance.content_type_id == question_type_id else TYPE_ACTIVITY_COMMENT_ANSWER
+        if (instance.content_type_id == question_type_id):
+            type = TYPE_ACTIVITY_COMMENT_QUESTION
+        else:
+            type = TYPE_ACTIVITY_COMMENT_ANSWER
         activity = Activity(user=instance.user, active_at=instance.added_at, content_object=instance, activity_type=type)
         activity.save()
 

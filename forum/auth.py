@@ -167,7 +167,10 @@ def can_upload_files(request_user):
 ###########################################
 def calculate_reputation(origin, offset):
     result = int(origin) + int(offset)
-    return result if result > 0 else 1
+    if (result > 0):
+        return result
+    else: 
+        return 1
 
 @transaction.commit_on_success
 def onFlaggedItem(item, post, user):
