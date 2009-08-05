@@ -1037,8 +1037,14 @@ def user_recent(request, user_id, user_view):
             self.type_id = type
             self.title = title
             self.summary = summary
-            self.title_link = u'/questions/%s/%s#%s' %(question_id, title, answer_id)\
-                if int(answer_id) > 0 else u'/questions/%s/%s' %(question_id, title)
+            #python 2.4 issue - Adolfo Fitoria
+            #self.title_link = u'/questions/%s/%s#%s' %(question_id, title, answer_id)\
+            #    if int(answer_id) > 0 else u'/questions/%s/%s' %(question_id, title)
+            if (int(answer_id)>0):
+                self.title_link = u'/questions/%s/%s#%s' %(question_id, title, answer_id)
+            else:
+                self.title_link =  u'/questions/%s/%s' %(question_id, title)
+
     class AwardEvent:
         def __init__(self, time, type, id):
             self.time = time
