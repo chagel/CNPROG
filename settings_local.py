@@ -1,7 +1,7 @@
 # encoding:utf-8
 
 #path must have slash appended!!!
-SITE_SRC_ROOT = '/...this dir.../'
+SITE_SRC_ROOT = '/var/www/vhosts/default/htdocs/cnprog-tests/test/'
 LOG_FILENAME = 'django.lanai.log'
 
 #for logging
