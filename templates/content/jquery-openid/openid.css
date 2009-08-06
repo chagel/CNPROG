@@ -1,0 +1,33 @@
+fieldset {border-style:none;}
+img {border-style:none;}
+
+.logo_box {width:90px;height:40px;background:white;border:1px solid #dddddd;}
+.openid_box img {margin-top:6px;}
+.aol_box img {margin-top:6px;}
+.yahoo_box img {margin-top:13px;}
+.google_box img {margin-top:6px;}
+
+form.openid ul{ margin:0;padding:0;text-align:center; list-style-type:none; display:block;}
+form.openid ul li {float:left; padding:4px;} 
+form.openid ul li span {padding:0 1em 0 3px}
+form.openid ul li.first_tiny_li {clear:left;}
+form.openid fieldset {clear:both;padding:10px 0px 0px 0px;}
+form.openid div+fieldset {display:none}
+form.openid label {display:block; font-weight:bold; margin-bottom:.5em}
+input[name=openid_username] {width:8em}
+input[name=openid_identifier] {width:18em}
+form.openid ul li.highlight { -moz-border-radius:4px; -webkit-border-radius:4px; background-color: #FD6}
+form.openid fieldset div {-moz-border-radius:4px; -webkit-border-radius:4px; 
+                          background: #DCDCDC;
+						  padding:10px;display:inline-block}
+form.openid fieldset div p {padding:0px;margin:0px;}
+/*form.openid input[type='submit'] {margin-left:1em;}*/
+#openid_username {background:#ffffa0;}
+#openid_url {background:#ffffa0;}
+
+.openid_logo{color:#F7931E;padding:6px 0px 8px 28px; 
+background: url(images/openidico.png) no-repeat;
+}
+
+#openid_login {float:left; width:30%; margin:2em 1em; text-align:center}
+#openid_login div{margin-top:0.5em}
