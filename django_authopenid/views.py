@@ -30,12 +30,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-from django.http import HttpResponseRedirect, get_host
+from django.http import HttpResponseRedirect, get_host, Http404
 from django.shortcuts import render_to_response as render
 from django.template import RequestContext, loader, Context
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import logout #for login I've added wrapper below - called login
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.utils.encoding import smart_unicode
@@ -44,6 +44,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from django.utils.http import urlquote_plus
 from django.core.mail import send_mail
+from django.views.defaults import server_error
 
 from openid.consumer.consumer import Consumer, \
     SUCCESS, CANCEL, FAILURE, SETUP_NEEDED
@@ -65,6 +66,16 @@ from django_authopenid.forms import OpenidSigninForm, OpenidAuthForm, OpenidRegi
         OpenidVerifyForm, RegistrationForm, ChangepwForm, ChangeemailForm, \
         ChangeopenidForm, DeleteForm, EmailPasswordForm
 
+def login(request,user):
+    from django.contrib.auth import login as _login
+    from forum.models import user_logged_in #custom signal
+    #1) get old session key
+    session_key = request.session.session_key
+    #2) login and get new session key
+    _login(request,user)
+    #3) send signal with old session key as argument
+    user_logged_in.send(user=user,session_key=session_key,sender=None)
+
 def get_url_host(request):
     if request.is_secure():
         protocol = 'https'
@@ -75,8 +86,6 @@ def get_url_host(request):
 
 def get_full_url(request):
     return get_url_host(request) + request.get_full_path()
-
-
 
 def ask_openid(request, openid_url, redirect_to, on_failure=None,
         sreg_request=None):
@@ -96,7 +105,7 @@ def ask_openid(request, openid_url, redirect_to, on_failure=None,
     try:
         auth_request = consumer.begin(openid_url)
     except DiscoveryFailure:
-        msg = _(u"非法OpenID地址： %s" % openid_url)
+        msg = _(u"OpenID %(openid_url)s is invalid" % {'openid_url':openid_url})
         return on_failure(request, msg)
 
     if sreg_request:
@@ -113,7 +122,6 @@ def complete(request, on_success=None, on_failure=None, return_to=None):
     # make sure params are encoded in utf8
     params = dict((k,smart_unicode(v)) for k, v in request.GET.items())
     openid_response = consumer.complete(params, return_to)
-            
     
     if openid_response.status == SUCCESS:
         return on_success(request, openid_response.identity_url,
@@ -150,7 +158,7 @@ def not_authenticated(func):
     return decorated
 
 @not_authenticated
-def signin(request):
+def signin(request,newquestion=False,newanswer=False):
     """
     signin page. It manage the legacy authentification (user/password) 
     and authentification with openid.
@@ -168,7 +176,7 @@ def signin(request):
     
     if request.POST:   
         
-        if 'bsignin' in request.POST.keys():
+        if 'bsignin' in request.POST.keys() or 'openid_username' in request.POST.keys():
 
             form_signin = OpenidSigninForm(request.POST)
             if form_signin.is_valid():
@@ -179,7 +187,6 @@ def signin(request):
                         reverse('user_complete_signin'), 
                         urllib.urlencode({'next':next})
                 )
-
                 return ask_openid(request, 
                         form_signin.cleaned_data['openid_url'], 
                         redirect_to, 
@@ -195,8 +202,24 @@ def signin(request):
                 next = clean_next(form_auth.cleaned_data.get('next'))
                 return HttpResponseRedirect(next)
 
+    question = None
+    if newquestion == True:
+        from forum.models import AnonymousQuestion as AQ
+        session_key = request.session.session_key
+        qlist = AQ.objects.filter(session_key=session_key).order_by('-added_at')
+        if len(qlist) > 0:
+            question = qlist[0]
+    answer = None
+    if newanswer == True:
+        from forum.models import AnonymousAnswer as AA
+        session_key = request.session.session_key
+        alist = AA.objects.filter(session_key=session_key).order_by('-added_at')
+        if len(alist) > 0:
+            answer = alist[0]
 
     return render('authopenid/signin.html', {
+        'question':question,
+        'answer':answer,
         'form1': form_auth,
         'form2': form_signin,
         'msg':  request.GET.get('msg',''),
@@ -220,7 +243,7 @@ def signin_success(request, identity_url, openid_response):
     if openid isn't registered user is redirected to register page.
     """
 
-    openid_ = from_openid_response(openid_response)
+    openid_ = from_openid_response(openid_response) #create janrain OpenID object
     request.session['openid'] = openid_
     try:
         rel = UserAssociation.objects.get(openid_url__exact = str(openid_))
@@ -278,7 +301,8 @@ def register(request):
         'next': next,
         'username': nickname,
     })
-    
+
+    user_ = None
     if request.POST:
         just_completed = False
         if 'bnewaccount' in request.POST.keys():
@@ -309,14 +333,41 @@ def register(request):
                         user_id=user_.id)
                 uassoc.save()
                 login(request, user_)
+
+        #check if we need to post a question that was added anonymously
+        #this needs to be a function call becase this is also done
+        #if user just logged in and did not need to create the new account
         
-        # redirect, can redirect only if forms are valid.
-        if is_redirect:
-            return HttpResponseRedirect(next) 
+        if user_ != None and settings.EMAIL_VALIDATION == 'on':
+            send_new_email_key(user_,nomessage=True)
+            output = validation_email_sent(request)
+            set_email_validation_message(user_) #message set after generating view
+            return output
+        elif user_.is_authenticated():
+            return HttpResponseRedirect('/')
+        else:
+            raise server_error('')
     
+    openid_str = str(openid_)
+    bits = openid_str.split('/')
+    base_url = bits[2] #assume this is base url
+    url_bits = base_url.split('.')
+    provider_name = url_bits[-2].lower()
+
+    providers = {'yahoo':'<font color="purple">Yahoo!</font>',
+                'flickr':'<font color="#0063dc">flick</font><font color="#ff0084">r</font>&trade;',
+                'google':'Google&trade;',
+                'aol':'<font color="#31658e">AOL</font>',
+                }
+    if provider_name not in providers:
+        provider_logo = provider_name
+    else:
+        provider_logo = providers[provider_name]
+
     return render('authopenid/complete.html', {
         'form1': form1,
         'form2': form2,
+        'provider':providers[provider_name],
         'nickname': nickname,
         'email': email
     }, context_instance=RequestContext(request))
@@ -464,46 +515,157 @@ def changepw(request):
     return render('authopenid/changepw.html', {'form': form },
                                 context_instance=RequestContext(request))
 
+def find_email_validation_messages(user):
+    msg_text = _('your email needs to be validated')
+    return user.message_set.filter(message__exact=msg_text)
+
+def set_email_validation_message(user):
+    messages = find_email_validation_messages(user)
+    msg_text = _('your email needs to be validated')
+    if len(messages) == 0:
+        user.message_set.create(message=msg_text)
+
+def clear_email_validation_message(user):
+    messages = find_email_validation_messages(user)
+    messages.delete()
+
+def set_new_email(user, new_email, nomessage=False):
+    if new_email != user.email:
+        user.email = new_email
+        user.email_isvalid = False
+        user.save()
+        if settings.EMAIL_VALIDATION == 'on':
+            send_new_email_key(user,nomessage=nomessage)
+
+def _send_email_key(user):
+    """private function. sends email containing validation key
+    to user's email address
+    """
+    subject = _("Welcome")
+    message_template = loader.get_template('authopenid/email_validation.txt')
+    import settings
+    message_context = Context({
+    'validation_link': '%s/email/verify/%d/%s/' % (settings.APP_URL ,user.id,user.email_key)
+    })
+    message = message_template.render(message_context)
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+
+def send_new_email_key(user,nomessage=False):
+    import random
+    random.seed()
+    user.email_key = '%032x' % random.getrandbits(128) 
+    user.save()
+    _send_email_key(user)
+    if nomessage==False:
+        set_email_validation_message(user)
+
+@login_required
+def send_email_key(request):
+    """
+    url = /email/sendkey/
+
+    view that is shown right after sending email key
+    email sending is called internally
+
+    raises 404 if email validation is off
+    if current email is valid shows 'key_not_sent' view of 
+    authopenid/changeemail.html template
+    """
+
+    if settings.EMAIL_VALIDATION != 'off':
+        if request.user.email_isvalid:
+            return render('authopenid/changeemail.html',
+                            { 'email': request.user.email, 
+                              'action_type': 'key_not_sent', 
+                              'change_link': reverse('user_changeemail')},
+                              context_instance=RequestContext(request)
+                              )
+        else:
+            _send_email_key(request.user)
+            return validation_email_sent(request)
+    else:
+        raise Http404
+   
+
+#internal server view used as return value by other views
+def validation_email_sent(request):
+    return render('authopenid/changeemail.html',
+                    { 'email': request.user.email, 'action_type': 'validate', }, 
+                     context_instance=RequestContext(request))
+
+
+def verifyemail(request,id=None,key=None):
+    """
+    view that is shown when user clicks email validation link
+    url = /email/verify/{{user.id}}/{{user.email_key}}/
+    """
+    if settings.EMAIL_VALIDATION != 'off':
+        user = User.objects.get(id=id)
+        if user:
+            if user.email_key == key:
+                user.email_isvalid = True
+                clear_email_validation_message(user)
+                user.save()
+                return render('authopenid/changeemail.html', {
+                    'action_type': 'validation_complete',
+                    }, context_instance=RequestContext(request))
+    raise Http404
+
 @login_required
 def changeemail(request):
     """ 
     changeemail view. It require password or openid to allow change.
 
-    url: /changeemail/
+    url: /email/*
 
     template : authopenid/changeemail.html
     """
     msg = request.GET.get('msg', '')
     extension_args = {}
     user_ = request.user
-    
+
     redirect_to = get_url_host(request) + reverse('user_changeemail')
+    action = 'change'
 
     if request.POST:
         form = ChangeemailForm(request.POST, user=user_)
         if form.is_valid():
             if not form.test_openid:
-                user_.email = form.cleaned_data['email']
-                user_.save()
-                msg = _("Email changed.") 
-                redirect = "%s?msg=%s" % (reverse('user_account_settings'),
-                        urlquote_plus(msg))
-                return HttpResponseRedirect(redirect)
+                new_email = form.cleaned_data['email']
+                if new_email != user_.email:
+                    if settings.EMAIL_VALIDATION == 'on':
+                        action = 'validate'
+                    else:
+                        action = 'done_novalidate'
+                    set_new_email(user_, new_email,nomessage=True)
+                else:
+                    action = 'keep'
             else:
+                #what does this branch do?
+                return server_error('')
                 request.session['new_email'] = form.cleaned_data['email']
                 return ask_openid(request, form.cleaned_data['password'], 
                         redirect_to, on_failure=emailopenid_failure)    
+
     elif not request.POST and 'openid.mode' in request.GET:
         return complete(request, emailopenid_success, 
                 emailopenid_failure, redirect_to) 
     else:
         form = ChangeemailForm(initial={'email': user_.email},
                 user=user_)
+
     
-    return render('authopenid/changeemail.html', {
+    output = render('authopenid/changeemail.html', {
         'form': form,
+        'email': user_.email,
+        'action_type': action,
         'msg': msg 
         }, context_instance=RequestContext(request))
+
+    if action == 'validate':
+        set_email_validation_message(user_)
+
+    return output
 
 
 def emailopenid_success(request, identity_url, openid_response):

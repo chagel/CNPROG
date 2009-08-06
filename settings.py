@@ -17,8 +17,9 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-SERVER_EMAIL = 'webmaster@cnprog.com'
-DEFAULT_FROM_EMAIL = 'webmaster@cnprog.com'
+#email server settings
+SERVER_EMAIL = ''
+DEFAULT_FROM_EMAIL = 'team@cnprog.com'
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_SUBJECT_PREFIX = '[cnprog.com]'
@@ -29,16 +30,14 @@ EMAIL_USE_TLS=True
 #LOCALIZATIONS
 TIME_ZONE = 'Asia/Chongqing Asia/Chungking'
 # LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'zh-cn'
 SITE_ID = 1
-USE_I18N = True
 
-#OTHER SETTINS
+#OTHER SETTINGS
 APP_TITLE = u'CNProg.com 程序员问答社区'
-APP_URL = 'http://www.cnprog.com'
 APP_KEYWORDS = u'技术问答社区，中国程序员，编程技术社区，程序员社区，程序员论坛，程序员wiki，程序员博客'
 APP_DESCRIPTION = u'中国程序员的编程技术问答社区。我们做专业的、可协作编辑的技术问答社区。'
 APP_INTRO = u' <p>CNProg是一个<strong>面向程序员</strong>的可协作编辑的<strong>开放源代码问答社区</strong>。</p><p> 您可以在这里提问各类<strong>程序技术问题</strong> - 问题不分语言和平台。 同时也希望您对力所能及的问题，给予您的宝贵答案。</p>'
+APP_COPYRIGHT = 'Copyright CNPROG.COM 2009'
 ADMIN_MEDIA_PREFIX = '/admin/media/'
 SECRET_KEY = '$oo^&_m&qwbib=(_4m_n*zn-d=g#s0he5fx9xonnym#8p6yigm'
 # List of callables that know how to import templates from various sources.
@@ -51,19 +50,20 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    #'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
-    'middleware.pagesize.QuestionsPageSizeMiddleware',
+    #'middleware.pagesize.QuestionsPageSizeMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
-    'django.core.context_processors.auth',
-    'context.application_settings'
+    'context.auth_processor',
+    'context.application_settings',
+    #'django.core.context_processors.i18n',
 )
 
 ROOT_URLCONF = 'urls'
@@ -97,3 +97,11 @@ INSTALLED_APPS = (
 # User settings
 from settings_local import *
 
+USE_I18N = True
+LANGUAGE_CODE = 'en'
+EMAIL_VALIDATION = 'off'
+MIN_USERNAME_LENGTH = 1
+EMAIL_UNIQUE = False
+APP_URL = 'http://server.com' #used by email notif system and RSS
+GOOGLE_SITEMAP_CODE = '55uGNnQVJW8p1bbXeF/Xbh9I7nZBM/wLhRz6N/I1kkA='
+GOOGLE_ANALYTICS_KEY = ''

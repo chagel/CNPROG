@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+<!-- template badges.html -->
 {% load extra_tags %}
 {% load humanize %}
 {% load i18n %}
@@ -15,9 +16,10 @@
 <div class="headlineA">
         <span class="headMedals">{% trans "Badges" %}</span>
 </div>
-<div id="main-body" style="width:100%">
+<div class="badges" id="main-body" style="width:100%">
     <p>
-	{% trans "Community gives you awards for your questions, answers and votes. Below is the list of available badges and number of times each type of badge has been awarded." %}
+	{% trans "Community gives you awards for your questions, answers and votes." %}<br>
+	{% trans "Below is the list of available badges and number of times each type of badge has been awarded." %}
     </p>
     <br>
     <div id="medalList">
@@ -43,14 +45,14 @@
 {% endblock %}
 {% block sidebar %}
 
-<div class="boxB">
+<div class="boxC">
     <h3>{% trans "Community badges" %}</h3>
     <div class="body">
     <p>
         <a style="cursor:default;" title="gold badge: the highest honor and is very rare" class="medal"><span class="badge1">&#9679;</span>&nbsp;{% trans "gold" %}</a>
     </p>
     <p>
-    {% trans "Gold badge is very rare. To obtain it you have to show profound knowledge and ability in addition to actively participating in the community. Gold badge is the highest award in this community." %}
+	{% trans "gold badge description" %}
     </p>
     <p>
         <a style="cursor:default;" 
@@ -58,14 +60,14 @@
 			class="medal"><span class="badge2">&#9679;</span>&nbsp;{% trans "silver" %}</a>
     </p>
     <p>
-	{% trans "Obtaining silver badge requires significant patience. If you got one, you've very significantly contributed to this community" %}
+	{% trans "silver badge description" %}
     </p>
     <p>
         <a style="cursor:default;" title="{% trans "bronze badge: often given as a special honor" %}" class="medal">
 		<span class="badge3">&#9679;</span>&nbsp;{% trans "bronze" %}</a>
     </p>
     <p>
-	{% trans "If you are active in this community, you will get this medal - still it is a special honor." %}
+	{% trans "bronze badge description" %}
     </p>
     </div>
 </div>

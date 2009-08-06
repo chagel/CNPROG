@@ -1,20 +1,23 @@
 {% extends "user.html" %}
+<!-- user_preferences.html -->
+{% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
 
 {% block usercontent %}
         <div style="padding:5px;">
         <fieldset>
-            <legend><b>同步Twitter消息</b></legend>
+            <legend><b>{% trans "Connect with Twitter" %}</b></legend>
             <form>
-                <label for="name">账号:</label>
+                <label for="name">{% trans "Twitter account name:" %}</label>
                 <input id="name" /><br>
-                <label for="password">密码:</label>
+                <label for="password">{% trans "Twitter password:" %}</label>
                 <input id="password" type="password"/><br>
-                <input id="cbMessage" type="checkbox" />发布我的提问到我的Twitter<br>
-                <input id="cbReply" type="checkbox" />发布我的回答到我的Twitter<br>
-                <input type="submit" value="保存" />
+                <input id="cbMessage" type="checkbox" />{% trans "Send my Questions to Twitter" %}<br>
+                <input id="cbReply" type="checkbox" />{% trans "Send my Answers to Twitter" %}<br>
+                <input type="submit" value="{% trans "Save" %}" />
             </form>
         </fieldset>
         </div>
 {% endblock %}
+<!-- end user_preferences.html -->

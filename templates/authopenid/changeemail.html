@@ -1,35 +1,81 @@
 {% extends "base_content.html" %}
 {% load i18n %}
 {% block content %}
-<div id="main-bar" class="">
-    <h3>
-        {% trans "Account: change email" %}
-    </h3>
-</div>
-<p class="settings-descr">{% blocktrans %}This is where you can change the email address associated with your account. Please keep this email address up to date so we can send you a password-reset email if you request one.{% endblocktrans %}</p>
-{% if form.errors %}
-<p class="errors">{% trans "Please correct errors below:" %}<br />
-	{% if form.email.errors %} 
-		<span class="error">{{ form.email.errors|join:", " }}</span>
-	{% endif %}
-	{% if form.password.errors %} 
-		<span class="error">{{ form.password.errors|join:", " }}</span>
-	{% endif %}
-</p>
-{% endif %}
+<!-- changeemail.html action_type={{action_type}}-->
+{% ifequal action_type "change" %}
+    <div id="main-bar" class="headNormal">
+        {% trans "Change email" %}
+    </div>
+    <p class="message">
+    {% blocktrans %}change {{email}} info{% endblocktrans %}
+    </p>
+    {% if form.errors %}
+    <p class="errors">{% trans "Please correct errors below:" %}<br />
+        {% if form.email.errors %} 
+            <span class="error">{{ form.email.errors|join:", " }}</span>
+        {% endif %}
+        {% if form.password.errors %} 
+            <span class="error">{{ form.password.errors|join:", " }}</span>
+        {% endif %}
+    </p>
+    {% endif %}
 
-{% if msg %}
-<p class="errors">{{ msg }}</p>
-{% endif %}
+    {% if msg %}
+    <p class="errors">{{ msg }}</p>
+    {% endif %}
 
-<div class="aligned">
-	<form action="." method="post" accept-charset="utf-8">
+    <div class="aligned">
+        <form action="." method="post" accept-charset="utf-8">
 
-		<div id="form-row"><label for="id_email">{% trans "Email" %}</label>{{ form.email }}</div>
-		<div id="form-row"><label for="id_password">{% trans "Password" %}</label>{{ form.password }}</div>
+            <div class="form-row"><label for="id_email">{% trans "Your new Email" %}</label><br>{{ form.email }}</div>
+            <!--<div class="form-row"><label for="id_password">{% trans "Password" %}</label>{{ form.password }}</div>-->
+            <div class="submit-row">
+                <input class="submit" type="submit" name="change_email" value="{% trans "Change email" %}">
+                <input class="submit" type="submit" name="cancel" value="{% trans "Cancel" %}">
+            </div>
 
-        <p><input type="submit" value="{% trans "Change email" %}"></p>
-
-	</form>
-	</div>
+        </form>
+    </div>
+{% endifequal %}
+{% ifequal action_type "validate" %}
+    <div id="main-bar" class="headNormal">
+        {% trans "Validate email" %}
+    </div>
+    <p class="message">
+        {% blocktrans %}validate {{email}} info{% endblocktrans %}
+    </p>
+{% endifequal %}
+{% ifequal action_type "keep" %}
+    <div id="main-bar" class="headNormal">
+        {% trans "Email not changed" %}
+    </div>
+    <p class="message">
+        {% blocktrans %}old {{email}} kept{% endblocktrans %}
+    </p>
+{% endifequal %}
+{% ifequal action_type "done_novalidate" %}
+    <div id="main-bar" class="headNormal">
+        {% trans "Email changed" %}
+    </div>
+    <p class="message">
+        {% blocktrans %}your current {{email}} can be used for this{% endblocktrans %}
+    </p>
+{% endifequal %}
+{% ifequal action_type "validation_complete" %}
+    <div id="main-bar" class="headNormal">
+        {% trans "Email verified" %}
+    </div>
+    <p class="message">
+        {% trans "thanks for verifying email" %}
+    </p>
+{% endifequal %}
+{% ifequal action_type "key_not_sent" %}
+    <div id="main-bar" class="headNormal">
+        {% trans "email key not sent" %}
+    </div>
+    <p class="message">
+        {% blocktrans %}email key not sent {{email}} change email here {{change_link}}{% endblocktrans %}
+    </p>
+{% endifequal %}
 {% endblock %}
+<!-- end changeemail.html -->

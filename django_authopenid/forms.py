@@ -158,7 +158,7 @@ class OpenidRegisterForm(forms.Form):
                 raise forms.ValidationError(_('invalid user name'))
             if self.cleaned_data['username'] in RESERVED_NAMES:
                 raise forms.ValidationError(_('sorry, this name can not be used, please try another'))
-            if len(self.cleaned_data['username']) < 3:
+            if len(self.cleaned_data['username']) < settings.MIN_USERNAME_LENGTH:
                 raise forms.ValidationError(_('username too short'))
             try:
                 user = User.objects.get(
@@ -171,19 +171,22 @@ class OpenidRegisterForm(forms.Form):
             raise forms.ValidationError(_('this name is already in use - please try anoter'))
             
     def clean_email(self):
-        """For security reason one unique email in database"""
+        """Optionally, for security reason one unique email in database"""
         if 'email' in self.cleaned_data:
-            try:
-                user = User.objects.get(email = self.cleaned_data['email'])
-            except User.DoesNotExist:
+            if settings.EMAIL_UNIQUE == True:
+                    try:
+                        user = User.objects.get(email = self.cleaned_data['email'])
+                    except User.DoesNotExist:
+                        return self.cleaned_data['email']
+                    except User.MultipleObjectsReturned:
+                        raise forms.ValidationError(u'There is already more than one \
+                            account registered with that e-mail address. Please try \
+                            another.')
+                    raise forms.ValidationError(_("This email is already \
+                        registered in our database. Please choose another."))
+            else:
                 return self.cleaned_data['email']
-            except User.MultipleObjectsReturned:
-                raise forms.ValidationError(u'There is already more than one \
-                    account registered with that e-mail address. Please try \
-                    another.')
-            raise forms.ValidationError(_("This email is already \
-                registered in our database. Please choose another."))
- 
+        #what if not???
     
 class OpenidVerifyForm(forms.Form):
     """ openid verify form (associate an openid with an account) """
@@ -204,8 +207,7 @@ class OpenidVerifyForm(forms.Form):
         """ validate username """
         if 'username' in self.cleaned_data:
             if not username_re.search(self.cleaned_data['username']):
-                raise forms.ValidationError(_("Usernames can only contain \
-                    letters, numbers and underscores"))
+                raise forms.ValidationError(_('invalid user name'))
             try:
                 user = User.objects.get(
                         username__exact = self.cleaned_data['username']
@@ -241,7 +243,7 @@ class OpenidVerifyForm(forms.Form):
 
 
 attrs_dict = { 'class': 'required' }
-username_re = re.compile(r'^\w+$')
+username_re = re.compile(r'^[\w ]+$')
 
 class RegistrationForm(forms.Form):
     """ legacy registration form """
@@ -286,17 +288,20 @@ class RegistrationForm(forms.Form):
         """ validate if email exist in database
         :return: raise error if it exist """
         if 'email' in self.cleaned_data:
-            try:
-                user = User.objects.get(email = self.cleaned_data['email'])
-            except User.DoesNotExist:
+            if settings.EMAIL_UNIQUE == True:
+                try:
+                    user = User.objects.get(email = self.cleaned_data['email'])
+                except User.DoesNotExist:
+                    return self.cleaned_data['email']
+                except User.MultipleObjectsReturned:
+                    raise forms.ValidationError(u'There is already more than one \
+                        account registered with that e-mail address. Please try \
+                        another.')
+                raise forms.ValidationError(u'This email is already registered \
+                        in our database. Please choose another.')
+            else:
                 return self.cleaned_data['email']
-            except User.MultipleObjectsReturned:
-                raise forms.ValidationError(u'There is already more than one \
-                    account registered with that e-mail address. Please try \
-                    another.')
-            raise forms.ValidationError(u'This email is already registered \
-                    in our database. Please choose another.')
-        return self.cleaned_data['email']
+        #what if not?
     
     def clean_password2(self):
         """
@@ -361,18 +366,21 @@ class ChangeemailForm(forms.Form):
     def clean_email(self):
         """ check if email don't exist """
         if 'email' in self.cleaned_data:
-            if self.user.email != self.cleaned_data['email']:
-                try:
-                    user = User.objects.get(email = self.cleaned_data['email'])
-                except User.DoesNotExist:
-                    return self.cleaned_data['email']
-                except User.MultipleObjectsReturned:
-                    raise forms.ValidationError(u'There is already more than one \
-                        account registered with that e-mail address. Please try \
-                        another.')
-                raise forms.ValidationError(u'This email is already registered \
-                    in our database. Please choose another.')
-        return self.cleaned_data['email']
+            if settings.EMAIL_UNIQUE == True:
+                if self.user.email != self.cleaned_data['email']:
+                    try:
+                        user = User.objects.get(email = self.cleaned_data['email'])
+                    except User.DoesNotExist:
+                        return self.cleaned_data['email']
+                    except User.MultipleObjectsReturned:
+                        raise forms.ValidationError(u'There is already more than one \
+                            account registered with that e-mail address. Please try \
+                            another.')
+                    raise forms.ValidationError(u'This email is already registered \
+                        in our database. Please choose another.')
+            else:
+                return self.cleaned_data['email']
+        #what if not?
         
 
     def clean_password(self):

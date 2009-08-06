@@ -43,7 +43,8 @@ class TagNamesField(forms.CharField):
         self.widget = forms.TextInput(attrs={'size' : 50, 'autocomplete' : 'off'})
         self.max_length = 255
         self.label  = _('tags')
-        self.help_text = _('please use space to separate tags (this enables autocomplete feature)')
+        #self.help_text = _('please use space to separate tags (this enables autocomplete feature)')
+        self.help_text = _('Tags are short keywords, with no spaces within. Up to five tags can be used.')
         self.initial = ''
 
 	def clean(self, value):
@@ -74,6 +75,10 @@ class WikiField(forms.BooleanField):
         self.label  = _('community wiki')
         self.help_text = _('if you choose community wiki option, the question and answer do not generate points and name of author will not be shown')
 
+class EmailNotifyField(forms.BooleanField):
+    def __init__(self, *args, **kwargs):
+        super(EmailNotifyField, self).__init__(*args, **kwargs)
+        self.required = False
 
 class SummaryField(forms.CharField):
     def __init__(self, *args, **kwargs):
@@ -94,18 +99,28 @@ class AskForm(forms.Form):
     user   = forms.CharField(required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
     email  = forms.CharField(required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
 
-
-
 class AnswerForm(forms.Form):
     text   = EditorField()
     wiki   = WikiField()
     openid = forms.CharField(required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 40, 'class':'openid-input'}))
     user   = forms.CharField(required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
     email  = forms.CharField(required=False, max_length=255, widget=forms.TextInput(attrs={'size' : 35}))
-    def __init__(self, question, *args, **kwargs):
+    email_notify = EmailNotifyField()
+    def __init__(self, question, user, *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
+        self.fields['email_notify'].widget.attrs['id'] = 'question-subscribe-updates';
         if question.wiki:
             self.fields['wiki'].initial = True
+        if user.is_authenticated():
+            try:
+                feed = EmailFeed.objects.get(feed_id=question.id, subscriber_id=user.id)
+                if feed.subscriber == user and feed.content == question:
+                    self.fields['email_notify'].initial = True
+                    return
+            except EmailFeed.DoesNotExist:
+                pass
+        self.fields['email_notify'].initial = False
+
 
 class CloseForm(forms.Form):
     reason = forms.ChoiceField(choices=CLOSE_REASONS)
@@ -181,13 +196,14 @@ class EditUserForm(forms.Form):
     def clean_email(self):
         """For security reason one unique email in database"""
         if self.user.email != self.cleaned_data['email']:
-            if 'email' in self.cleaned_data:
-                try:
-                    user = User.objects.get(email = self.cleaned_data['email'])
-                except User.DoesNotExist:
-                    return self.cleaned_data['email']
-                except User.MultipleObjectsReturned:
+            #todo dry it, there is a similar thing in openidauth
+            if settings.EMAIL_UNIQUE == True:
+                if 'email' in self.cleaned_data:
+                    try:
+                        user = User.objects.get(email = self.cleaned_data['email'])
+                    except User.DoesNotExist:
+                        return self.cleaned_data['email']
+                    except User.MultipleObjectsReturned:
+                        raise forms.ValidationError(_('this email has already been registered, please use another one'))
                     raise forms.ValidationError(_('this email has already been registered, please use another one'))
-                raise forms.ValidationError(_('this email has already been registered, please use another one'))
-        else:
-            return self.cleaned_data['email']
+        return self.cleaned_data['email']

@@ -1,5 +1,3 @@
-// Evgeny Fadeev evgeny.fadeev@gmail.com localized for english and chinese
-// i18nLang variable must be set in html header to extract correct language
 var i18nZh = {
 	'insufficient privilege':'用户权限不在操作范围',
 	'cannot pick own answer as best':'不能设置自己的回答为最佳答案',
@@ -59,6 +57,10 @@ var i18nZh = {
 };
 
 var i18nEn = {
+    '>15 points requried to upvote':'>15 points requried to upvote ',
+	'tags cannot be empty':'please enter at least one tag',
+	'anonymous users cannot vote':'anonymous users cannot vote ',
+	'anonymous users cannot select favorite questions':'anonymous users cannot select favorite questions ',
 	'to comment, need': 'to comment, need reputation ',
 	'please see':'please see ',
 	'community reputation points':' ',
@@ -84,7 +86,7 @@ var i18nEn = {
 
 var i18n = {
 	'en':i18nEn,
-	'zh':i18nZh
+	'zh_CN':i18nZh
 };
 
 var i18n_dict = i18n[i18nLang];

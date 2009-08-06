@@ -12,6 +12,7 @@
 # Licence:     GPL V2
 #-------------------------------------------------------------------------------
 
+from datetime import datetime, date
 from django.db import connection
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType

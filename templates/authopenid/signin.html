@@ -1,41 +1,119 @@
 {% extends "base.html" %}
+<!-- signin.html -->
 {% load i18n %}
 {% block title %}{% spaceless %}{% trans "User login" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
-	<script type="text/javascript" src="/content/js/jquery.openid.js?"></script>
+	<!--<script type="text/javascript" src="/content/js/jquery.openid.js?"></script>-->
     <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
-	<script type="text/javascript">
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/content/jquery-openid/openid.css"/>
+	<script type="text/javascript" src="/content/jquery-openid/jquery.openid.js"></script>
+	<script type="text/javascript">  $().ready( function() { $("form.openid:eq(0)").openid(); })</script>
+	<!--<script type="text/javascript">
 	$().ready(function(){
 	    openid.init('id_openid_url');
         setupFormValidation("#openid_form", {bsignin:{required: true}});
 	});
-	</script>
+	</script>-->
 {% endblock %}
 {% block content %}
 <div class="headNormal">
 	{% trans "User login" %}
 </div>
-<div class="login">
-    <form name="openid_form" action="{% url user_signin %}" method="post">
-        {{ form2.next }}
-        <p style="display:none">{% trans "we support two login modes" %}</p>
         {% if msg %}
             <p class="warning">{{ msg }}</p>
         {% endif %}
-        <fieldset class="fieldset">
-    		<legend ><strong>{% trans "Login with your OpenID" %}</strong></legend>
-            <div id="openid_choice">
-                <p>{% trans "select openid provider" %}</p>
-                <div id="openid_btns">
-                </div>
-				<br><br><br>
-				<p>{% trans "verify openid link and login" %}</p>
+        {% if answer %}
+            <div class="message">
+                {% blocktrans with answer.question.title as title and answer.summary as summary %}
+                Your answer to {{title}} {{summary}} will be posted once you log in
+                {% endblocktrans %}
             </div>
-        	<p>
-                {{ form2.openid_url }} <input id="bsignin" name="bsignin" type="submit" value="{% trans "Login" %}" class="openid-login-submit" />
-        	</p>
-        </fieldset>	
-    </form>
+        {% endif %}
+        {% if question %}
+            <div class="message">
+                {% blocktrans with question.title as title and question.summary as summary %}Your question 
+                {{title}} {{summary}} will be posted once you log in
+                {% endblocktrans %}
+            </div>
+        {% endif %}
+		<div style="width:600px;float:left;margin-bottom:5px;">{% trans "Click to sign in through any of these services." %}</div>
+			<form id="openid_form" name="openid_form" class="openid" method="post" action="{% url user_signin %}"> 
+			  <ul class="providers"> 
+			  <li class="openid" title="OpenID">
+				  <div class="logo_box openid_box">
+						<img src="/content/jquery-openid/images/openid.gif" alt="icon" /> 
+				  </div>
+			  <span><strong>http://{your-openid-url}</strong></span>
+			  </li> 
+			  <li class="direct" title="Google"> 
+			  	<div class="logo_box google_box">
+					<img src="/content/jquery-openid/images/google.gif" alt="icon" /><span>https://www.google.com/accounts/o8/id</span>
+				</div>
+		 	  </li>
+			  <li class="direct" title="Yahoo"> 
+			  	<div class="logo_box yahoo_box">
+					<img src="/content/jquery-openid/images/yahoo.gif" alt="icon" /><span>http://yahoo.com/</span>
+				</div>
+			  </li>
+			  <li class="username" title="AOL screen name"> 
+			  	<div class="logo_box aol_box">
+					<img src="/content/jquery-openid/images/aol.gif" alt="icon" /><span>http://openid.aol.com/<strong>username</strong></span>
+				</div>
+			  </li>
+			  <li class="username first_tiny_li" title="MyOpenID user name"> 
+					<img src="/content/jquery-openid/images/myopenid.ico" alt="icon" />
+					<span>http://<strong>username</strong>.myopenid.com/</span>
+		      </li> 
+			  <li class="username" title="Flickr user name"> 
+					<img src="/content/jquery-openid/images/flickr.ico" alt="icon" />
+					<span>http://flickr.com/<strong>username</strong>/</span>
+			  </li> 
+			  <li class="username" title="Technorati user name"> 
+					<img src="/content/jquery-openid/images/technorati.ico" alt="icon" />
+					<span>http://technorati.com/people/technorati/<strong>username</strong>/</span>
+			  </li> 
+			  <li class="username" title="Wordpress blog name"> 
+					<img src="/content/jquery-openid/images/wordpress.ico" alt="icon" />
+					<span>http://<strong>username</strong>.wordpress.com</span>
+              </li> 
+			  <li class="username" title="Blogger blog name"> 
+					<img src="/content/jquery-openid/images/blogger.ico" alt="icon" />
+					<span>http://<strong>username</strong>.blogspot.com/</span>
+			  </li> 
+			  <li class="username" title="LiveJournal blog name"> 
+					<img src="/content/jquery-openid/images/livejournal.ico" alt="icon" />
+					<span>http://<strong>username</strong>.livejournal.com</span>
+			  </li> 
+			  <li class="username" title="ClaimID user name"> 
+					<img src="/content/jquery-openid/images/claimid.ico" alt="icon" />
+					<span>http://claimid.com/<strong>username</strong></span>
+			  </li> 
+			  <li class="username" title="Vidoop user name"> 
+					<img src="/content/jquery-openid/images/vidoop.ico" alt="icon" />
+					<span>http://<strong>username</strong>.myvidoop.com/</span>
+			  </li> 
+			  <li class="username" title="Verisign user name"> 
+					<img src="/content/jquery-openid/images/verisign.ico" alt="icon" />
+					<span>http://<strong>username</strong>.pip.verisignlabs.com/</span>
+			  </li> 
+			  </ul>
+			  {{ form2.next }}
+			  <fieldset> 
+				  <p id="provider_name_slot">{% trans 'Enter your <span id="enter_your_what">Provider user name</span>' %}</p> 
+				  <div><p><span></span>
+				  		<input id="openid_username" type="text" name="openid_username" /><span></span> 
+			  			<input type="submit" value="Login" />
+				  </p></div>
+			  </fieldset> 
+			  <fieldset> 
+				  <p>{% trans 'Enter your <a class="openid_logo" href="http://openid.net">OpenID</a> web address' %}</p> 
+				  <div><p><input id="openid_url" type="text" value="http://" name="openid_url" /> 
+				  <input id="bsignin" name="bsignin" type="submit" value="{% trans "Login" %}" /></p></div> 
+			  </fieldset> 
+			</form>
+<div class="login">
+        <p style="display:none">{% trans "we support two login modes" %}</p>
     <div style="display:none">
         <br>
         {% if form1.errors %}
@@ -60,7 +138,7 @@
         		<div class="form-row"><label for="id_password">{% trans "Password" %}:</label><br />{{ form1.password }}</div>
                <div class="submit-row"><input type="submit" class="submit" name="blogin" value="{% trans "Login" %}"> 
 			   <a href="">{% trans "Forgot your password?" %}</a> 
-			   <a href="">{% trans "Create new acccount" %}</a></div>
+			   <a href="">{% trans "Create new account" %}</a></div>
         	</fieldset>	
         </form>
     </div>
@@ -93,3 +171,5 @@
 </div>
 {% endblock%}
 
+		<script type="text/javascript">  $( function() { $("form.openid:eq(0)").openid(); })</script>
+<!-- end signin.html -->

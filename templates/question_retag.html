@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}{% spaceless %}修改问题标签{% endspaceless %}{% endblock %}
+<!-- question_retag.html -->
+{% block title %}{% spaceless %}{% trans "Change tags" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
         <script type='text/javascript' src='/content/js/com.cnprog.editor.js'></script>
         <script type='text/javascript' src='/content/js/com.cnprog.post.js'></script>
@@ -34,8 +35,8 @@
         		},
                 messages: {
         			tags: {
-                        required: " 标签不能为空。",
-                        maxlength: " 最多5个标签，每个标签长度小于20个字符。"
+                        required: "{% trans "tags are required" %}",
+                        maxlength: "{% trans "up to 5 tags, less than 20 characters each" %}
                     }
                 }
                 
@@ -48,7 +49,7 @@
         
 {% block content %}
 <div id="main-bar" class="headNormal">
-    修改标签 [<a href="{{ question.get_absolute_url }}">返回</a>]
+    {% trans "Change tags" %} [<a href="{{ question.get_absolute_url }}">{% trans "back" %}</a>]
 </div>
 <div id="main-body" class="ask-body">
     <div id="askform">
@@ -71,8 +72,8 @@
             <br>
             
             <div class="error" ></div>
-            <input type="submit" value="现在修改" class="submit" />
-            <input type="button" value="取消" class="submit" onclick="history.back(-1);" />
+            <input type="submit" value="{% trans "Save edit" %}" class="submit" />
+            <input type="button" value="{% trans "Cancel" %}" class="submit" onclick="history.back(-1);" />
             <br>
             <br>
         </form>
@@ -82,20 +83,16 @@
 
 {% block sidebar %}
 <div class="boxC">
-    <p class="subtitle">为什么我只能修改问题标签？</p>
+    <p class="subtitle">{% trans "Why use and modify tags?" %}</p>
     <ul class="list-item">
-        
         <li>
-            CNProg用标签来分类系统的信息
-
+            {% trans "tags help us keep Questions organized" %}
         </li>
         <li>
             修改完整问题需要用户的积分达到一定条件（比如：积分 >= 3000分，自己发布的问题除外），而用户积分达到比较低的时候，就可以修改问题的标签（比如：积分 >= 500, 这里指所有问题的标签）。
-
         </li>
         <li>
-            修改标签的用户将授予特殊的社区奖牌 
-
+            {% trans "tag editors receive special awards from the community" %}
         </li>
     </ul>
     <a href="{% url faq %}" style="float:right;position:relative">faq »</a>
@@ -106,4 +103,4 @@
 
 {% block endjs %}
 {% endblock %}
-
+<!-- end question_retag.html -->

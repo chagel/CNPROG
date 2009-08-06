@@ -1,114 +1,148 @@
 {% extends "base_content.html" %}
+<!-- template faq.html -->
 {% load extra_tags %}
 {% load humanize %}
+{% load i18n %}
 {% block title %}{% spaceless %}FAQ{% endspaceless %}{% endblock %}
 {% block forejs %}
 {% endblock %}
 {% block content %}
 <div class="headNormal">
-    常见问题(FAQ)
+    {% trans "Frequently Asked Questions " %}(FAQ)
 </div>
-<div id="main-body" style="width:100%">
-    
-    <h3 class="subtitle">我可以在这里提问什么样的问题？</h3>
-    <p>毫无疑问，首先必须是<span class="yellowbg">技术编程问题！</span>      
-     提问之前，充分利用系统的自动查找、标签和搜索，看看是否已经有一样的问题并有了答案。<br>
-     避免问相同的问题，减少后有问题的朋友的疑惑，以后能够清晰地找到唯一问题和答案。
-    </p><br>
-    
-        <h3 class="subtitle">什么样的问题我不该在这里提问？</h3>
-     <p>   <span class="yellowbg">与程序员或技术无关的，引起争吵或太过于主观性等违背社区宗旨的内容。</span>本站建立是为了帮助大众程序员解决实际技术问题，我们需要实际的问题！
-        </p><p>
-        同样，在社区建立之初，很多用户可能对社区有各种各样的疑问。我们希望能够通过更多的faq或者文档去解释这些疑问，如果用户没有找到答案，希望你在社区提出此类问题，并引用“faq”或者“cnprog”等相关的标签。毕竟，访问社区的用户，是关心他们要寻找的答案，不是来学习如何使用复杂的社区功能的。
-        </p><p>
-        如果还没有拜读过Eric S. Raymond的<a href="http://www.catb.org/~esr/faqs/smart-questions.html">《How To Ask Questions The Smart Way》</a>的朋友，推荐先读一下大师的箴言。另外，这里有一<a href="http://www.dianbo.org/9238/stone/tiwendezhihui.htm">中文版本</a>，可以参考浏览。
-        </p><p><span class="yellowbg">管理运行社区的是你们，而不是我们。</span></p>
-    </p><br>
-    
-        <h3 class="subtitle">什么样的回答是不受欢迎的？</h3>
-        <p>   CNProg 希望用户提供针对提问的技术回答，可以是进一步了解问题实质，给予参考方案，或完全解决问题的回答。我们希望通过问答的形式解决用户的实际问题。因此，<span class="yellowbg">我们不欢迎在回答中出现不是回答问题的内容，包括针对他人回答的讨论，和其他无意义的浪费网络资源行为</span>。CNProg建议您使用<span class="yellowbg">评论</span>功能来讨论你的意见和想法。
-        
-    </p><br>
-    
-        <h3 class="subtitle">谁是社区的管理员？</h3>
-     <p>   答案是：<span class="yellowbg">每个用户。</span><br>
+<div id="main-body" class="about" style="width:100%">
 
-        社区没有严格意义上的管理员身份。
-     通过积分运作，<span class="yellowbg">每个用户都有权限创建标签，进行对所有问题、回答的投票、编辑、关闭等操作。</span>
-    </p><br>
+        <div class="first">
+            <h3 class="subtitle">{% trans "What kinds of questions can I ask here?" %}</h3>
+            <p>{% trans "Most importanly - questions should be <strong>relevant</strong> to this community." %}
+            {% trans "Before asking the question - please make sure to use search to see whether your question has alredy been answered."%}
+            </p>
+            
+                <h3 class="subtitle">{% trans "What questions should I avoid asking?" %}</h3>
+                <p>{% trans "Please avoid asking questions that are not relevant to this community, too subjective and argumentative." %}</p>
+            </p>
+        </div>
     
-        <h3 class="subtitle">什么是社区积分？</h3>
-    <p>    对于正常使用社区进行提问、回答而言，积分不是必须的。<br>
-        我们一再声明，CNProg由你来运行和维护。如果你想帮助我们来运作CNProg，你需要一定的积分等级。<span class="yellowbg">积分是一种用来粗略衡量社区对你有多信任的数据。</span>积分不是有谁来支付或直接给予你的，而是你通过获得其他用户的支持和信任“赚得”的。
-        <br><br>
-        举例来说，如果你提了一个非常有帮助的问题或者做了很有用的回答，你将会被其他用户投赞成票。相反，你提了不受欢迎的问题，或者误导用户的回答，你将可能被其他用户投反对票。每个赞成票会帮你产生<strong>10</strong>个社区积分，每个反对票会相应扣除你<strong>2</strong>个积分。每天通过别人投赞成票，你最多只能产生<strong>200</strong>个积分，这是上限。当你累计到一定积分，你可以在社区做更多的事情：<br>
-        <table style="font-family:arial;" cellspacing="3" cellpadding="3">
-            <tr>
-                <th width="40px" style="text-align:right"></th>
-                <th width="300px"></th>
-            </tr>
-	        <tr>
-                <td style="text-align:right;padding-right:5px"><strong>15</strong></td>
-                <td>投赞成票</td>
-	        </tr>
-	        <tr>
-                <td style="text-align:right;padding-right:5px"><strong>15</strong></td>
-                <td>标记垃圾帖</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>50</strong></td>
-                <td>添加评论</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>100</strong></td>
-                <td>投反对票</td>
-	        </tr><tr>
-                <td style="text-align:right;padding-right:5px"><strong>250</strong></td>
-                <td>打开关闭自己的问题</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>500</strong></td>
-                <td>给任何问题整理标签</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>750</strong></td>
-                <td>编辑wiki类问题</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>2000</strong></td>
-                <td>编辑任何问题或答案</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>3000</strong></td>
-                <td>打开关闭任何人的问题</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>5000</strong></td>
-                <td>删除任何一个评论</td>
-	        </tr>
-            <tr>
-                <td style="text-align:right;padding-right:5px"><strong>10000</strong></td>
-                <td>删除任何一个问题或答案，及其他管理功能</td>
-	        </tr>
+        <div>
+            <h3 class="subtitle">{% trans "What should I avoid in my answers?" %}</h3>
+            <p>{% trans "site title" %} {% trans "is a Q&A site, not a discussion group. Therefore - please avoid having discussions in your answers, comment facility allows some space for brief discussions." %}</p>
+        </div>
+    
+        <div>
+            <h3 class="subtitle">{% trans "Who moderates this community?" %}</h3>
+            <p>{% trans "The short answer is: <strong>you</strong>." %}
+            {% trans "This website is moderated by the users." %}
+            {% trans "The reputation system allows users earn the authorization to perform a variety of moderation tasks." %} 
+            </p>
+        </div>
 
-        </table>
-        
-    </p><br>
-   
-        <h3 class="subtitle">我需要注册一个新用户吗？</h3>
-     <p>        不需要。社区提供了OpenID的登录支持，你要用Google、Yahoo等任何支持OpenID登录的帐号就可以使用系统。<strong><a href="/account/signin">马上登录</a> »</strong>
-    </p><br>
+        <div>
+            <h3 class="subtitle">{% trans "How does reputation system work?" %}</h3>
+            <p>{% trans "Rep system summary" %}</p>
+            <p>
+                For example, if you ask an interesting question or give a helpful answer, your input will be upvoted.
+                On the other hand if the answer is misleading - it will be downvoted.
+                Each vote in favor will generate <strong>10</strong> points, each vote against will subtract <strong>2</strong> points.
+                There is a limit of <strong>200</strong> points that can be accumulated per question or answer.
+
+                The table below explains reputation point requirements for each type of moderation task.
+            </p>
+
+            <table style="font-family:arial;" cellspacing="3" cellpadding="3">
+                <tr>
+                    <th width="40px" style="text-align:right"></th>
+                    <th width="300px"></th>
+                </tr>
+                <!--
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>15</strong></td>
+                    <td>{% trans "upvote" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>15</strong></td>
+                    <td>{% trans "use tags" %}</td>
+                </tr>
+                -->
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>50</strong></td>
+                    <td>{% trans "add comments" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>100</strong></td>
+                    <td>{% trans "downvote" %}</td>
+                </tr><tr>
+                    <td style="text-align:right;padding-right:5px"><strong>250</strong></td>
+                    <td>{% trans "open and close own questions" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>500</strong></td>
+                    <td>{% trans "retag questions" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>750</strong></td>
+                    <td>{% trans "edit community wiki questions" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>2000</strong></td>
+                    <td>{% trans "edit any answer" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>3000</strong></td>
+                    <td>{% trans "open any closed question" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>5000</strong></td>
+                    <td>{% trans "delete any comment" %}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right;padding-right:5px"><strong>10000</strong></td>
+                    <td>{% trans "delete any questions and answers and perform other moderation tasks" %}</td>
+                </tr>
+
+            </table>
+        </div>
+        {% ifequal settings.EMAIL_VALIDATION 'on' %}
+        <div>
+            <a id='validate'></a><h3 class="subtitle">{% trans "how to validate email title" %}</h3>
+            <!--special case here message must contain paragraphs-->
+            {% trans "how to validate email info" %}
+        </div>
+        {% endifequal %}
+        <div>
+            <a id='gravatar'></a><h3 class="subtitle">{% trans "what is gravatar" %}</h3>
+            <p>{% trans "gravatar faq info" %}</p>
+        </div>
+        <div>
+            <h3 class="subtitle">{% trans "To register, do I need to create new password?" %}</h3>
+            <p>{% trans "No, you don't have to. You can login through any service that supports OpenID, e.g. Google, Yahoo, AOL, etc." %}
+            <strong><a href="/account/signin">{% trans "Login now!" %}</a> »</strong> 
+            </p>
+        </div>
     
-        <h3 class="subtitle">为什么其他人可以修改我的问题/回答？</h3>
-    <p>    CNProg 是为了帮助程序员解决更多问题，更加方便的解决问题。所以问题和答案都是如Wiki一样可编辑的，我们希望社区能帮助用户沉淀、积累更多有用的知识和经验。如果您不喜欢这种方式，我们尊重你的选择。
-    </p><br>
-    
-        <h3 class="subtitle">还有其他问题？</h3>
-    <p>    如果您对社区还有其他疑问，请一起来完善我们的<a href="/tags/faq" class="big">CNProg FAQ</a>。
-    </p>
-    <br><br>
+        <div>
+            <h3 class="subtitle">{% trans "Why other people can edit my questions/answers?" %}</h3>
+            <p> {% trans "Goal of this site is..." %} {% trans "So questions and answers can be edited like wiki pages by experienced users of this site and this improves the overall quality of the knowledge base content." %}
+            {% trans "If this approach is not for you, we respect your choice." %}
+            </p>
+        </div>
+        <div>
+            <h3 class="subtitle">{% trans "Still have questions?" %}</h3>
+            <p>{% trans "Please ask your question, help make our community better!" %} 
+            <!--
+            <a href="/tags/faq" class="big">{% trans "site title" %} {% trans "questions" %}</a>{% trans "." %}
+            -->
+            </p>
+        </div>
 </div>
+<script type="text/javascript">
+    //highlihts section if url has matching #anchor_name
+    $(document).ready(function (){
+        var hash = window.location.hash;
+        if (hash.length > 1){
+            $(hash).parent().addClass('highlight');
+            window.location.hash = hash;
+        }
+    })
+</script>
 {% endblock %}
-
-
-
+<!-- end template faq.html -->

@@ -1,5 +1,3 @@
-# author Evgeny Fadeev (evgeny.fadeev@gmail.com)
-# site-specific messages
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -66,7 +64,6 @@ msgid "this name is already in use - please try anoter"
 msgstr "该用户名已被注册，请换一个试试"
 
 #: django_authopenid/forms.py:184
-#, fuzzy
 msgid ""
 "This email is already                 registered in our database. Please "
 "choose another."
@@ -78,7 +75,6 @@ msgid ""
 msgstr ""
 
 #: django_authopenid/forms.py:253
-#, fuzzy
 msgid "choose a username"
 msgstr "选择一个用户名"
 
@@ -105,7 +101,6 @@ msgid "new passwords do not match"
 msgstr ""
 
 #: django_authopenid/forms.py:434
-#, fuzzy
 msgid "Incorrect username."
 msgstr "选择一个用户名"
 
@@ -132,7 +127,6 @@ msgid "sendpw/"
 msgstr ""
 
 #: django_authopenid/urls.py:26
-#, fuzzy
 msgid "delete/"
 msgstr "删除"
 
@@ -385,7 +379,7 @@ msgstr "多个标签请用空格间隔-最多5个标签。（优先使用自动�
 
 #: forum/forms.py:53
 msgid "tags are required"
-msgstr "标签不能为空。"
+msgstr " 标签不能为空。"
 
 #: forum/forms.py:57
 msgid "please use 5 tags or less"
@@ -698,6 +692,9 @@ msgstr "预览开关"
 msgid "Save edit"
 msgstr "现在修改"
 
+msgid "Save"
+msgstr "保存"
+
 #: templates/answer_edit.html:74 templates/close.html:29
 #: templates/question_edit.html:120 templates/reopen.html:30
 #: templates/user_edit.html:83
@@ -768,18 +765,16 @@ msgid "Community badges"
 msgstr "社区奖牌"
 
 #: templates/badges.html:53
-#, fuzzy
-msgid ""
+msgid "gold badge description"
 "Gold badge is very rare. To obtain it you have to show profound knowledge "
 "and ability in addition to actively participating in the community. Gold "
 "badge is the highest award in this community."
 msgstr ""
-"你不仅要参与社区的提问、回答、投票等活动，而且需要有高深的知识和能力才能获"
+"金牌是十分罕见的。你不仅要参与社区的提问、回答、投票等活动，而且需要有高深的知识和能力才能获"
 "得。"
 
 #: templates/badges.html:61
-#, fuzzy
-msgid ""
+msgid "silver badge description"
 "Obtaining silver badge requires significant patience. If you got one, you've "
 "very significantly contributed to this community"
 msgstr "它是不同寻常的荣誉，只要你付出足够的努力就会得到。"
@@ -788,9 +783,24 @@ msgstr "它是不同寻常的荣誉，只要你付出足够的努力就会得到
 msgid "bronze badge: often given as a special honor"
 msgstr "铜牌:时常授予之特殊荣誉"
 
+msgid "Connect with Twitter"
+msgstr "同步Twitter消息"
+
+msgid "Twitter account name:"
+msgstr "账号:"
+
+msgid "Twitter password:"
+msgstr "密码:"
+
+msgid "Send my Questions to Twitter"
+msgstr "发布我的提问到我的Twitter"
+
+msgid "Send my Answers to Twitter"
+msgstr "发布我的回答到我的Twitter"
+
 #: templates/badges.html:68
 #, fuzzy
-msgid ""
+msgid "bronze badge description"
 "If you are active in this community, you will get this medal - still it is a "
 "special honor."
 msgstr "铜牌会在你活跃于社区时产生，它相对容易获得，但也是一种特殊的荣誉。"
@@ -1020,6 +1030,8 @@ msgid "most voted questions"
 msgstr "投票次数最多的问题"
 
 #: templates/index.html:25
+#"最有价值问题"
+#"最新问题"
 msgid "most voted"
 msgstr "最有价值的问题"
 
@@ -1041,7 +1053,6 @@ msgid "see questions tagged"
 msgstr "查看有关"
 
 #: templates/index.html:79
-#, fuzzy
 msgid "welcome to website"
 msgstr "CNProg欢迎您!"
 
@@ -1053,7 +1064,7 @@ msgstr "最新标签"
 #: templates/index.html:93
 #, fuzzy, python-format
 msgid "see questions tagged '%(tagname)s'"
-msgstr "查看有关'%s'的问题"
+msgstr "查看有关'%(tagname)s'的问题"
 
 #: templates/index.html:96 templates/index.html.py:120
 msgid "popular tags"
@@ -1092,6 +1103,26 @@ msgstr "或者"
 msgid "."
 msgstr "。"
 
+#: templates/pagesize.html:5
+msgid "posts per page"
+msgstr "每页显示："
+
+#: templates/paginator.html:5
+msgid "previous"
+msgstr "上一页"
+
+#: templates/questions.html:22
+msgid "Found by tags"
+msgstr "标签问题"
+
+#: templates/questions.html:25
+msgid "Active"
+msgstr "活跃问题"
+
+#: templates/authopenid/changeemail.html:10
+msgid "Account: change email"
+msgstr "修改电子邮件"
+
 #: templates/index.html:120
 msgid "Please help us answer"
 msgstr "请帮助我们回答"
@@ -1116,12 +1147,6 @@ msgstr "点击退出登录"
 #, fuzzy
 msgid "Size per page:"
 msgstr "每页显示"
-
-# paginator.html
-#: templates/paginator.html:5
-#, fuzzy
-msgid "Previous"
-msgstr "上一页"
 
 #: templates/privacy.html:6 templates/privacy.html.py:11
 msgid "Privacy policy"
@@ -1432,76 +1457,21 @@ msgstr "基本的HTML标签也是支持的"
 msgid "learn more about Markdown"
 msgstr "有关Markdown详细说明"
 
-#: templates/questions.html:6
-#, fuzzy
-msgid "Question list"
-msgstr "问题列表"
-
-#: templates/questions.html:22
-#, fuzzy
-msgid "Tagged questions"
-msgstr "相似的问题"
-
-#: templates/questions.html:22
-msgid "Query result"
-msgstr ""
-
 #: templates/questions.html:22
 msgid "All questions"
 msgstr "所有问题"
-
-#: templates/questions.html:24
-#, fuzzy
-msgid "New questions"
-msgstr "问题"
-
-#: templates/questions.html:24
-#, fuzzy
-msgid "Newest"
-msgstr "最新问题"
-
-#: templates/questions.html:25
-#, fuzzy
-msgid "Newest updated questions"
-msgstr "最新更新的问题"
-
-#: templates/questions.html:25
-#, fuzzy
-msgid "Active"
-msgstr "活跃问题"
 
 #: templates/questions.html:26
 #, fuzzy
 msgid "Questions with most answers"
 msgstr "您正在浏览的问题含有以下标签"
 
-#: templates/questions.html:26
-#, fuzzy
-msgid "Hottest"
-msgstr "热门问题"
-
 #: templates/questions.html:27
 msgid "Questions with most votes"
 msgstr ""
 
-#: templates/questions.html:27
-#, fuzzy
-msgid "Best"
-msgstr "最新问题"
-
-#: templates/questions.html:45
-#, fuzzy
-msgid "Votes"
-msgstr "票"
-
-#: templates/questions.html:46
-#, fuzzy
-msgid "Visits"
-msgstr "网站访问者"
-
 # index.html
 #: templates/questions.html:57 templates/questions.html.py:69
-#, fuzzy
 msgid "Community wiki"
 msgstr "社区Wiki"
 
@@ -1706,6 +1676,9 @@ msgstr "用户投的反对票总数"
 msgid "Tags"
 msgstr "个标签"
 
+msgid "Tags help us keep Questions organized"
+msgstr "CNProg用标签来分类系统的信息"
+
 #: templates/user_stats.html:94
 #, fuzzy, python-format
 msgid "see other questions tagged '%(tag)s' "
@@ -1774,11 +1747,6 @@ msgstr "这个问题被"
 #, fuzzy
 msgid "this answer has been accepted to be correct"
 msgstr "有答案已被接受为正确答案"
-
-#: templates/authopenid/changeemail.html:6
-#, fuzzy
-msgid "Account: change email"
-msgstr "更换电子邮件"
 
 #: templates/authopenid/changeemail.html:9
 msgid ""
@@ -1983,7 +1951,6 @@ msgid "Give your  account a new password."
 msgstr ""
 
 #: templates/authopenid/settings.html:30
-#, fuzzy
 msgid "Change email "
 msgstr "更换电子邮件"
 
@@ -2102,350 +2069,350 @@ msgstr "返回登录"
 msgid "Register with your OpenID"
 msgstr "使用OpenID注册"
 
-#~ msgid "meta site keywords, comma separated"
-#~ msgstr ""
-#~ "技术问答社区，中国程序员，编程技术社区，程序员社区，程序员论坛，程序员"
-#~ "wiki，程序员博客"
+msgid "meta site keywords, comma separated"
+msgstr ""
+"技术问答社区，中国程序员，编程技术社区，程序员社区，程序员论坛，程序员"
+"wiki，程序员博客"
 
-#~ msgid "what is this website"
-#~ msgstr ""
-#~ "CNProg是一个<strong>面向程序员</strong>的可协作编辑的<strong>开放源代码问"
-#~ "答社区</strong>。"
+msgid "what is this website"
+msgstr ""
+"CNProg是一个<strong>面向程序员</strong>的可协作编辑的<strong>开放源代码问"
+"答社区</strong>。"
 
-#~ msgid "what can one do on this website"
-#~ msgstr ""
-#~ "您可以在这里提问各类<strong>程序技术问题</strong> - 问题不分语言和平台。 "
-#~ "同时也希望您对力所能及的问题，给予您的宝贵答案。"
+msgid "what can one do on this website"
+msgstr ""
+"您可以在这里提问各类<strong>程序技术问题</strong> - 问题不分语言和平台。 "
+"同时也希望您对力所能及的问题，给予您的宝贵答案。"
 
-#~ msgid "Goal of this site is..."
-#~ msgstr "CNProg 是为了帮助程序员解决更多问题，更加方便的解决问题。"
+msgid "Goal of this site is..."
+msgstr "CNProg 是为了帮助程序员解决更多问题，更加方便的解决问题。"
 
-#~ msgid "Community gives you awards for your questions, answers and votes."
-#~ msgstr ""
-#~ "提出问题，给予回答，投出你的票 - CNProg 会针对你在社区的表现，授予你各类奖"
-#~ "牌。"
+msgid "Community gives you awards for your questions, answers and votes."
+msgstr ""
+"提出问题，给予回答，投出你的票 - CNProg 会针对你在社区的表现，授予你各类奖"
+"牌。"
 
-#~ msgid "please make your answer relevant to this community"
-#~ msgstr "您的问题与编程相关吗？"
+msgid "please make your answer relevant to this community"
+msgstr "您的问题与编程相关吗？"
 
-#~ msgid "book technical Q&A"
-#~ msgstr "图书相关的技术答疑"
+msgid "book technical Q&A"
+msgstr "图书相关的技术答疑"
 
-#~ msgid "blog"
-#~ msgstr "Blog"
+msgid "blog"
+msgstr "Blog"
 
-#~ msgid "privacy policy"
-#~ msgstr "隐私政策"
+msgid "privacy policy"
+msgstr "隐私政策"
 
-#~ msgid "current revision"
-#~ msgstr "当前版本"
+msgid "current revision"
+msgstr "当前版本"
 
-#~ msgid "number of votes"
-#~ msgstr "票数"
+msgid "number of votes"
+msgstr "票数"
 
-#~ msgid "current page"
-#~ msgstr "当前页"
+msgid "current page"
+msgstr "当前页"
 
-#~ msgid "next page"
-#~ msgstr "下一页"
+msgid "next page"
+msgstr "下一页"
 
-#~ msgid "page number "
-#~ msgstr "第"
+msgid "page number "
+msgstr "第"
 
-#~ msgid "number - make blank in english"
-#~ msgstr "页"
+msgid "number - make blank in english"
+msgstr "页"
 
-#~ msgid "Change tags"
-#~ msgstr "修改问题标签"
+msgid "Change tags"
+msgstr "修改问题标签"
 
 # todo: remove magic numbers from this file
-#~ msgid "up to 5 tags, less than 20 characters each"
-#~ msgstr "最多5个标签，每个标签长度小于20个字符。"
+msgid "up to 5 tags, less than 20 characters each"
+msgstr "最多5个标签，每个标签长度小于20个字符。"
 
-#~ msgid "Change now"
-#~ msgstr "现在修改"
+msgid "Change now"
+msgstr "现在修改"
 
-#~ msgid "uses tags for the classification of questions"
-#~ msgstr "用标签来分类系统的信息"
+msgid "uses tags for the classification of questions"
+msgstr "用标签来分类系统的信息"
 
-#~ msgid "tag editors receive special awards from the community"
-#~ msgstr "修改标签的用户将授予特殊的社区奖牌"
+msgid "tag editors receive special awards from the community"
+msgstr "修改标签的用户将授予特殊的社区奖牌"
 
-#~ msgid "Why use and modify tags?"
-#~ msgstr "为什么我只能修改问题标签？"
+msgid "Why use and modify tags?"
+msgstr "为什么我只能修改问题标签？"
 
-#~ msgid "Found by tag"
-#~ msgstr "标签问题"
+msgid "Found by tag"
+msgstr "标签问题"
 
-#~ msgid "Found by title"
-#~ msgstr "查询结果"
+msgid "Found by title"
+msgstr "查询结果"
 
-#~ msgid "most recently updated questions"
-#~ msgstr "最近被更新的问题"
+msgid "most recently updated questions"
+msgstr "最近被更新的问题"
 
-#~ msgid "latest questions info"
-#~ msgstr ""
-#~ "问题按<strong>提问时间</strong>显示排序。新加入的问题将显示在最前面。"
+msgid "latest questions info"
+msgstr ""
+"问题按<strong>提问时间</strong>显示排序。新加入的问题将显示在最前面。"
 
-#~ msgid ""
-#~ "\n"
-#~ "\t\t\thave total %(q_num)s questions tagged %(tagname)s\n"
-#~ "\t\t\t"
-#~ msgid_plural ""
-#~ "\n"
-#~ "\t\t\thave total %(q_num)s questions tagged %(tagname)s\n"
-#~ "\t\t\t"
-#~ msgstr[0] ""
-#~ "\n"
-#~ "您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标记为<span "
-#~ "class=\"tag\">%(tagname)s</span></p>"
-#~ msgstr[1] ""
-#~ "\n"
-#~ "您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标记为<span "
-#~ "class=\"tag\">%(tagname)s</span></p>"
+msgid ""
+"\n"
+"\t\t\thave total %(q_num)s questions tagged %(tagname)s\n"
+"\t\t\t"
+msgid_plural ""
+"\n"
+"\t\t\thave total %(q_num)s questions tagged %(tagname)s\n"
+"\t\t\t"
+msgstr[0] ""
+"\n"
+"您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标记为<span "
+"class=\"tag\">%(tagname)s</span></p>"
+msgstr[1] ""
+"\n"
+"您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标记为<span "
+"class=\"tag\">%(tagname)s</span></p>"
 
-#~ msgid ""
-#~ "\n"
-#~ "\t\t\thave total %(q_num)s questions containing %(searchtitle)s\n"
-#~ "\t\t\t"
-#~ msgid_plural ""
-#~ "\n"
-#~ "\t\t\thave total %(q_num)s questions containing %(searchtitle)s\n"
-#~ "\t\t\t"
-#~ msgstr[0] ""
-#~ "\n"
-#~ "您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标题含有"
-#~ "<span class=\"tag\">%(searchtitle)s</span></p>"
-#~ msgstr[1] ""
-#~ "\n"
-#~ "您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标题含有"
-#~ "<span class=\"tag\">%(searchtitle)s</span></p>"
+msgid ""
+"\n"
+"\t\t\thave total %(q_num)s questions containing %(searchtitle)s\n"
+"\t\t\t"
+msgid_plural ""
+"\n"
+"\t\t\thave total %(q_num)s questions containing %(searchtitle)s\n"
+"\t\t\t"
+msgstr[0] ""
+"\n"
+"您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标题含有"
+"<span class=\"tag\">%(searchtitle)s</span></p>"
+msgstr[1] ""
+"\n"
+"您正在浏览所有<div class=\"questions-count\">%(q_num)s</div>个标题含有"
+"<span class=\"tag\">%(searchtitle)s</span></p>"
 
-#~ msgid "number of questions"
-#~ msgstr "个"
+msgid "number of questions"
+msgstr "个"
 
-#~ msgid "number of <strong>unanswered</strong> questions"
-#~ msgstr ""
-#~ "个 <span class=\"darkred\"><strong>没有回答的</strong></span> 问题。"
+msgid "number of <strong>unanswered</strong> questions"
+msgstr ""
+"个 <span class=\"darkred\"><strong>没有回答的</strong></span> 问题。"
 
-#~ msgid "tagged with"
-#~ msgstr "标记为"
+msgid "tagged with"
+msgstr "标记为"
 
-#~ msgid "whose title contains"
-#~ msgstr "标题含有"
+msgid "whose title contains"
+msgstr "标题含有"
 
-#~ msgid "number of questions end of sentence"
-#~ msgstr "的问题。"
+msgid "number of questions end of sentence"
+msgstr "的问题。"
 
-#~ msgid "Questions are sorted by the <strong>time of last update</strong>."
-#~ msgstr "问题按<strong>最后更新时间</strong>显示排序。"
+msgid "Questions are sorted by the <strong>time of last update</strong>."
+msgstr "问题按<strong>最后更新时间</strong>显示排序。"
 
-#~ msgid "Most recently answered ones are shown first."
-#~ msgstr "最后被回答或者>更新的问题将显示在最前面。"
+msgid "Most recently answered ones are shown first."
+msgstr "最后被回答或者>更新的问题将显示在最前面。"
 
-#~ msgid "Questions sorted by <strong>number of responses</strong>."
-#~ msgstr "问题按<strong>回复数量</strong>显示排序。"
+msgid "Questions sorted by <strong>number of responses</strong>."
+msgstr "问题按<strong>回复数量</strong>显示排序。"
 
-#~ msgid "Most answered questions are shown first"
-#~ msgstr "回复最多的问题将显示在最前面。"
+msgid "Most answered questions are shown first"
+msgstr "回复最多的问题将显示在最前面。"
 
-#~ msgid "Questions are sorted by the <strong>number of votes</strong>."
-#~ msgstr "问题按<strong>投票数量</strong>显示排序。"
+msgid "Questions are sorted by the <strong>number of votes</strong>."
+msgstr "问题按<strong>投票数量</strong>显示排序。"
 
-#~ msgid "Most voted questions are shown first"
-#~ msgstr "投票最多的问题将显示在最前面。"
+msgid "Most voted questions are shown first"
+msgstr "投票最多的问题将显示在最前面。"
 
-#~ msgid "questions that user selected as his/her favorite"
-#~ msgstr "用户收藏的问题"
+msgid "questions that user selected as his/her favorite"
+msgstr "用户收藏的问题"
 
-#~ msgid "Frequently Asked Questions "
-#~ msgstr "常见问题"
+msgid "Frequently Asked Questions "
+msgstr "常见问题"
 
-#~ msgid "What kinds of questions can I ask here?"
-#~ msgstr "我可以在这里提问什么样的问题？"
+msgid "What kinds of questions can I ask here?"
+msgstr "我可以在这里提问什么样的问题？"
 
-#~ msgid "What questions should I avoid asking?"
-#~ msgstr "什么样的问题我不该在这里提问？"
+msgid "What questions should I avoid asking?"
+msgstr "什么样的问题我不该在这里提问？"
 
-#~ msgid ""
-#~ "Most importanly - questions should be <strong>relevant</strong> to this "
-#~ "community."
-#~ msgstr "毫无疑问，首先必须是<span class=\"yellowbg\">技术编程问题！</span>"
+msgid ""
+"Most importanly - questions should be <strong>relevant</strong> to this "
+"community."
+msgstr "毫无疑问，首先必须是<span class=\"yellowbg\">技术编程问题！</span>"
 
-#~ msgid ""
-#~ "Before asking the question - please make sure to use search to see "
-#~ "whether your question has alredy been answered."
-#~ msgstr ""
-#~ "提问之前，充分利用系统的自动查找、标签和搜索，看看是否已经有一样的问题并有"
-#~ "了答案。"
+msgid ""
+"Before asking the question - please make sure to use search to see "
+"whether your question has alredy been answered."
+msgstr ""
+"提问之前，充分利用系统的自动查找、标签和搜索，看看是否已经有一样的问题并有"
+"了答案。"
 
-#~ msgid "What should I avoid in my answers?"
-#~ msgstr "什么样的回答是不受欢迎的？"
+msgid "What should I avoid in my answers?"
+msgstr "什么样的回答是不受欢迎的？"
 
-#~ msgid "Who moderates this community?"
-#~ msgstr "谁是社区的管理员？"
+msgid "Who moderates this community?"
+msgstr "谁是社区的管理员？"
 
-#~ msgid ""
-#~ "Please avoid asking questions that are not relevant to this community, "
-#~ "too subjective and argumentative."
-#~ msgstr ""
-#~ "<span class=\"yellowbg\">与程序员或技术无关的，引起争吵或太过于主观性等违"
-#~ "背社区宗旨的内容。</span>本站建立是为了帮助大众程序员解决实际技术问题，我"
-#~ "们需要实际的问题！"
+msgid ""
+"Please avoid asking questions that are not relevant to this community, "
+"too subjective and argumentative."
+msgstr ""
+"<span class=\"yellowbg\">与程序员或技术无关的，引起争吵或太过于主观性等违"
+"背社区宗旨的内容。</span>本站建立是为了帮助大众程序员解决实际技术问题，我"
+"们需要实际的问题！"
 
-#~ msgid ""
-#~ "is a Q&A site, not a discussion group. Therefore - please avoid having "
-#~ "discussions in your answers, comment facility allows some space for brief "
-#~ "discussions."
-#~ msgstr ""
-#~ "希望用户提供针对提问的技术回答，可以是进一步了解问题实质，给予参考方案，或"
-#~ "完全解决问题的回答。我们希望通过问答的形式解决用户的实际问题。因此，<span "
-#~ "class=\"yellowbg\">我们不>欢迎在回答中出现不是回答问题的内容，包括针对他人"
-#~ "回答的讨论，和其他无意义的浪费网络资源行为</span>。CNProg建议您使用<span "
-#~ "class=\"yellowbg\">评论</span>功能来讨论你的意见和想法。"
+msgid ""
+"is a Q&A site, not a discussion group. Therefore - please avoid having "
+"discussions in your answers, comment facility allows some space for brief "
+"discussions."
+msgstr ""
+"希望用户提供针对提问的技术回答，可以是进一步了解问题实质，给予参考方案，或"
+"完全解决问题的回答。我们希望通过问答的形式解决用户的实际问题。因此，<span "
+"class=\"yellowbg\">我们不>欢迎在回答中出现不是回答问题的内容，包括针对他人"
+"回答的讨论，和其他无意义的浪费网络资源行为</span>。CNProg建议您使用<span "
+"class=\"yellowbg\">评论</span>功能来讨论你的意见和想法。"
 
-#~ msgid "The short answer is: <strong>you</strong>."
-#~ msgstr "答案是：<span class=\"yellowbg\">每个用户。</span>"
+msgid "The short answer is: <strong>you</strong>."
+msgstr "答案是：<span class=\"yellowbg\">每个用户。</span>"
 
-#~ msgid ""
-#~ "The reputation system allows users earn the authorization to perform a "
-#~ "variety of moderation tasks."
-#~ msgstr ""
-#~ "通过积分运作，<span class=\"yellowbg\">每个用户都有权限创建标签，进行对所"
-#~ "有问题、回答的投票、编辑、关闭等操作。</span>"
+msgid ""
+"The reputation system allows users earn the authorization to perform a "
+"variety of moderation tasks."
+msgstr ""
+"通过积分运作，<span class=\"yellowbg\">每个用户都有权限创建标签，进行对所"
+"有问题、回答的投票、编辑、关闭等操作。</span>"
 
-#~ msgid "This website is moderated by the users."
-#~ msgstr "社区没有严格意义上的管理员身份"
+msgid "This website is moderated by the users."
+msgstr "社区没有严格意义上的管理员身份"
 
-#~ msgid "How does reputation system work?"
-#~ msgstr "什么是社区积分？"
+msgid "How does reputation system work?"
+msgstr "什么是社区积分？"
 
-#~ msgid ""
-#~ "Anyone can ask questions and give answers, points are not necessary for "
-#~ "that."
-#~ msgstr "对于正常使用社区进行提问、回答而言，积分不是必须的。"
+msgid ""
+"Anyone can ask questions and give answers, points are not necessary for "
+"that."
+msgstr "对于正常使用社区进行提问、回答而言，积分不是必须的。"
 
-#~ msgid ""
-#~ "As we've said before, users help running this site. Point system helps "
-#~ "select users who can administer this community."
-#~ msgstr ""
-#~ "我们一再声明，CNProg由你来运行和维护。如果你想帮助我们来运作CNProg，你需要"
-#~ "一定的积分等级。"
+msgid ""
+"As we've said before, users help running this site. Point system helps "
+"select users who can administer this community."
+msgstr ""
+"我们一再声明，CNProg由你来运行和维护。如果你想帮助我们来运作CNProg，你需要"
+"一定的积分等级。"
 
-#~ msgid ""
-#~ "Reputation points roughly measure how community trusts you. These points "
-#~ "are given to you directly by other members of the community."
-#~ msgstr ""
-#~ "<span class=\"yellowbg\">积分是一种用来粗略衡量社区对你有多信任的数据。</"
-#~ "span>积分不是有谁来支付或直接给予你的，而是你通过获得其他用户的支持和信"
-#~ "任“赚得”的。"
+msgid ""
+"Reputation points roughly measure how community trusts you. These points "
+"are given to you directly by other members of the community."
+msgstr ""
+"<span class=\"yellowbg\">积分是一种用来粗略衡量社区对你有多信任的数据。</"
+"span>积分不是有谁来支付或直接给予你的，而是你通过获得其他用户的支持和信"
+"任“赚得”的。"
 
-#~ msgid ""
-#~ "For example, if you ask an interesting question or give a helpful answer, "
-#~ "your input will be upvoted and you will gain more trust in the community."
-#~ msgstr ""
-#~ "举例来说，如果你提了一个非常有帮助的问题或者做了很有用的回答，你将会被其他"
-#~ "用户投赞成票。"
+msgid ""
+"For example, if you ask an interesting question or give a helpful answer, "
+"your input will be upvoted and you will gain more trust in the community."
+msgstr ""
+"举例来说，如果你提了一个非常有帮助的问题或者做了很有用的回答，你将会被其他"
+"用户投赞成票。"
 
-#~ msgid ""
-#~ "If on the other hand someone gives a misleading answer, the answer will "
-#~ "be voted down and he/she loses some points."
-#~ msgstr ""
-#~ "相反，你提了不受欢迎的问题，或者误导用户的回答，你将可能被其他用户投反对"
-#~ "票。每个赞成"
+msgid ""
+"If on the other hand someone gives a misleading answer, the answer will "
+"be voted down and he/she loses some points."
+msgstr ""
+"相反，你提了不受欢迎的问题，或者误导用户的回答，你将可能被其他用户投反对"
+"票。每个赞成"
 
-#~ msgid ""
-#~ "Each vote in favor will generate <strong>10</strong> points, each vote "
-#~ "against will subtract <strong>2</strong> points."
-#~ msgstr ""
-#~ "票会帮你产生<strong>10</strong>个社区积分，每个反对票会相应扣除你"
-#~ "<strong>2</strong>个积分。"
+msgid ""
+"Each vote in favor will generate <strong>10</strong> points, each vote "
+"against will subtract <strong>2</strong> points."
+msgstr ""
+"票会帮你产生<strong>10</strong>个社区积分，每个反对票会相应扣除你"
+"<strong>2</strong>个积分。"
 
-#~ msgid ""
-#~ "Through the votes of other people you can accumulate a maximum of "
-#~ "<strong>200</strong> points."
-#~ msgstr ""
-#~ "每天通过别人投赞成票，你最多只能产生<strong>200</strong>个积分，这是上限。"
+msgid ""
+"Through the votes of other people you can accumulate a maximum of "
+"<strong>200</strong> points."
+msgstr ""
+"每天通过别人投赞成票，你最多只能产生<strong>200</strong>个积分，这是上限。"
 
-#~ msgid "After accumulating certain number of points, you can do more:"
-#~ msgstr "当你累计到一定>积分，你可以在社区做更多的事情："
+msgid "After accumulating certain number of points, you can do more:"
+msgstr "当你累计到一定>积分，你可以在社区做更多的事情："
 
 # todo - check if it's indeed plural
-#~ msgid "add comments"
-#~ msgstr "添加评论"
+msgid "add comments"
+msgstr "添加评论"
 
-#~ msgid "retag questions"
-#~ msgstr "给任何问题整理标签"
+msgid "retag questions"
+msgstr "给任何问题整理标签"
 
-#~ msgid "edit community wiki questions"
-#~ msgstr "编辑wiki类问题"
+msgid "edit community wiki questions"
+msgstr "编辑wiki类问题"
 
-#~ msgid "edit any answer"
-#~ msgstr "编辑任何问题或答案"
+msgid "edit any answer"
+msgstr "编辑任何问题或答案"
 
-#~ msgid "reopen any closed questions"
-#~ msgstr "打开关闭任何人的问题"
+msgid "reopen any closed questions"
+msgstr "打开关闭任何人的问题"
 
-#~ msgid "delete any comment"
-#~ msgstr "删除任何一个评论"
+msgid "delete any comment"
+msgstr "删除任何一个评论"
 
-#~ msgid "delete any questions and answers and perform other moderation tasks"
-#~ msgstr "删除任何一个问题或答案，及其他管理功能"
+msgid "delete any questions and answers and perform other moderation tasks"
+msgstr "删除任何一个问题或答案，及其他管理功能"
 
-#~ msgid "To register, do I need to create new password?"
-#~ msgstr "我需要注册一个新用户吗？"
+msgid "To register, do I need to create new password?"
+msgstr "我需要注册一个新用户吗？"
 
-#~ msgid "Why other people can edit my questions/answers?"
-#~ msgstr "为什么其他人可以修改我的问题/回答？"
+msgid "Why other people can edit my questions/answers?"
+msgstr "为什么其他人可以修改我的问题/回答？"
 
-#~ msgid "Still have questions?"
-#~ msgstr "还有其他问题？"
+msgid "Still have questions?"
+msgstr "还有其他问题？"
 
-#~ msgid "Please ask your question, help make our community better!"
-#~ msgstr "如果您对社区还有其他疑问，请一起来完善我们的"
+msgid "Please ask your question, help make our community better!"
+msgstr "如果您对社区还有其他疑问，请一起来完善我们的"
 
-#~ msgid ""
-#~ "No, you don't have to. You can login through any service that supports "
-#~ "OpenID, e.g. Google, Yahoo, AOL, etc."
-#~ msgstr ""
-#~ "不需要。社区提供了OpenID的登录支持，你要用Google、Yahoo等任何支持OpenID登"
-#~ "录的帐号就可以使用系统。"
+msgid ""
+"No, you don't have to. You can login through any service that supports "
+"OpenID, e.g. Google, Yahoo, AOL, etc."
+msgstr ""
+"不需要。社区提供了OpenID的登录支持，你要用Google、Yahoo等任何支持OpenID登"
+"录的帐号就可以使用系统。"
 
-#~ msgid "Login now!"
-#~ msgstr "马上登录"
+msgid "Login now!"
+msgstr "马上登录"
 
-#~ msgid ""
-#~ "So questions and answers can be edited like wiki pages by experienced "
-#~ "users of this site and this improves the overall quality of the knowledge "
-#~ "base content."
-#~ msgstr ""
-#~ "所以问题和答案都是如Wiki一样可编辑的，我们希望社区能帮助用户沉淀、积累更多"
-#~ "有用的知识和经验。"
+msgid ""
+"So questions and answers can be edited like wiki pages by experienced "
+"users of this site and this improves the overall quality of the knowledge "
+"base content."
+msgstr ""
+"所以问题和答案都是如Wiki一样可编辑的，我们希望社区能帮助用户沉淀、积累更多"
+"有用的知识和经验。"
 
-#~ msgid "If this approach is not for you, we respect your choice."
-#~ msgstr "如果您不喜欢这种方式，我们尊重你的选择。"
+msgid "If this approach is not for you, we respect your choice."
+msgstr "如果您不喜欢这种方式，我们尊重你的选择。"
 
-#~ msgid "answer tips"
-#~ msgstr "受欢迎的提问"
+msgid "answer tips"
+msgstr "受欢迎的提问"
 
-#~ msgid "try to give an answer, rather than engage into a discussion"
-#~ msgstr "建议您提的问题是可以被答复的，而不仅仅是可以讨论。"
+msgid "try to give an answer, rather than engage into a discussion"
+msgstr "建议您提的问题是可以被答复的，而不仅仅是可以讨论。"
 
-#~ msgid "gold badge: the highest honor and is very rare"
-#~ msgstr "金牌:十分罕见之最高荣耀"
+msgid "gold badge: the highest honor and is very rare"
+msgstr "金牌:十分罕见之最高荣耀"
 
-#~ msgid ""
-#~ "silver badge: occasionally awarded for the very high quality contributions"
-#~ msgstr "银牌:偶尔颁发之优质奖章"
+msgid ""
+"silver badge: occasionally awarded for the very high quality contributions"
+msgstr "银牌:偶尔颁发之优质奖章"
 
-#~ msgid "Gold badge is very rare."
-#~ msgstr "金牌是十分罕见的。"
+msgid "Gold badge is very rare."
+msgstr "金牌是十分罕见的。"
 
-#~ msgid "Gold badge is the highest award in this community."
-#~ msgstr "获得金牌意味着你在某个层次上已经达到了顶峰。"
+msgid "Gold badge is the highest award in this community."
+msgstr "获得金牌意味着你在某个层次上已经达到了顶峰。"
 
-#~ msgid "Obtaining silver badge requires significant patience."
-#~ msgstr "银牌需要经过长时间的奋斗才能获得。"
+msgid "Obtaining silver badge requires significant patience."
+msgstr "银牌需要经过长时间的奋斗才能获得。"
 
-#~ msgid "%s ago"
-#~ msgstr "于%s<font class=\"darkred\">关闭</font>"
+msgid "%s ago"
+msgstr "于%s<font class=\"darkred\">关闭</font>"
