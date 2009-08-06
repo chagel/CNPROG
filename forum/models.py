@@ -12,9 +12,32 @@ from django.template.defaultfilters import slugify
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.utils.translation import ugettext as _
 import django.dispatch
+import settings
 
 from forum.managers import *
 from const import *
+
+class EmailFeed(models.Model):
+    #subscription key for unsubscribe by visiting emailed link
+    key = models.CharField(max_length=32)
+    #generic relation with feed content (i.e. question or tags)
+    feed_content_type = models.ForeignKey(ContentType,related_name='content_emailfeed')
+    feed_id = models.PositiveIntegerField()
+    content = generic.GenericForeignKey('feed_content_type','feed_id')
+    #generic relation with owner - either nameless email or User
+    subscriber_content_type = models.ForeignKey(ContentType,related_name='subscriber_emailfeed')
+    subscriber_id = models.PositiveIntegerField()
+    subscriber = generic.GenericForeignKey('subscriber_content_type','subscriber_id')
+    added_at = models.DateTimeField(default=datetime.datetime.now)
+    reported_at = models.DateTimeField(default=datetime.datetime.now)
+
+    #getter functions rely on implementations of similar functions in content
+    #of subscriber objects
+    def get_update_summary(self):
+        return self.content.get_update_summary(last_reported_at = self.reported_at,recipient_email = self.get_email())
+
+    def get_email(self):
+        return self.subscriber.email
 
 class Tag(models.Model):
     name       = models.CharField(max_length=255, unique=True)
@@ -22,6 +45,7 @@ class Tag(models.Model):
     deleted         = models.BooleanField(default=False)
     deleted_at      = models.DateTimeField(null=True, blank=True)
     deleted_by      = models.ForeignKey(User, null=True, blank=True, related_name='deleted_tags')
+    email_feeds     = generic.GenericRelation(EmailFeed)
     # Denormalised data
     used_count = models.PositiveIntegerField(default=0)
 
@@ -131,6 +155,7 @@ class Question(models.Model):
     comments             = generic.GenericRelation(Comment)
     votes                = generic.GenericRelation(Vote)
     flagged_items        = generic.GenericRelation(FlaggedItem)
+    email_feeds          = generic.GenericRelation(EmailFeed)
 
     objects = QuestionManager()
 
@@ -173,13 +198,67 @@ class Question(models.Model):
             attr = CONST['deleted']
         else:
             attr = None
-        return u'%s %s' % (self.title, attr) if attr is not None else self.title
+        if attr is not None:
+            return u'%s %s' % (self.title, attr)
+        else:
+            return self.title
 
     def get_revision_url(self):
         return reverse('question_revisions', args=[self.id])
 
     def get_latest_revision(self):
         return self.revisions.all()[0]
+
+    def get_update_summary(self,last_reported_at=None,recipient_email=''):
+        edited = False 
+        if self.last_edited_at and self.last_edited_at > last_reported_at:
+            if self.last_edited_by.email != recipient_email:
+                edited = True 
+        comments = []
+        for comment in self.comments.all():
+            if comment.added_at > last_reported_at and comment.user.email != recipient_email:
+                comments.append(comment)
+        new_answers = []
+        answer_comments = []
+        modified_answers = []
+        for answer in self.answers.all():
+            if (answer.added_at > last_reported_at):
+                new_answers.append(answer)
+            if (answer.last_edited_at 
+                and answer.last_edited_at > last_reported_at 
+                and answer.last_edited_by.email != recipient_email):
+                modified_answers.append(answer)
+            for comment in answer.comments.all():
+                if comment.added_at > last_reported_at and comment.user.email != recipient_email:
+                    answer_comments.append(comment)
+        if edited or comments or new_answers or modified_answers or answer_comments:
+            import sets
+            out = [] 
+            if edited:
+                out.append(_('%(author)s modified the question') % {'author':self.last_edited_by.username})
+            if new_answers:
+                names = sets.Set(map(lambda x: x.author.username,new_answers))
+                people = ', '.join(names)
+                out.append(_('%(people)s posted %(new_answer_count)s new answers') \
+                                % {'new_answer_count':len(new_answers),'people':people})
+            if comments:
+                names = sets.Set(map(lambda x: x.user.username,comments))
+                people = ', '.join(names)
+                out.append(_('%(people)s commented the question') % {'people':people})
+            if answer_comments:
+                names = sets.Set(map(lambda x: x.user.username,answer_comments))
+                people = ', '.join(names)
+                if len(answer_comments) > 1:
+                    out.append(_('%(people)s commented answers') % {'people':people})
+                else:
+                    out.append(_('%(people)s commented the answer') % {'people':people})
+            url = settings.APP_URL + self.get_absolute_url()
+            retval = '<a href="%s">%s</a>:<br>\n' % (url,self.title)
+            out = map(lambda x: '<li>' + x + '</li>',out)
+            retval += '<ul>' + '\n'.join(out) + '</ul><br>\n'
+            return retval
+        else:
+            return None
 
     def __unicode__(self):
         return self.title
@@ -218,6 +297,44 @@ class QuestionRevision(models.Model):
 
     def __unicode__(self):
         return u'revision %s of %s' % (self.revision, self.title)
+
+class AnonymousAnswer(models.Model):
+    question = models.ForeignKey(Question, related_name='anonymous_answers')
+    session_key = models.CharField(max_length=40)  #session id for anonymous questions
+    wiki = models.BooleanField(default=False)
+    added_at = models.DateTimeField(default=datetime.datetime.now)
+    ip_addr = models.IPAddressField(max_length=21) #allow high port numbers
+    author = models.ForeignKey(User,null=True)
+    text = models.TextField()
+    summary = models.CharField(max_length=180)
+
+    def publish(self,user):
+        from forum.views import create_new_answer
+        added_at = datetime.datetime.now()
+        print user.id
+        create_new_answer(question=self.question,wiki=self.wiki,
+                            added_at=added_at,text=self.text,
+                            author=user)
+        self.delete()
+
+class AnonymousQuestion(models.Model):
+    title = models.CharField(max_length=300)
+    session_key = models.CharField(max_length=40)  #session id for anonymous questions
+    text = models.TextField()
+    summary = models.CharField(max_length=180)
+    tagnames = models.CharField(max_length=125)
+    wiki = models.BooleanField(default=False)
+    added_at = models.DateTimeField(default=datetime.datetime.now)
+    ip_addr = models.IPAddressField(max_length=21) #allow high port numbers
+    author = models.ForeignKey(User,null=True)
+
+    def publish(self,user):
+        from forum.views import create_new_question
+        added_at = datetime.datetime.now()
+        create_new_question(title=self.title, author=user, added_at=added_at,
+                                wiki=self.wiki, tagnames=self.tagnames,
+                                summary=self.summary, text=self.text)
+        self.delete()
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, related_name='answers')
@@ -447,6 +564,13 @@ class BookAuthorRss(models.Model):
     class Meta:
         db_table = u'book_author_rss'
 
+class AnonymousEmail(models.Model):
+    #validation key, if used
+    key = models.CharField(max_length=32)
+    email = models.EmailField(null=False,unique=True)
+    isvalid = models.BooleanField(default=False)
+    feeds = generic.GenericRelation(EmailFeed)
+
 # User extend properties
 QUESTIONS_PER_PAGE_CHOICES = (
    (10, u'10'),
@@ -454,8 +578,11 @@ QUESTIONS_PER_PAGE_CHOICES = (
    (50, u'50'),
 )
 
+User.add_to_class('email_isvalid', models.BooleanField(default=False))
+User.add_to_class('email_key', models.CharField(max_length=16, null=True))
 User.add_to_class('reputation', models.PositiveIntegerField(default=1))
 User.add_to_class('gravatar', models.CharField(max_length=32))
+User.add_to_class('email_feeds', generic.GenericRelation(EmailFeed))
 User.add_to_class('favorite_questions',
                   models.ManyToManyField(Question, through=FavoriteQuestion,
                                          related_name='favorited_by'))
@@ -480,11 +607,14 @@ edit_question_or_answer = django.dispatch.Signal(providing_args=["instance", "mo
 delete_post_or_answer = django.dispatch.Signal(providing_args=["instance", "deleted_by"])
 mark_offensive = django.dispatch.Signal(providing_args=["instance", "mark_by"])
 user_updated = django.dispatch.Signal(providing_args=["instance", "updated_by"])
+user_logged_in = django.dispatch.Signal(providing_args=["session"])
+
+
 def get_messages(self):
-        messages = []
-        for m in self.message_set.all():
-            messages.append(m.message)
-        return messages
+    messages = []
+    for m in self.message_set.all():
+        messages.append(m.message)
+    return messages
 
 def delete_messages(self):
     self.message_set.all().delete()
@@ -632,6 +762,24 @@ def record_user_full_updated(instance, **kwargs):
     activity = Activity(user=instance, active_at=datetime.datetime.now(), content_object=instance, activity_type=TYPE_ACTIVITY_USER_FULL_UPDATED)
     activity.save()
 
+def post_stored_anonymous_content(sender,user,session_key,signal,*args,**kwargs):
+    aq_list = AnonymousQuestion.objects.filter(session_key = session_key)
+    aa_list = AnonymousAnswer.objects.filter(session_key = session_key)
+    import settings
+    if settings.EMAIL_VALIDATION == 'on':#add user to the record
+        for aq in aq_list:
+            aq.author = user
+            aq.save()
+        for aa in aa_list:
+            aa.author = user
+            aa.save()
+        #maybe add pending posts message?
+    else: #just publish the questions
+        for aq in aq_list:
+            aq.publish(user)
+        for aa in aa_list:
+            aa.publish(user)
+
 #signal for User modle save changes
 pre_save.connect(calculate_gravatar_hash, sender=User)
 post_save.connect(record_ask_event, sender=Question)
@@ -652,3 +800,4 @@ mark_offensive.connect(record_mark_offensive, sender=Answer)
 tags_updated.connect(record_update_tags, sender=Question)
 post_save.connect(record_favorite_question, sender=FavoriteQuestion)
 user_updated.connect(record_user_full_updated, sender=User)
+user_logged_in.connect(post_stored_anonymous_content)

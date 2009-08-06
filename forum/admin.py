@@ -4,6 +4,9 @@ from django.contrib import admin
 from models import *
 
 
+class AnonymousQuestionAdmin(admin.ModelAdmin):
+    """AnonymousQuestion admin class"""
+
 class QuestionAdmin(admin.ModelAdmin):
     """Question admin class"""
 

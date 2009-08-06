@@ -1,5 +1,8 @@
+{% extends "base.html" %}
 <!-- question.html -->
-{% extends "base.html" %}{% load extra_tags %}{% load extra_filters %}{% load humanize %}
+{% load extra_tags %}
+{% load extra_filters %}
+{% load humanize %}
 {% load i18n %}
 {% block title %}{% spaceless %}{{ question.get_question_title }}{% endspaceless %}{% endblock %}
 {% block forejs %}
@@ -250,10 +253,10 @@
             </div>
             {% endif %}
             
-            {% ifnotequal question.answer_count 0 %}
+            {% ifnotequal answers.length 0 %}
                 <div class="tabBar">
                     <a name="sort-top"></a>
-                    <div class="headQuestions">{{ question.answer_count }}{% trans "Answers" %}:</div>
+                    <div class="headQuestions">{{ answers|length }}{% trans "Answers" %}:</div>
                     <div class="tabsA">
                          <a id="oldest" href="?sort=oldest#sort-top" title="{% trans "oldest answers will be shown first" %}">{% trans "oldest answers" %}</a>
                         <a id="latest" href="?sort=latest#sort-top" title="{% trans "newest answers will be shown first" %}">{% trans "newest answers" %}</a>
@@ -431,10 +434,12 @@
             </div>
             
             {% if not question.closed %}
-            {% if request.user.is_authenticated %}
             <div style="padding:10px 0 0 0;">
                 <div class="headNormal">{% trans "Your answer" %}:</div>
             </div>
+            {% if not request.user.is_authenticated %}
+                <div class="message">{% trans "you can answer anonymously and then login" %}</div>
+            {% endif %}
 
             <div id="description" class="" >
                 <div id="wmd-button-bar" class="wmd-panel"></div>
@@ -458,9 +463,11 @@
             </div>
             <br>
             <input type="submit" value="{% trans "Answer the question" %}" class="submit"><span class="form-error"></span>
-            {% else %}
-            <input id="btLogin" type="button" class="submit" style="width:200px" value="{% trans "Login to answer" %}">
-            {% endif %}
+                {% if request.user.is_authenticated %}
+                    {{ answer.email_notify }} <label for="question-subscribe-updates">{% trans "Notify me daily if there are any new answers." %}</label>
+                {% else %}
+                    <input type="checkbox" disabled><label>{% trans "once you sign in you will be able to subscribe for any updates here" %}</label>
+                {% endif %}
             {% endif %}
             <br><br>
         </form>

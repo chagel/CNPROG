@@ -1,5 +1,5 @@
-<!-- user.html -->
 {% extends "base_content.html" %}
+<!-- user.html -->
 {% load extra_tags %}
 {% load humanize %}
 {% block title %}{% spaceless %}{{ page_title }}{% endspaceless %}{% endblock %}
@@ -16,14 +16,12 @@
                     $("#nav_profile").attr('className',"on");
                 {% else %}
                     $("#nav_users").attr('className',"on");
-               
                 {% endifequal %}
-            });     
+            }); 
         </script>
         {% block userjs %}
         {% endblock %}
 {% endblock %}
-
 {% block content %}
     <div id="mainbar-full">
         {% include "user_info.html" %}

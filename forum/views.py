@@ -168,46 +168,140 @@ def questions(request, tagname=None, unanswered=False):
             'pagesize' : pagesize
         }}, context_instance=RequestContext(request))
 
+def create_new_answer( question=None, author=None,\
+            added_at=None, wiki=False,\
+            text='', email_notify=False):
+
+    html = sanitize_html(markdowner.convert(text))
+
+    #create answer
+    answer = Answer(
+        question = question,
+        author = author,
+        added_at = added_at,
+        wiki = wiki,
+        html = html
+    )
+    if answer.wiki:
+        answer.last_edited_by = answer.author
+        answer.last_edited_at = added_at 
+        answer.wikified_at = added_at 
+
+    answer.save()
+
+    #update question data
+    question.last_activity_at = added_at 
+    question.last_activity_by = author 
+    question.save()
+    Question.objects.update_answer_count(question)
+
+    #update revision
+    AnswerRevision.objects.create(
+        answer     = answer,
+        revision   = 1,
+        author     = author,
+        revised_at = added_at,
+        summary    = CONST['default_version'],
+        text       = text
+    )
+
+    #set notification/delete
+    if email_notify:
+        try:
+            EmailFeed.objects.get(feed_id = question.id, subscriber_id = author.id, feed_content_type=question_type)
+        except EmailFeed.DoesNotExist:
+            feed = EmailFeed(content = question, subscriber = author)
+            feed.save()
+    else:
+        #not sure if this is necessary. ajax should take care of this...
+        try:
+            feed = Email.objects.get(feed_id = question.id, subscriber_id = author.id, feed_content_type=question_type)
+            feed.delete()
+        except:
+            pass
+
+def create_new_question(title=None,author=None,added_at=None,
+                        wiki=False,tagnames=None,summary=None,
+                        text=None):
+    """this is not a view
+    and maybe should become one of the methods on Question object?
+    """
+    html = sanitize_html(markdowner.convert(text))
+    question = Question(
+        title            = title,
+        author           = author, 
+        added_at         = added_at,
+        last_activity_at = added_at,
+        last_activity_by = author,
+        wiki             = wiki,
+        tagnames         = tagnames,
+        html             = html,
+        summary          = summary 
+    )
+    if question.wiki:
+        question.last_edited_by = question.author
+        question.last_edited_at = added_at
+        question.wikified_at = added_at
+
+    question.save()
+
+    # create the first revision
+    QuestionRevision.objects.create(
+        question   = question,
+        revision   = 1,
+        title      = question.title,
+        author     = author,
+        revised_at = added_at,
+        tagnames   = question.tagnames,
+        summary    = CONST['default_version'],
+        text       = text
+    )
+    return question
+
 #TODO: allow anynomus user to ask question by providing email and username.
-@login_required
+#@login_required
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
         if form.is_valid():
+
             added_at = datetime.datetime.now()
-            html = sanitize_html(markdowner.convert(form.cleaned_data['text']))
-            question = Question(
-                title            = strip_tags(form.cleaned_data['title']),
-                author           = request.user,
-                added_at         = added_at,
-                last_activity_at = added_at,
-                last_activity_by = request.user,
-                wiki             = form.cleaned_data['wiki'],
-                tagnames         = form.cleaned_data['tags'].strip(),
-                html             = html,
-                summary          = strip_tags(html)[:120]
-            )
-            if question.wiki:
-                question.last_edited_by = question.author
-                question.last_edited_at = added_at
-                question.wikified_at = added_at
+            title = strip_tags(form.cleaned_data['title'])
+            wiki = form.cleaned_data['wiki']
+            tagnames = form.cleaned_data['tags'].strip()
+            text = form.cleaned_data['text']
+            html = sanitize_html(markdowner.convert(text))
+            summary = strip_tags(html)[:120]
 
-            question.save()
+            if request.user.is_authenticated():
+                author = request.user 
 
-            # create the first revision
-            QuestionRevision.objects.create(
-                question   = question,
-                revision   = 1,
-                title      = question.title,
-                author     = request.user,
-                revised_at = added_at,
-                tagnames   = question.tagnames,
-                summary    = CONST['default_version'],
-                text       = form.cleaned_data['text']
-            )
+                question = create_new_question(
+                    title            = title,
+                    author           = author, 
+                    added_at         = added_at,
+                    wiki             = wiki,
+                    tagnames         = tagnames,
+                    summary          = summary,
+                    text = text
+                )
 
-            return HttpResponseRedirect(question.get_absolute_url())
-
+                return HttpResponseRedirect(question.get_absolute_url())
+            else:
+                request.session.flush()
+                session_key = request.session.session_key
+                question = AnonymousQuestion(
+                    session_key = session_key,
+                    title       = title,
+                    tagnames = tagnames,
+                    wiki = wiki,
+                    text = text,
+                    summary = summary,
+                    added_at = added_at,
+					ip_addr = request.META['REMOTE_ADDR'],
+                )
+                question.save()
+                return HttpResponseRedirect('%s%s%s' % ( _('/account/'),_('signin/'),('newquestion/')))
     else:
         form = AskForm()
 
@@ -233,7 +327,7 @@ def question(request, id):
     question = get_object_or_404(Question, id=id)
     if question.deleted and not can_view_deleted_post(request.user, question):
         raise Http404
-    answer_form = AnswerForm(question)
+    answer_form = AnswerForm(question,request.user)
     answers = Answer.objects.get_answers_from_question(question, request.user)
     answers = answers.select_related(depth=1)
 
@@ -254,7 +348,16 @@ def question(request, id):
 
     if answers is not None:
         answers = answers.order_by("-accepted", orderby)
-    objects_list = Paginator(answers, ANSWERS_PAGE_SIZE)
+
+    filtered_answers = []
+    for answer in answers:
+        if answer.deleted == True:
+            if answer.author_id == request.user.id:
+                filtered_answers.append(answer)
+        else:
+            filtered_answers.append(answer)
+
+    objects_list = Paginator(filtered_answers, ANSWERS_PAGE_SIZE)
     page_objects = objects_list.page(page)
     # update view count
     Question.objects.update_view_count(question)
@@ -558,42 +661,38 @@ def answer_revisions(request, id):
         'revisions': revisions,
     }, context_instance=RequestContext(request))
 
-#TODO: allow anynomus
-@login_required
 def answer(request, id):
     question = get_object_or_404(Question, id=id)
     if request.method == "POST":
-        form = AnswerForm(question, request.POST)
+        form = AnswerForm(question, request.user, request.POST)
         if form.is_valid():
+            wiki = form.cleaned_data['wiki']
+            text = form.cleaned_data['text']
             update_time = datetime.datetime.now()
-            answer = Answer(
-                question = question,
-                author = request.user,
-                added_at = update_time,
-                wiki = form.cleaned_data['wiki'],
-                html = sanitize_html(markdowner.convert(form.cleaned_data['text'])),
-            )
-            if answer.wiki:
-                answer.last_edited_by = answer.author
-                answer.last_edited_at = update_time
-                answer.wikified_at = update_time
 
-            answer.save()
-            Question.objects.update_answer_count(question)
-
-            question = get_object_or_404(Question, id=id)
-            question.last_activity_at = update_time
-            question.last_activity_by = request.user
-            question.save()
-
-            AnswerRevision.objects.create(
-                answer     = answer,
-                revision   = 1,
-                author     = request.user,
-                revised_at = update_time,
-                summary    = CONST['default_version'],
-                text       = form.cleaned_data['text']
-            )
+            if request.user.is_authenticated():
+                create_new_answer(
+                        question=question,
+                        author=request.user,
+                        added_at=update_time,
+                        wiki=wiki,
+                        text=text,
+                        email_notify=form.cleaned_data['email_notify']
+                    )
+            else:
+                request.session.flush()
+                html = sanitize_html(markdowner.convert(text))
+                summary = strip_tags(html)[:120]
+                anon = AnonymousAnswer(
+                    question = question,
+                    wiki = wiki,
+                    text = text,
+                    summary = summary,
+                    session_key = request.session.session_key,
+                    ip_addr = request.META['REMOTE_ADDR'],
+                    )
+                anon.save()
+                return HttpResponseRedirect('/account/signin/newanswer')
 
     return HttpResponseRedirect(question.get_absolute_url())
 
@@ -655,6 +754,7 @@ def vote(request, id):
         offensiveAnswer:8,
         removeQuestion: 9,
         removeAnswer:10
+        questionSubscribeUpdates:11
 
     accept answer code:
         response_data['allowed'] = -1, Accept his own answer   0, no allowed - Anonymous    1, Allowed - by default
@@ -831,6 +931,31 @@ def vote(request, id):
                 else:
                     onDeleted(post, request.user)
                     delete_post_or_answer.send(sender=post.__class__, instance=post, delete_by=request.user)
+            elif vote_type == '11':#subscribe q updates
+                user = request.user
+                if user.is_authenticated():
+                    try:
+                        EmailFeed.objects.get(feed_id=question.id,subscriber_id=user.id,feed_content_type=question_type)
+                    except EmailFeed.DoesNotExist:
+                        feed = EmailFeed(subscriber=user,content=question)
+                        feed.save()
+                        if settings.EMAIL_VALIDATION == 'on' and user.email_isvalid == False:
+                            response_data['message'] = _('subscription saved, %(email)s needs validation') % {'email':user.email}
+                    #response_data['status'] = 1
+                    #responst_data['allowed'] = 1
+                else:
+                    pass
+                    #response_data['status'] = 0
+                    #response_data['allowed'] = 0
+            elif vote_type == '12':#unsubscribe q updates
+                user = request.user
+                if user.is_authenticated():
+                    try:
+                        feed = EmailFeed.objects.get(feed_id=question.id,subscriber_id=user.id)
+                        feed.delete()
+                    except EmailFeed.DoesNotExist:
+                        pass
+                    
         else:
             response_data['success'] = 0
             response_data['message'] = u'Request mode is not supported. Please try again.'
@@ -905,7 +1030,11 @@ def edit_user(request, id):
     if request.method == "POST":
         form = EditUserForm(user, request.POST)
         if form.is_valid():
-            user.email = sanitize_html(form.cleaned_data['email'])
+            new_email = sanitize_html(form.cleaned_data['email'])
+
+            from django_authopenid.views import set_new_email
+            set_new_email(user, new_email)
+
             user.real_name = sanitize_html(form.cleaned_data['realname'])
             user.website = sanitize_html(form.cleaned_data['website'])
             user.location = sanitize_html(form.cleaned_data['city'])
@@ -1498,7 +1627,6 @@ def user_reputation(request, user_id, user_view):
 
     reputation.query.group_by = ['question_id']
 
-
     rep_list = []
     for rep in Repute.objects.filter(user=user).order_by('reputed_at'):
         dic = '[%s,%s]' % (calendar.timegm(rep.reputed_at.timetuple()) * 1000, rep.reputation)
@@ -1683,7 +1811,6 @@ def read_message(request):
     if request.method == "POST":
         if request.POST['formdata'] == 'required':
             request.session['message_silent'] = 1
-
             if request.user.is_authenticated():
                 request.user.delete_messages()
     return HttpResponse('')

@@ -1,5 +1,5 @@
-<!-- template ask.html -->
 {% extends "base.html" %}
+<!-- template ask.html -->
 {% load i18n %}
 {% block title %}{% spaceless %}{% trans "Ask a question" %}{% endspaceless %}{% endblock %}
 {% block forejs %}
@@ -62,6 +62,19 @@
 <div id="main-body" class="ask-body">
     <div id="askform">
         <form id="fmask" action="" method="post" >
+			{% if not request.user.is_authenticated %}
+            <div class="message">
+			    <p>{% trans "login to post question info" %}</p>
+            </div>
+            {% else %}
+                {% ifequal settings.EMAIL_VALIDATION 'on' %}
+                    {% if not request.user.email_isvalid %}
+                        <div class="message">
+                            {% blocktrans with request.user.email as email %}must have valid {{email}} to post{% endblocktrans %}
+                        </div>
+                    {% endif %}
+                {% endifequal %}
+			{% endif %}
             <p class="form-item">
                 <label for="id_title" ><strong>{{ form.title.label_tag }}:</strong></label> <span class="form-error"></span><br>
                 {{ form.title }} {{ form.title.errors }}
@@ -92,40 +105,17 @@
                 <br>
             </p>
             <p class="form-item">
-                <strong>{{ form.tags.label_tag }}:</strong> <span class="form-error"></span><br>
+                <strong>{{ form.tags.label_tag }}:</strong> {% trans "(required)" %} <span class="form-error"></span><br>
                 {{ form.tags }}  {{ form.tags.errors }}
-                <div class="title-desc">
-                    {{ form.tags.help_text }}
-                </div>
             </p>
-            <br>
+			<p class="title-desc">
+				{{ form.tags.help_text }}
+			</p>
             {% if not request.user.is_authenticated %}
-            <table id="login-box">
-                <tr>
-                    <td style="vertical-align:middle;">
-                    <strong>{% trans "Use" %} <a href="http://openid.net/" title="{% trans "learn more about OpenID" %}">OpenID</a> {% trans "Login" %}:</strong><br>
-                        {{ form.openid }}
-                        <div class="title-desc">
-                            {% trans "Get your own "%} <a href="https://www.myopenid.com/" target=="_blank">OpenID</a>。
-                        </div>
-                    </td>
-                    <td style="vertical-align:middle; padding: 0px 40px 0px 40px">
-                        <div style="position: absolute; margin-top:40px; background-color:white; margin-left:-10px; padding:5px;">或</div>
-                        <div style="width:1px; border-left:solid 1px #999; height:8em; margin:auto;"></div>
-                    </td>
-                    <td style="vertical-align:middle;">
-                        <strong>{% trans "User name" %}:</strong><br>
-                        {{ form.user }}
-                        <p>
-                        <strong>{% trans "Email: (won't be shown to anyone)" %}:</strong><br>
-                        {{ form.email }}
-                        </p>
-                    </td>
-                </tr>
-            </table>
-            {% endif %}
+            <input type="submit" value="{% trans "Login/signup to post your question" %}" class="submit" />
+			{% else %}
             <input type="submit" value="{% trans "Ask your question" %}" class="submit" />
-            <br><br>
+            {% endif %}
         </form>
     </div>
 </div>

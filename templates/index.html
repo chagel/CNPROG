@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+<!-- index.html -->
 {% load i18n %}
 {% load extra_tags %}
 {% load humanize %}
 {% load extra_filters %}
 {% block title %}{% spaceless %}{% trans "Home" %}{% endspaceless %}{% endblock %}
-{% block meta %}<meta name="keywords" content="{{ APP_KEYWORDS }}" />
-        <meta name="description" content="{{ APP_DESCRIPTION }}" />{% endblock %}
+{% block meta %}<meta name="keywords" content="{{ settings.APP_KEYWORDS }}" />
+        <meta name="description" content="{{ settings.APP_DESCRIPTION }}" />{% endblock %}
 {% block forejs %}
        <script type="text/javascript">
         $().ready(function(){
@@ -78,7 +79,7 @@
 <div class="boxA">
 	<h3>{% trans "welcome to website" %}</h3>
 	<div class="body">
-      {{ APP_INTRO|safe }}
+      {{ settings.APP_INTRO|safe }}
 	  <div class="more"><a href="/about">{% trans "about" %} »</a></div>
 	  <div class="more"><a href="/faq">{% trans "faq" %} »</a></div>
 	</div>
@@ -117,6 +118,7 @@
 {% endblock %}
 {% block tail %}
 <div style="padding:5px 0 5px 5px;">
-<span class="evenMore">{% trans "Still looking for more? See" %} <a href="/questions/">{% trans "complete list of quesionts" %}</a>, {% trans "or" %} <a href="/tags/">{% trans "popular tags" %}</a>{% trans "." %} {% trans "Please help us answer" %} <a href="/questions/unanswered">{% trans "unanswered questions" %}</a>{% trans "." %}</span>
+<span class="evenMore">{% trans "Still looking for more? See" %} <a href="/questions/">{% trans "complete list of questions" %}</a> {% trans "or" %} <a href="/tags/">{% trans "popular tags" %}</a>{% trans "." %} {% trans "Please help us answer" %} <a href="/questions/unanswered">{% trans "list of unanswered questions" %}</a>{% trans "." %}</span>
 </div>
 {% endblock %}
+<!-- index.html -->

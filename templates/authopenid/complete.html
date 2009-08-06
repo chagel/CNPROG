@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "base_content.html" %}
+<!-- complete.html -->
 {% load i18n %}
 {% block head %}{% endblock %}
 {% block title %}{% spaceless %}{% trans "Connect your OpenID with this site" %}{% endspaceless %}{% endblock %}
@@ -7,7 +8,9 @@
 		{% trans "Connect your OpenID with your account on this site" %}
     </div>      
 	<p id="completetxt" >
-    	<h3>{% trans "Your OpenID is accepted. Please complete this to finish registration." %}</h3>
+        <div class="message">
+            {% blocktrans %}register new {{provider}} account info{% endblocktrans %}
+        </div>
     	<p style="display:none">{% trans "This account already exists, please use another." %}</p>
 	</p>
 
@@ -41,12 +44,9 @@
 	<div class="login">
         <form name="fregister" action="{% url user_register %}" method="POST">
             {{ form.next }}
-            <fieldset style="padding:10px">
-            <legend class="big">{% trans "New account" %}</legend>
-				<div class="form-row"><label for="id_username">{% trans "User name (<i>will be shown to others, cannot be modified</i>)" %}</label><br />{{ form1.username }}</div>
-				<div class="form-row"><label for="id_email">{% trans "Email (<i>not shared with anyone</i>)" %}</label><br />{{ form1.email }}</div>
-				<div class="submit-row"><input type="submit" class="submit" name="bnewaccount" value="{% trans "create account" %}"></div>
-            </fieldset>
+            <div class="form-row"><label for="id_username">{% trans "Screen name label" %}</label><br />{{ form1.username }}</div>
+            <div class="form-row"><label for="id_email">{% trans "Email address label" %}</label><br />{{ form1.email }}</div>
+            <div class="submit-row"><input type="submit" class="submit" name="bnewaccount" value="{% trans "create account" %}"></div>
 		</form>
 	</div>
 	<div class="login" style="display:none">
@@ -65,3 +65,4 @@
 		</form>
 	</div>
 {% endblock %}
+<!-- end complete.html -->

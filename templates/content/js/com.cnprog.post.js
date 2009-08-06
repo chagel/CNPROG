@@ -48,10 +48,11 @@ var Vote = function(){
     var questionControlsId = 'question-controls';
     var removeQuestionLinkIdPrefix = 'question-delete-link-';
     var removeAnswerLinkIdPrefix = 'answer-delete-link-';
+    var questionSubscribeUpdates = 'question-subscribe-updates';
     
     var acceptAnonymousMessage = $.i18n._('insufficient privilege');
     var acceptOwnAnswerMessage = $.i18n._('cannot pick own answer as best');
-    var favoriteAnonymousMessage = $.i18n._('anonymous user cannot select favorite questions') 
+    var favoriteAnonymousMessage = $.i18n._('anonymous users cannot select favorite questions') 
 					+ "<a href='/account/signin/?next=/questions/{{QuestionID}}'>"
 					+ $.i18n._('please login') + "</a>";
     var voteAnonymousMessage = $.i18n._('anonymous users cannot vote') 
@@ -91,7 +92,9 @@ var Vote = function(){
         offensiveQuestion : 7,
         offensiveAnswer:8,
         removeQuestion: 9,
-        removeAnswer:10
+        removeAnswer:10,
+        questionSubscribeUpdates:11,
+        questionUnsubscribeUpdates:12,
     };
 
     var getFavoriteButton = function(){
@@ -140,6 +143,10 @@ var Vote = function(){
     var getremoveQuestionLink = function(){
         var removeQuestionLink = 'div#question-controls a[id^='+ removeQuestionLinkIdPrefix +']';
         return $(removeQuestionLink);
+    };
+
+    var getquestionSubscribeUpdatesCheckbox = function(){
+        return $('#' + questionSubscribeUpdates);
     };
     
     var getremoveAnswersLinks = function(){
@@ -215,6 +222,15 @@ var Vote = function(){
     
         getremoveQuestionLink().unbind('click').click(function(event){
             Vote.remove(this, VoteType.removeQuestion);
+        });
+
+        getquestionSubscribeUpdatesCheckbox().unbind('click').click(function(event){
+            if (this.checked){
+                Vote.vote($(event.target), VoteType.questionSubscribeUpdates);
+            }
+            else {
+                Vote.vote($(event.target), VoteType.questionUnsubscribeUpdates);
+            }
         });
     
         getremoveAnswersLinks().unbind('click').click(function(event){
@@ -343,7 +359,6 @@ var Vote = function(){
     };
         
     var callback_remove = function(object, voteType, data){
-		alert(data.status);
         if(data.allowed == "0" && data.success == "0"){
             showMessage(object, removeAnonymousMessage.replace("{{QuestionID}}", questionId));
         }

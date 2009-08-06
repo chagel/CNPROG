@@ -379,7 +379,7 @@ msgstr "多个标签请用空格间隔-最多5个标签。（优先使用自动�
 
 #: forum/forms.py:53
 msgid "tags are required"
-msgstr "标签不能为空。"
+msgstr " 标签不能为空。"
 
 #: forum/forms.py:57
 msgid "please use 5 tags or less"
@@ -692,6 +692,9 @@ msgstr "预览开关"
 msgid "Save edit"
 msgstr "现在修改"
 
+msgid "Save"
+msgstr "保存"
+
 #: templates/answer_edit.html:74 templates/close.html:29
 #: templates/question_edit.html:120 templates/reopen.html:30
 #: templates/user_edit.html:83
@@ -762,18 +765,16 @@ msgid "Community badges"
 msgstr "社区奖牌"
 
 #: templates/badges.html:53
-#, fuzzy
-msgid ""
+msgid "gold badge description"
 "Gold badge is very rare. To obtain it you have to show profound knowledge "
 "and ability in addition to actively participating in the community. Gold "
 "badge is the highest award in this community."
 msgstr ""
-"你不仅要参与社区的提问、回答、投票等活动，而且需要有高深的知识和能力才能获"
+"金牌是十分罕见的。你不仅要参与社区的提问、回答、投票等活动，而且需要有高深的知识和能力才能获"
 "得。"
 
 #: templates/badges.html:61
-#, fuzzy
-msgid ""
+msgid "silver badge description"
 "Obtaining silver badge requires significant patience. If you got one, you've "
 "very significantly contributed to this community"
 msgstr "它是不同寻常的荣誉，只要你付出足够的努力就会得到。"
@@ -782,9 +783,24 @@ msgstr "它是不同寻常的荣誉，只要你付出足够的努力就会得到
 msgid "bronze badge: often given as a special honor"
 msgstr "铜牌:时常授予之特殊荣誉"
 
+msgid "Connect with Twitter"
+msgstr "同步Twitter消息"
+
+msgid "Twitter account name:"
+msgstr "账号:"
+
+msgid "Twitter password:"
+msgstr "密码:"
+
+msgid "Send my Questions to Twitter"
+msgstr "发布我的提问到我的Twitter"
+
+msgid "Send my Answers to Twitter"
+msgstr "发布我的回答到我的Twitter"
+
 #: templates/badges.html:68
 #, fuzzy
-msgid ""
+msgid "bronze badge description"
 "If you are active in this community, you will get this medal - still it is a "
 "special honor."
 msgstr "铜牌会在你活跃于社区时产生，它相对容易获得，但也是一种特殊的荣誉。"
@@ -1659,6 +1675,9 @@ msgstr "用户投的反对票总数"
 #: templates/user_stats.html:84
 msgid "Tags"
 msgstr "个标签"
+
+msgid "Tags help us keep Questions organized"
+msgstr "CNProg用标签来分类系统的信息"
 
 #: templates/user_stats.html:94
 #, fuzzy, python-format

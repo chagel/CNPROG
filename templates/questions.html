@@ -1,6 +1,5 @@
-<!-- questions.html -->
 {% extends "base.html" %}
-{% load i18n %}
+<!-- questions.html -->
 {% load extra_tags %}
 {% load i18n %}
 {% load humanize %}
@@ -112,13 +111,20 @@
 			{% plural %}
 			have total {{q_num}} questions tagged {{tagname}}
 			{% endblocktrans %}
-		{% endif %}
-		{% if searchtitle %}
-			{% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
-			have total {{q_num}} questions containing {{searchtitle}}
-			{% plural %}
-			have total {{q_num}} questions containing {{searchtitle}}
-			{% endblocktrans %}
+		{% else %}
+			{% if searchtitle %}
+				{% blocktrans count questions_count as cnt with questions_count|intcomma as q_num %}
+				have total {{q_num}} questions containing {{searchtitle}}
+				{% plural %}
+				have total {{q_num}} questions containing {{searchtitle}}
+				{% endblocktrans %}
+			{% else %}
+				{% blocktrans count questions as cnt with questions_count|intcomma as q_num %}
+				have total {{q_num}} questions
+				{% plural %}
+				have total {{q_num}} questions
+				{% endblocktrans %}
+			{% endif %}
 		{% endif %}
 
         {% ifequal tab_id "latest" %}
@@ -139,13 +145,15 @@
 			<p>{% trans "Questions are sorted by the <strong>number of votes</strong>." %}
             {% trans "Most voted questions are shown first." %}</p>
         {% endifequal %}
+        
+        
     </p>
 </div>
 <div class="boxC">
 	<h3 class="subtitle">{% trans "Related tags" %}</h3>
     <div class="tags">
         {% for tag in tags %}
-            <a rel="tag" title="{% blocktrans with tag.name as tagname %}see questions tagged '{{ tagname }}'{% endblocktrans %}"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
+            <a rel="tag" title="{% trans "see questions tagged" %}'{{ tag.name }}'{% trans "using tags" %}"  href="{% url forum.views.tag tag.name|urlencode %}">{{ tag.name }}</a>
             <span class="tag-number">× {{ tag.used_count|intcomma }}</span>
             <br>
         {% endfor %}

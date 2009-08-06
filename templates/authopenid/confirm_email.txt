@@ -1,12 +1,13 @@
-Thank you for registering. 
+{% load i18n %}
+{% trans "Thank you for registering at our Q&A forum!" %}
 
-Your account details are:
+{% trans "Your account details are:" %}
 
-Username: {{ username }}
-Password: {{ password }}
+{% trans "Username:" %} {{ username }}
+{% trans "Password:" %} {{ password }}
 
+{% trans "Please sign in here:" %}
+{{ site_url }}{% trans "signin/" %}
 
-You may sign in here:
-{{ site_url }}signin/
-
-
+{% blocktrans %}Sincerely,
+Forum Administrator{% endblocktrans %}

@@ -1,4 +1,4 @@
-﻿import time
+import time
 import datetime
 import math
 import re

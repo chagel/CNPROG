@@ -22,13 +22,11 @@
         <a id="favorites" {% ifequal tab_name "favorites" %}class="on"{% endifequal %} 
 			title="{% trans "questions that user selected as his/her favorite" 
 			href="/users/{{view_user.id}}/{{view_user.username}}?sort=favorites">{% trans "favorites" %}</a>
-        <!--
         {% if request.user|can_view_user_preferences:view_user %}
         <a id="preferences" {% ifequal tab_name "preferences" %}class="on"{% endifequal %} 
 			title="{% trans "user preference settings" %}" 
 			href="/users/{{view_user.id}}/{{view_user.username}}?sort=preferences">{% trans "settings" %}</a>
         {% endif %}  
-        -->
     </div>
 </div>
 <!-- end user_tabs.html -->

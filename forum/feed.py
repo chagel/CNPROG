@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+#!/usr/bin/env python
 #encoding:utf-8
 #-------------------------------------------------------------------------------
 # Name:        Syndication feed class for subsribtion
@@ -13,16 +13,16 @@
 from django.contrib.syndication.feeds import Feed, FeedDoesNotExist
 from django.utils.translation import ugettext as _
 from models import Question
+import settings
 class RssLastestQuestionsFeed(Feed):
-    title = _('site title') + _(' - ') + _('site slogan') + _(' - ')+ _('latest questions')
-	#EDIT!!!
-    link = 'http://where.com/questions/'
-    description = _('meta site content')
+    title = settings.APP_TITLE + _(' - ')+ _('latest questions')
+    link = settings.APP_URL + '/' + _('questions/')
+    description = settings.APP_DESCRIPTION
     #ttl = 10
-    copyright = _('copyright message')
+    copyright = settings.APP_COPYRIGHT
 
     def item_link(self, item):
-        return '/questions/%s/' % item.id
+        return self.link + '%s/' % item.id
 
     def item_author_name(self, item):
         return item.author.username

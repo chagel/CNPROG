@@ -1,15 +1,15 @@
 # encoding:utf-8
 
 #path must have slash appended!!!
-SITE_SRC_ROOT = '/path/to/dir/contating/this/file/'
+SITE_SRC_ROOT = '/...this dir.../'
 LOG_FILENAME = 'django.lanai.log'
 
 #for logging
 import logging
 logging.basicConfig(filename=SITE_SRC_ROOT + 'log/' + LOG_FILENAME, level=logging.DEBUG,)
 
-DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-DATABASE_USER = ''               # Not used with sqlite3.
+DATABASE_NAME = 'cnprog'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'cnprog'               # Not used with sqlite3.
 DATABASE_PASSWORD = ''               # Not used with sqlite3.
 DATABASE_ENGINE = ''  #mysql, etc
 

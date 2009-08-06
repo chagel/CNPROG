@@ -1,4 +1,37 @@
-# development 
+==Aug 5, 2009 Evgeny==
+===Interface changes===
+Merged in my code that:
+* allows anonymous posting of Q&A and then login
+* per-question email notifications via 'send_email_alerts' command
+* allows space character in username
+* improves openid login
+* makes notification messages sticky - have to click "x" to dismiss
+* unanswered questions are now those with no accepted answer
+* added following setting parameters:
+
+settings.MIN_USERNAME_LENGTH = 1 
+settings.EMAIL_UNIQUE = True|False
+settings.EMAIL_VALIDATION = 'on'|'off' #thought of maybe adding other options so type is string
+settings.GOOGLE_SITEMAP_CODE = <string>
+settings.GOOGLE_ANALYTICS_KEY = <string>
+
+===Fixes===
+* fixed incorrect answer count issue in question.html
+* translated Twittwer stuff in user_preferences.html
+* translated question_retag.html, except one phrase
+* added Adolfo's python2.4 fix
+* fixed template debugging comments so that they don't break page layout
+* reorganized header template so that it takes less vertical space
+
+===Code changes===
+* wrapped template context settings into a single settings dictionary
+* on login anonymous session is recorded so that anonymously posted questions (if any) could be found later
+* added models: AnonymousQuestion, AnonymousAnswer, EmailFeed (for notifications)
+* User model has two new fields email_key - 32 byte hex hash and email_isvalid - boolean
+  file sql_scripts/update_2009_07_05_EF.sql will make upgrade to the live database
+* added auth_processor to context.py which loads notification messages without deleting them
+  NOTE: default django auth processor must be removed!
+* added ajax actions questionSubscribeUpdates/questionUnsubscribeUpdates
 
 ==Aug 4 2009, Evgeny==
 ===Changes===

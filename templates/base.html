@@ -4,18 +4,18 @@
 {% load i18n %}
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>{% block title %}{% endblock %} - {{ APP_TITLE }}</title>
+        <title>{% block title %}{% endblock %} - {{ settings.APP_TITLE }}</title>
         {% spaceless %}
         {% block meta %}{% endblock %}
         {% endspaceless %}
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="verify-v1" content="{{verify_v1_code}}" />
+        <meta name="verify-v1" content="{{settings.GOOGLE_SITEMAP_CODE}}" />
         <link rel="shortcut icon" href="/content/images/favicon.ico" >
         <link href="/content/style/style.css" rel="stylesheet" type="text/css" />
         <script src="http://www.google.com/jsapi"></script>
         <script>google.load("jquery", "1.2.6");</script>
 		<script type="text/javascript">
-			var i18nLang = 'en';
+			var i18nLang = '{{settings.LANGUAGE_CODE}}';
 		</script>
         <script type='text/javascript' src='/content/js/com.cnprog.i18n.js'></script>
 		<script type='text/javascript' src='/content/js/jquery.i18n.js'></script>
@@ -26,9 +26,8 @@
         </script>
         <script type="text/javascript">
         UserVoice.Tab.show({ 
-			//EDIT!!!
-            key: 'key',
-            host: 'where.uservoice.com', 
+            key: 'cnprog',
+            host: 'cnprog.uservoice.com', 
             forum: 'general', 
             alignment: 'left', /* 'left', 'right' */
             background_color:'#777', 
@@ -38,30 +37,31 @@
         })
         </script>-->
 		<!-- todo move this to settings -->
-        {% with request.user.get_messages as messages%}
         {% if messages %}
         <style type="text/css">
             body { margin-top:2.4em; }
         </style>
         <script type="text/javascript">
             $().ready(function() {
+                $('#validate_email_alert').click(function(){notify.close(true)})
                 notify.show();
             });
         </script>
-       
         {% endif %}
-        {% endwith %}
       
         {% block forejs %}
         {% endblock %}
     </head>
     <body>
         <div class="notify" style="display:none">
-            <span>{% if request.user.get_messages %}
-            {% trans "congratulations, community gave you a badge" %}: {% for message in request.user.get_messages %}
-            <font class="darkred">{{ message }}</font>, {% endfor %}查看
-            <a href="{{ request.user.get_profile_url }}">{% trans "profile" %}</a>{% endif %}</span>
-            <a class="close-notify" onclick="notify.close(true)">&times;</a>
+            {% autoescape off %}
+                {% if messages %}
+                    {% for message in messages %}
+                          <p class="darkred">{{ message }}<p>
+                    {% endfor %}
+                {% endif %}
+            {% endautoescape %}
+            <a id="close-notify" onclick="notify.close(true)">&times;</a>
         </div>
         {% include "header.html" %}
         <div id="wrapper">
@@ -89,3 +89,4 @@
         {% endblock %}
     </body>
 </html>
+<!-- end template base.html -->
