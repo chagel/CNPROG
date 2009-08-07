@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-05 22:28-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2009-08-07 11:21-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -117,14 +117,12 @@ msgid "Incorrect username."
 msgstr "Nombre de usuario incorrecto"
 
 #: django_authopenid/urls.py:10
-#, fuzzy
 msgid "newquestion/"
-msgstr "pregunta"
+msgstr "nueva-pregunta/"
 
 #: django_authopenid/urls.py:11
-#, fuzzy
 msgid "newanswer/"
-msgstr "resputa"
+msgstr "respuesta-nueva/"
 
 #: django_authopenid/urls.py:12
 msgid "signout/"
@@ -165,17 +163,17 @@ msgstr "Contraseña modificada"
 
 #: django_authopenid/views.py:519 django_authopenid/views.py:524
 msgid "your email needs to be validated"
-msgstr ""
+msgstr "su correo electrónico necesita ser validado"
 
 #: django_authopenid/views.py:681 django_authopenid/views.py:833
 #, python-format
 msgid "No OpenID %s found associated in our database"
-msgstr "La OpenID %s no esta asociada en nuestra base de datos"
+msgstr "El OpenID %s no esta asociada en nuestra base de datos"
 
 #: django_authopenid/views.py:685 django_authopenid/views.py:840
 #, python-format
 msgid "The OpenID %s isn't associated to current user logged in"
-msgstr "La OpenID %s no esta asociada al usuario actualmente autenticado"
+msgstr "El OpenID %s no esta asociada al usuario actualmente autenticado"
 
 #: django_authopenid/views.py:693
 msgid "Email Changed."
@@ -183,12 +181,12 @@ msgstr "Email modificado"
 
 #: django_authopenid/views.py:768
 msgid "This OpenID is already associated with another account."
-msgstr "Esta OpenID ya está asociada a otra cuenta."
+msgstr "Este OpenID ya está asociada a otra cuenta."
 
 #: django_authopenid/views.py:773
 #, python-format
 msgid "OpenID %s is now associated with your account."
-msgstr "La OpenID %s está ahora asociada con tu cuenta."
+msgstr "El OpenID %s está ahora asociada con tu cuenta."
 
 #: django_authopenid/views.py:843
 msgid "Account deleted."
@@ -349,23 +347,22 @@ msgid "latest questions"
 msgstr "últimas preguntas"
 
 #: forum/feed.py:19
-#, fuzzy
 msgid "questions/"
-msgstr "preguntas"
+msgstr "preguntas/"
 
 #: forum/forms.py:14 templates/answer_edit_tips.html:34
 #: templates/answer_edit_tips.html.py:38 templates/question_edit_tips.html:31
 #: templates/question_edit_tips.html:36
 msgid "title"
-msgstr "titulo"
+msgstr "título"
 
 #: forum/forms.py:15
 msgid "please enter a descriptive title for your question"
-msgstr "ingrese un titulo descriptivo para su pregunta"
+msgstr "ingrese un título descriptivo para su pregunta"
 
 #: forum/forms.py:20
 msgid "title must be > 10 characters"
-msgstr "el titulo debe tener al menos 10 caracteres"
+msgstr "el título debe tener al menos 10 caracteres"
 
 #: forum/forms.py:29
 msgid "content"
@@ -466,27 +463,27 @@ msgstr "este email ya ha sido registrado, por favor use otro"
 #: forum/models.py:238
 #, fuzzy, python-format
 msgid "%(author)s modified the question"
-msgstr "Cerrar la pregunta"
+msgstr "%(author) modificó la pregunta"
 
 #: forum/models.py:242
 #, python-format
 msgid "%(people)s posted %(new_answer_count)s new answers"
-msgstr ""
+msgstr "%(people)s publicaron %(new_answer_count)s nuevas respuestas"
 
 #: forum/models.py:247
-#, fuzzy, python-format
+#, python-format
 msgid "%(people)s commented the question"
-msgstr "pregunta comentada"
+msgstr "%(people)s comentarion la pregunta"
 
 #: forum/models.py:252
-#, fuzzy, python-format
+#, python-format
 msgid "%(people)s commented answers"
-msgstr "respuesta comentada"
+msgstr "%(people)s comentaron la respuesta"
 
 #: forum/models.py:254
-#, fuzzy, python-format
+#, python-format
 msgid "%(people)s commented the answer"
-msgstr "respuesta comentada"
+msgstr "%(people)s comentaron la respuestas"
 
 #: forum/models.py:433 templates/badges.html:52
 msgid "gold"
@@ -585,14 +582,13 @@ msgid "profile - user preferences"
 msgstr "perfil - preferencia de "
 
 #: forum/views.py:304
-#, fuzzy
 msgid "/account/"
-msgstr "cuenta/"
+msgstr "/cuenta/"
 
 #: forum/views.py:943
 #, python-format
 msgid "subscription saved, %(email)s needs validation"
-msgstr ""
+msgstr "subscripción guardada, %(email)s necesita validación"
 
 #: forum/views.py:1853
 msgid "uploading images is limited to users with >60 reputation points"
@@ -617,9 +613,8 @@ msgstr ""
 "Error al subir el archivo. Por favor, contacte al administrador. Gracias. %s"
 
 #: forum/management/commands/send_email_alerts.py:35
-#, fuzzy
 msgid "updates from website"
-msgstr "sitio web del usuario"
+msgstr "actualizaciones del sitio"
 
 #: forum/templatetags/extra_tags.py:139 forum/templatetags/extra_tags.py:168
 #: templates/header.html:33
@@ -818,25 +813,24 @@ msgstr "aprender mas sobre Markdown"
 
 #: templates/ask.html:4 templates/ask.html.py:60
 msgid "Ask a question"
-msgstr "Hacer una pregunta"
+msgstr "Preguntar"
 
 #: templates/ask.html:67
-#, fuzzy
 msgid "login to post question info"
-msgstr "<strong>Más recientes</strong> preguntas son mostradas primero."
+msgstr "Inicie sesión para publicar pregunta."
 
 #: templates/ask.html:73
 #, python-format
 msgid "must have valid %(email)s to post"
-msgstr ""
+msgstr "debe de tener un %(email)s válido para publicar"
 
 #: templates/ask.html:108
 msgid "(required)"
-msgstr ""
+msgstr "(requerido)"
 
 #: templates/ask.html:115
 msgid "Login/signup to post your question"
-msgstr ""
+msgstr "Iniciar sesión/registrarse para publicar su pregunta"
 
 #: templates/ask.html:117
 msgid "Ask your question"
@@ -863,13 +857,11 @@ msgid "Community gives you awards for your questions, answers and votes."
 msgstr "La comunidad te da distinciones por tus preguntas, respuestas y votos."
 
 #: templates/badges.html:22
-#, fuzzy
 msgid ""
 "Below is the list of available badges and number of times each type of badge "
 "has been awarded."
 msgstr ""
-"La comunidad te condecora con distinciones por tus preguntas, respuestas y "
-"votos. Debajo esta la lista de las distinciones disponibles y la cantidad de "
+"Debajo esta la lista de las distinciones disponibles y la cantidad de "
 "veces que han sido asignadas."
 
 #: templates/badges.html:49
@@ -1054,7 +1046,7 @@ msgstr "¿Que debo evitar en mis respuestas?"
 
 #: templates/faq.html:28 templates/faq.html.py:132
 msgid "site title"
-msgstr "titulo del sitio"
+msgstr "título del sitio"
 
 #: templates/faq.html:28
 msgid ""
@@ -1091,9 +1083,8 @@ msgid "How does reputation system work?"
 msgstr "¿Cómo funciona el sistema de reputación?"
 
 #: templates/faq.html:41
-#, fuzzy
 msgid "Rep system summary"
-msgstr "resumen de modificación"
+msgstr "resumen del sistema de reputación"
 
 #: templates/faq.html:59 templates/user_votes.html:14
 msgid "upvote"
@@ -1112,9 +1103,8 @@ msgid "downvote"
 msgstr "votar negativo"
 
 #: templates/faq.html:75
-#, fuzzy
 msgid "open and close own questions"
-msgstr "abrir cualquier pregunta cerrada"
+msgstr "abrir y cerrar sus propias preguntas"
 
 #: templates/faq.html:79
 msgid "retag questions"
@@ -1144,19 +1134,19 @@ msgstr ""
 
 #: templates/faq.html:106
 msgid "how to validate email title"
-msgstr ""
+msgstr "como validar el título del correo"
 
 #: templates/faq.html:108
 msgid "how to validate email info"
-msgstr ""
+msgstr "como validar la información del correo"
 
 #: templates/faq.html:112
 msgid "what is gravatar"
-msgstr ""
+msgstr "qué es gravatar"
 
 #: templates/faq.html:113
 msgid "gravatar faq info"
-msgstr ""
+msgstr "preguntas frecuentes sobre gravatar"
 
 #: templates/faq.html:116
 msgid "To register, do I need to create new password?"
@@ -1211,7 +1201,7 @@ msgstr "preguntas"
 
 #: templates/faq.html:132 templates/index.html:121
 msgid "."
-msgstr ""
+msgstr "."
 
 #: templates/footer.html:7 templates/header.html:14 templates/index.html:83
 msgid "about"
@@ -1365,7 +1355,6 @@ msgid "Still looking for more? See"
 msgstr "¿Aún sigues buscando más? Ver"
 
 #: templates/index.html:121
-#, fuzzy
 msgid "complete list of questions"
 msgstr "lista completa de preguntas"
 
@@ -1378,9 +1367,8 @@ msgid "Please help us answer"
 msgstr "Ayudanos a responder"
 
 #: templates/index.html:121
-#, fuzzy
 msgid "list of unanswered questions"
-msgstr "sin respuesta"
+msgstr "lista de preguntas sin respuesta"
 
 #: templates/logout.html:6 templates/logout.html.py:17
 msgid "Logout"
@@ -1696,7 +1684,7 @@ msgstr "Encontradas por etiqueta"
 
 #: templates/questions.html:23
 msgid "Found by title"
-msgstr "Encontradas por titulo"
+msgstr "Encontradas por título"
 
 #: templates/questions.html:23
 msgid "All questions"
@@ -1715,7 +1703,7 @@ msgid "active"
 msgstr "actividad"
 
 #: templates/questions.html:109
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "\t\t\thave total %(q_num)s questions tagged %(tagname)s\n"
@@ -1724,8 +1712,12 @@ msgid_plural ""
 "\n"
 "\t\t\thave total %(q_num)s questions tagged %(tagname)s\n"
 "\t\t\t"
-msgstr[0] "ver preguntas etiquetadas '%(tagname)s'"
-msgstr[1] "ver pregunta etiquetada '%(tagname)s'"
+msgstr[0] "\n" 
+"\t\t\ttiene un total de %(q_num)s preguntas etiquetadas con %(tagname)s\n"
+"\t\t\t"
+msgstr[1] "\n"
+"\t\t\ttiene un total de %(q_num)s preguntas etiquetadas con %(tagname)s\n"
+"\t\t\t"
 
 #: templates/questions.html:116
 #, fuzzy, python-format
@@ -1941,27 +1933,24 @@ msgid "Connect with Twitter"
 msgstr ""
 
 #: templates/user_preferences.html:12
-#, fuzzy
 msgid "Twitter account name:"
-msgstr "Esta cuenta esta inactiva."
+msgstr "Nombre de usuario en Twitter:"
 
 #: templates/user_preferences.html:14
-#, fuzzy
 msgid "Twitter password:"
-msgstr "Nueva contraseña"
+msgstr "Contraseña de Twitter:"
 
 #: templates/user_preferences.html:16
 msgid "Send my Questions to Twitter"
-msgstr ""
+msgstr "Enviar mis preguntas a Twitter"
 
 #: templates/user_preferences.html:17
 msgid "Send my Answers to Twitter"
-msgstr ""
+msgstr "Enviar mis respuestas a Twitter"
 
 #: templates/user_preferences.html:18
-#, fuzzy
 msgid "Save"
-msgstr "Guardar la edición"
+msgstr "Guardar"
 
 #: templates/user_stats.html:15
 msgid "User questions"
@@ -2064,7 +2053,7 @@ msgstr "Cambiar dirección email"
 #: templates/authopenid/changeemail.html:10
 #, fuzzy, python-format
 msgid "change %(email)s info"
-msgstr "Cambiar email "
+msgstr "Cambiar información del correo electrónico "
 
 #: templates/authopenid/changeemail.html:13
 #: templates/authopenid/changeopenid.html:14
@@ -2093,9 +2082,8 @@ msgid "validate %(email)s info"
 msgstr ""
 
 #: templates/authopenid/changeemail.html:50
-#, fuzzy
 msgid "Email not changed"
-msgstr "Email modificado."
+msgstr "Email no modificado."
 
 #: templates/authopenid/changeemail.html:53
 #, python-format
@@ -2103,7 +2091,6 @@ msgid "old %(email)s kept"
 msgstr ""
 
 #: templates/authopenid/changeemail.html:58
-#, fuzzy
 msgid "Email changed"
 msgstr "Email modificado."
 
@@ -2114,15 +2101,15 @@ msgstr ""
 
 #: templates/authopenid/changeemail.html:66
 msgid "Email verified"
-msgstr ""
+msgstr "Email verificado"
 
 #: templates/authopenid/changeemail.html:69
 msgid "thanks for verifying email"
-msgstr ""
+msgstr "gracias por verificar su correo"
 
 #: templates/authopenid/changeemail.html:74
 msgid "email key not sent"
-msgstr ""
+msgstr "llave de correo no enviada"
 
 #: templates/authopenid/changeemail.html:77
 #, python-format
@@ -2197,7 +2184,6 @@ msgid "Screen name label"
 msgstr ""
 
 #: templates/authopenid/complete.html:48
-#, fuzzy
 msgid "Email address label"
 msgstr "su email (correo electrónico)"
 
@@ -2231,11 +2217,10 @@ msgstr ""
 
 #: templates/authopenid/confirm_email.txt:4
 msgid "Your account details are:"
-msgstr ""
+msgstr "Los detalles de su cuenta son:"
 
 #: templates/authopenid/confirm_email.txt:6
 #: templates/authopenid/sendpw_email.txt:7
-#, fuzzy
 msgid "Username:"
 msgstr "Nombre de usuario"
 
@@ -2246,7 +2231,7 @@ msgstr "Contraseña"
 
 #: templates/authopenid/confirm_email.txt:9
 msgid "Please sign in here:"
-msgstr ""
+msgstr "Por favor inicie sesión aquí:"
 
 #: templates/authopenid/confirm_email.txt:12
 #: templates/authopenid/email_validation.txt:14
@@ -2294,11 +2279,11 @@ msgstr ""
 
 #: templates/authopenid/email_validation.txt:4
 msgid "To make use of the Forum, please follow the link below:"
-msgstr ""
+msgstr "Para usar el Foro, siga el siguiente enlace:"
 
 #: templates/authopenid/email_validation.txt:8
 msgid "Following the link above will help us verify your email address."
-msgstr ""
+msgstr "El siguiente enlace nos ayudará a verificar su correo electrónico."
 
 #: templates/authopenid/email_validation.txt:10
 msgid ""
@@ -2355,7 +2340,6 @@ msgid "Your new account details are:"
 msgstr ""
 
 #: templates/authopenid/sendpw_email.txt:8
-#, fuzzy
 msgid "New password:"
 msgstr "Nueva contraseña"
 
@@ -2441,7 +2425,6 @@ msgid "Login name"
 msgstr "Nombre de usuario"
 
 #: templates/authopenid/signin.html:141
-#, fuzzy
 msgid "Create new account"
 msgstr "Crear cuenta nueva"
 
