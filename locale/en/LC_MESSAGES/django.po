@@ -148,7 +148,7 @@ msgstr ""
 
 #: django_authopenid/views.py:417 django_authopenid/views.py:544
 msgid "Welcome"
-msgstr "Verification Email from NMR Wiki Q&A"
+msgstr "Verification Email from Q&A forum"
 
 #: django_authopenid/views.py:507
 msgid "Password changed."
@@ -1013,12 +1013,6 @@ msgid ""
 "Most importanly - questions should be <strong>relevant</strong> to this "
 "community."
 msgstr ""
-"Please ask questions about all aspects of <strong>Magnetic Resonance</"
-"strong> - <strong>NMR</strong>, <strong>EPR</strong>, <strong>MRI</strong>. "
-"Questions about both theory and practice in these fields are welcome, "
-"including questions about the physical foundations, scientific applications, "
-"instrumentation, interpretation of data, software, preparation and handling "
-"of samples etc. "
 
 #: templates/faq.html:18
 msgid ""
@@ -1037,9 +1031,6 @@ msgid ""
 "Please avoid asking questions that are not relevant to this community, too "
 "subjective and argumentative."
 msgstr ""
-"Please avoid asking questions that are not relevant to the subjects of NMR, "
-"EPR or MRI, also please avoid asking questions that are too argumentative or "
-"subjective."
 
 #: templates/faq.html:27
 msgid "What should I avoid in my answers?"
@@ -1047,7 +1038,7 @@ msgstr ""
 
 #: templates/faq.html:28 templates/faq.html.py:132
 msgid "site title"
-msgstr "NMR Wiki Q&A"
+msgstr ""
 
 #: templates/faq.html:28
 msgid ""
@@ -1190,9 +1181,6 @@ msgstr ""
 #: templates/faq.html:124
 msgid "Goal of this site is..."
 msgstr ""
-"<span class='orange'>NMR Wiki Q&A</span> aims for offering a place for "
-"efficient exchange of ideas among users of <strong>Magnetic Resonance</"
-"strong>and specialists working in this field."
 
 #: templates/faq.html:124
 msgid ""
@@ -1339,7 +1327,7 @@ msgstr ""
 
 #: templates/index.html:80
 msgid "welcome to website"
-msgstr "Welcome to NMR Wiki Q&A"
+msgstr ""
 
 #: templates/index.html:89
 msgid "Recent tags"
@@ -1399,9 +1387,6 @@ msgid ""
 "As a registered user you can login with your OpenID, log out of the site or "
 "permanently remove your account."
 msgstr ""
-"Clicking <strong>Logout</strong> will log you out from NMR Wiki Q&A.</"
-"p><p>If you wish to sign off completely - please make sure to log out from "
-"your OpenID provider."
 
 #: templates/logout.html:21
 msgid "Logout now"
@@ -2107,12 +2092,6 @@ msgstr ""
 #, python-format
 msgid "validate %(email)s info"
 msgstr ""
-"<span class=\"strong big\">An email with a validation link has been sent to %"
-"(email)s.</span> Please <strong>follow the emailed link</strong> with your "
-"web browser. Email validation is necessary to help insure the proper use of "
-"email on <span class=\"orange\">NMR Wiki Q&A</span>. If you would like to "
-"use <strong>another email</strong>, please <a href=\"/email/change/"
-"\"><strong>change it again</strong></a>."
 
 #: templates/authopenid/changeemail.html:50
 msgid "Email not changed"
