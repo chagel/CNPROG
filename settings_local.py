@@ -1,25 +1,25 @@
-# encoding:utf-8
-
-#path must have slash appended!!!
-SITE_SRC_ROOT = '/var/www/vhosts/default/htdocs/cnprog-tests/test/'
-LOG_FILENAME = 'django.lanai.log'
+SITE_SRC_ROOT = '~/dev/workspace/cnprog'
 
 #for logging
 import logging
-logging.basicConfig(filename=SITE_SRC_ROOT + 'log/' + LOG_FILENAME, level=logging.DEBUG,)
+LOG_FILENAME = 'development.log'
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG,)
 
-DATABASE_NAME = 'cnprog'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'cnprog'               # Not used with sqlite3.
-DATABASE_PASSWORD = ''               # Not used with sqlite3.
-DATABASE_ENGINE = ''  #mysql, etc
 
-#why does this stuff go here?
-#MIDDLEWARE_CLASSES = (
-#    'django.middleware.gzip.GZipMiddleware',
-#    'django.contrib.sessions.middleware.SessionMiddleware',
-#    'django.middleware.locale.LocaleMiddleware',
-#    'django.middleware.common.CommonMiddleware',
-#    'django.contrib.auth.middleware.AuthenticationMiddleware',
-#    'django.middleware.transaction.TransactionMiddleware',
-#    'debug_toolbar.middleware.DebugToolbarMiddleware',
-#)
+#Database configuration 
+DATABASE_ENGINE = 'mysql'      
+DATABASE_HOST = ''            
+DATABASE_PORT = ''          
+DATABASE_NAME = 'twogeekt_lanai'             # Or path to database file if using sqlite3.
+DATABASE_USER = 'twogeekt_lanai'             # Not used with sqlite3.
+DATABASE_PASSWORD = 'sysadm'                # Not used with sqlite3.
+
+
+# Absolute path to the directory that holds media.
+# Example: "/home/media/media.lawrence.com/"
+MEDIA_ROOT = '~/dev/workspace/cnprog/templates/upfiles/'
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash if there is a path component (optional in other cases).
+# Examples: "http://media.lawrence.com", "http://example.com/media/"
+MEDIA_URL = 'http://127.0.0.1:8000/upfiles/'
