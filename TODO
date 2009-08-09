@@ -1,4 +1,0 @@
-*check change email function - there is a strange 'password' field in form
-*make reusable question-block template for index questions unanswered - get rid of copy-paste
-*unused votes count in user profile not working - left that commented out in templates/user_info.html
-*badge award notification messages need to be set fixed at place where badges are awarded
