@@ -91,7 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'forum',
     'django_authopenid',
-    'debug_toolbar' ,
+    #'debug_toolbar' ,
 )
 
 # User settings
