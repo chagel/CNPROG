@@ -1,4 +1,4 @@
 *.pyc
 *.swp
 nbproject
-
+settings_local.py
