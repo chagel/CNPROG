@@ -367,7 +367,7 @@ def register(request):
     return render('authopenid/complete.html', {
         'form1': form1,
         'form2': form2,
-        'provider':providers[provider_name],
+        'provider':provider_logo,
         'nickname': nickname,
         'email': email
     }, context_instance=RequestContext(request))
