@@ -710,14 +710,14 @@ def tags(request):
 
     if request.method == "GET":
         stag = request.GET.get("q", "").strip()
-        if stag is not None:
+        if len(stag) > 0:
             objects_list = Paginator(Tag.objects.filter(deleted=False).exclude(used_count=0).extra(where=['name like %s'], params=['%' + stag + '%']), DEFAULT_PAGE_SIZE)
         else:
-            if sortby == "name":
-                objects_list = Paginator(Tag.objects.all().filter(deleted=False).exclude(used_count=0).order_by("name"), DEFAULT_PAGE_SIZE)
+            if sortby == "used":
+                sortby = "-used_count"
             else:
-                objects_list = Paginator(Tag.objects.all().filter(deleted=False).exclude(used_count=0).order_by("-used_count"), DEFAULT_PAGE_SIZE)
-
+                sortby = "name"
+            objects_list = Paginator(Tag.objects.all().filter(deleted=False).exclude(used_count=0).order_by(sortby), DEFAULT_PAGE_SIZE)
     try:
         tags = objects_list.page(page)
     except (EmptyPage, InvalidPage):
