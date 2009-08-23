@@ -37,7 +37,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.transaction.TransactionMiddleware',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
     #'middleware.pagesize.QuestionsPageSizeMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -73,7 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'forum',
     'django_authopenid',
-    'debug_toolbar' ,
+    #'debug_toolbar' ,
 )
 import django
 DJANGO_VERSION = django.get_version()
