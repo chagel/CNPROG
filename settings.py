@@ -36,7 +36,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     #'django.middleware.sqlprint.SqlPrintingMiddleware',
-    #'middleware.pagesize.QuestionsPageSizeMiddleware',
+    'middleware.pagesize.QuestionsPageSizeMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 

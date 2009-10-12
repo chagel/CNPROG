@@ -115,8 +115,6 @@ def questions(request, tagname=None, unanswered=False):
     # template file
     # "questions.html" or "unanswered.html"
     template_file = "questions.html"
-    # Set flag to False by default. If it is equal to True, then need to be saved.
-    pagesize_changed = False
     # get pagesize from session, if failed then get default value
     pagesize = request.session.get("pagesize", 10)
     try:

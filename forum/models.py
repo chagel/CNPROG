@@ -3,6 +3,7 @@ import datetime
 import hashlib
 from urllib import quote_plus, urlencode
 from django.db import models
+from django.utils.http import urlquote  as django_urlquote
 from django.utils.html import strip_tags
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -180,7 +181,7 @@ class Question(models.Model):
         return [name for name in self.tagnames.split(u' ')]
 
     def get_absolute_url(self):
-        return '%s%s' % (reverse('question', args=[self.id]), self.title.replace(' ', '-'))
+        return '%s%s' % (reverse('question', args=[self.id]), django_urlquote(self.title.replace(' ', '-')))
 
     def has_favorite_by_user(self, user):
         if not user.is_authenticated():
@@ -384,7 +385,7 @@ class Answer(models.Model):
         return self.question.title
 
     def get_absolute_url(self):
-        return '%s%s#%s' % (reverse('question', args=[self.question.id]), self.question.title, self.id)
+        return '%s%s#%s' % (reverse('question', args=[self.question.id]), django_urlquote(self.question.title), self.id)
 
     class Meta:
         db_table = u'answer'
@@ -535,7 +536,7 @@ class Book(models.Model):
     questions = models.ManyToManyField(Question, related_name='book', db_table='book_question')
     
     def get_absolute_url(self):
-        return '%s' % reverse('book', args=[self.short_name])
+        return '%s' % reverse('book', args=[django_urlquote(self.short_name)])
         
     def __unicode__(self):
         return self.title
