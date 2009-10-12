@@ -267,7 +267,7 @@ def ask(request):
         if form.is_valid():
 
             added_at = datetime.datetime.now()
-            title = strip_tags(form.cleaned_data['title'])
+            title = strip_tags(form.cleaned_data['title']).strip()
             wiki = form.cleaned_data['wiki']
             tagnames = form.cleaned_data['tags'].strip()
             text = form.cleaned_data['text']
