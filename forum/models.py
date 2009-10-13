@@ -209,7 +209,17 @@ class Question(models.Model):
 
     def get_latest_revision(self):
         return self.revisions.all()[0]
-
+    
+    def get_user_votes_in_answers(self, user):
+        content_type = ContentType.objects.get_for_model(Answer)
+        query_set = Vote.objects.extra(
+            tables = ['question', 'answer'],
+            where = ['question.id = answer.question_id AND question.id = %s AND vote.object_id = answer.id AND vote.content_type_id = %s AND vote.user_id = %s'],
+            params = [self.id, content_type.id, user.id]
+        )
+        
+        return query_set
+        
     def get_update_summary(self,last_reported_at=None,recipient_email=''):
         edited = False 
         if self.last_edited_at and self.last_edited_at > last_reported_at:

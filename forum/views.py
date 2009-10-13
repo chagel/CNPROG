@@ -338,14 +338,13 @@ def question(request, id):
         question_vote = question_vote[0]
 
     user_answer_votes = {}
-    for answer in answers:
-        vote = answer.get_user_vote(request.user)
-        if vote is not None and not user_answer_votes.has_key(answer.id):
+    for vote in question.get_user_votes_in_answers(request.user):
+        if not user_answer_votes.has_key(vote.object_id):
             vote_value = -1
             if vote.is_upvote():
                 vote_value = 1
-            user_answer_votes[answer.id] = vote_value
-
+            user_answer_votes[vote.object_id] = vote_value      
+    
     filtered_answers = []
     for answer in answers:
         if answer.deleted == True:
