@@ -329,7 +329,7 @@ def question(request, id):
     if question.deleted and not can_view_deleted_post(request.user, question):
         raise Http404
     answer_form = AnswerForm(question, request.user)
-    answers = Answer.objects.get_answers_from_question(question, request.user)
+    answers = Answer.objects.get_answers_from_question(question, request.user, orderby)
     answers = answers.select_related(depth=1)
 
     favorited = question.has_favorite_by_user(request.user)
@@ -345,10 +345,6 @@ def question(request, id):
             if vote.is_upvote():
                 vote_value = 1
             user_answer_votes[answer.id] = vote_value
-
-
-    if answers is not None:
-        answers = answers.order_by("-accepted", orderby)
 
     filtered_answers = []
     for answer in answers:

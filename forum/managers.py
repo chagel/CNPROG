@@ -165,17 +165,22 @@ class TagManager(models.Manager):
 
 class AnswerManager(models.Manager):
     GET_ANSWERS_FROM_USER_QUESTIONS = u'SELECT answer.* FROM answer INNER JOIN question ON answer.question_id = question.id WHERE question.author_id =%s AND answer.author_id <> %s'
-    def get_answers_from_question(self, question, user=None):
+    def get_answers_from_question(self, question, user=None, other_orderby = None):
         """
         Retrieves visibile answers for the given question. Delete answers
         are only visibile to the person who deleted them.
-        """
-       
+        """   
         if user is None or not user.is_authenticated():
-            return self.filter(question=question, deleted=False)
+            q = self.filter(question=question, deleted=False)
         else:
-            return self.filter(Q(question=question),
-                               Q(deleted=False) | Q(deleted_by=user))
+            q = self.filter(Q(question=question),
+                            Q(deleted=False) | Q(deleted_by=user))
+        if other_orderby is None:
+            q = q.order_by("-accepted")
+        else:
+            q = q.order_by("-accepted", other_orderby)
+
+        return q
                                
     def get_answers_from_questions(self, user_id):
         """
