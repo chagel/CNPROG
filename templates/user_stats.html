@@ -40,7 +40,7 @@
                 </a>
                 <div class="answer-link">
                     <a href="/questions/{{answered_question.id}}/{{answered_question.title}}#{{answered_question.answer_id}}">{{answered_question.title}}</a> {% if answered_question.comment_count %}<span 
-					title="{% blocktrans %}the answer has been commented {{ answered_question.comment_count }} times{% endblocktrans %}">({{answered_question.comment_count}})</span>{% endif %}
+					title="{% blocktrans with answered_question.comment_count as count %}the answer has been commented {{count}} times{% endblocktrans %}">({{answered_question.comment_count}})</span>{% endif %}
                 </div>
             </div>
             {% endfor %}
