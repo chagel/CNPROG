@@ -2,3 +2,5 @@
 *.swp
 nbproject
 settings_local.py
+log
+*.log

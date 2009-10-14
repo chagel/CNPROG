@@ -1,9 +1,16 @@
 PRE-REQUIREMENTS:
 -----------------------------------------------
-1. Python2.5, MySQL, Django v1.0+
+0. We recommend you to use python-setuptools to install pre-requirement libraries.
+If you haven't installed it, please try to install it first.
+e.g, sudo apt-get install python-setuptools
+
+1. Python2.5/2.6, MySQL, Django v1.0/1.1
+Make sure mysql for python provider has been installed.
+sudo easy_install mysql-python
 
 2. Python-openid v2.2
 http://openidenabled.com/python-openid/
+sudo easy_install python-openid
 
 3. django-authopenid(Included in project already)
 http://code.google.com/p/django-authopenid/
@@ -11,21 +18,29 @@ http://code.google.com/p/django-authopenid/
 4. html5lib
 http://code.google.com/p/html5lib/
 Used for HTML sanitizer
+sudo easy_install html5lib
 
 5. Markdown2
 http://code.google.com/p/python-markdown2/
+sudo easy_install markdown2
 
 6. Django Debug Toolbar
 http://github.com/robhudson/django-debug-toolbar/tree/master
 
 INSTALL STEPS:
 -----------------------------------------------
+0. Make sure you have all above python libraries installed.
+
 1. Copy settings_local.py.dist to settings_local.py and 
 update all your settings. Check settings.py and update 
 it as well if necessory.
 
 2. Prepare your database by using the same database/account 
 configuration from above.
+e.g,
+create database cnprog DEFAULT CHARACTER SET UTF8 COLLATE utf8_general_ci;
+grant all on cnprog.* to 'cnprog'@'localhost';
+And then run "python manage.py syncdb" to synchronize your database.
 
 3. Run "python manager.py runserver" to startup django 
 development environment.
