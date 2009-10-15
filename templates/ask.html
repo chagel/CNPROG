@@ -7,50 +7,36 @@
         <script type='text/javascript' src='/content/js/com.cnprog.post.js'></script>
         <script type='text/javascript' src='/content/js/jquery.validate.pack.js'></script>
         <script type='text/javascript' src='/content/js/wmd/showdown.js'></script>
-        <script type='text/javascript' src='/content/js/wmd/wmd.js'></script>
-        <link rel="stylesheet" type="text/css" href="/content/js/wmd/wmd.css" />
+        <script type='text/javascript' src='/content/js/kindeditor.js'></script>        
         <script type="text/javascript">
         $().ready(function(){
             //set current module button style
             $("#nav_ask").attr('className',"on");
-            $('#editor').TextAreaResizer();
-
-            //highlight code synctax when editor has new text
-            $("#editor").typeWatch({highlight: false, wait: 3000,
-                             captureLength: 5, callback: lanai.highlightSyntax});
-
-            //toggle preview of editor
-			//todo remove copy-paste
-            var display = true;
-            var txt = "[{% trans "hide preview" %}]";
-            $('#pre-collapse').text(txt);
-            $('#pre-collapse').bind('click', function(){
-                txt = display ? "[{% trans "show preview" %}]" : "[{% trans "hide preview" %}]";
-                display = !display;
-                $('#previewer').toggle();
-                $('#pre-collapse').text(txt);
+            KE.show({
+                id : 'editor',
+                items : [
+                'undo', 'redo', 'fontname', 'fontsize', 'textcolor', 'bgcolor', 'bold', 'italic', 'underline',
+                'removeformat', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist']
             });
 
             //Tags autocomplete action
             var tags = {{ tags|safe }};
-        	$("#id_tags").autocomplete(tags, {
-                minChars: 1,
-        		matchContains: true,
-                max: 20,
-                multiple: true,
-                multipleSeparator: " ",
-        		formatItem: function(row, i, max) {
-        			return row.n + " ("+ row.c +")";
-        		},
-                formatResult: function(row, i, max){
-                    return row.n;
-                }
-
+        	  $("#id_tags").autocomplete(tags, {
+                          minChars: 1,
+        		              matchContains: true,
+                          max: 20,
+                          multiple: true,
+                          multipleSeparator: " ",
+        		              formatItem: function(row, i, max) {
+        		                return row.n + " ("+ row.c +")";
+        		              },
+                          formatResult: function(row, i, max){
+                            return row.n;
+                          }
             });
 
             setupFormValidation("#fmask", CPValidator.getQuestionFormRules(), CPValidator.getQuestionFormMessages());
-            lanai.highlightSyntax();
-
         });
         </script>
 {% endblock %}
@@ -84,15 +70,12 @@
             </p>
 
             <p class="form-item">
-                <div id="wmd-button-bar" class="wmd-panel"></div>
                 {{ form.text }}
-
+                
                 <div class="preview-toggle">
                     <table width="100%">
                         <tr>
-                            <td>
-                                <span id="pre-collapse" title="{% trans "Toggle the real time Markdown editor preview" %}">{% trans "toggle preview" %}</span>
-                            </td>
+                            <td>&nbsp;</td>
                             <td style="text-align:right;">
                                 {{ form.wiki }} <span style="font-weight:normal;cursor:help" title="{{form.wiki.help_text}}">{{ form.wiki.label_tag }} </span>
                             </td>
@@ -100,7 +83,6 @@
 
                     </table>
                 </div>
-                <div id="previewer" class="wmd-preview"></div>
                 <span class="form-error"></span>
                 <br>
             </p>
