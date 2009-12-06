@@ -4,3 +4,4 @@ nbproject
 settings_local.py
 log
 *.log
+.DS_Store
