@@ -28,7 +28,8 @@
     </div>
     <div id="award-list" style="clear:both;margin-left:20px;line-height:25px;">
         {% for award in awards %}
-        <p style="width:185px;float:left"><a href="/users/{{ award.id }}/{{ award.name }}">{{ award.name }}</a> {% get_score_badge_by_details award.rep award.gold award.silver award.bronze %}</p>
+        <p style="width:185px;float:left"><a href="/users/{{ award.id }}/{{ award.name }}">{{ award.name }}</a>
+            {% get_score_badge_by_details award.rep award.gold award.silver award.bronze %}</p>
         {% endfor %}
     </div>
 
